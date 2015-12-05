@@ -38,23 +38,23 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	bg = display.newImage("settings_bg.png");
+	bg = display.newImage("images/settings_bg.png");
 		bg.height = _H; bg.width = _W + _W/4;
 		bg.x = _W/2; bg.y = _H/2;
 	
-	musicTX = display.newImage("musicTX.png");
+	musicTX = display.newImage("images/musicTX.png");
 		musicTX.height = _H/8; musicTX.width = _W/3 ;
 		musicTX.x = _W/2 - _W/5 - 9; musicTX.y = _H/2 - _H/3 + 5;
 	
-	sfxTX = display.newImage("sfxTX.png");
+	sfxTX = display.newImage("images/sfxTX.png");
 		sfxTX.height = _H/9; sfxTX.width =_W/3;
 		sfxTX.x = _W/2 - _W/6; sfxTX.y = _H/2 - _H/11;
 	
 	
 	langTX = widget.newButton
 	{
-		defaultFile = "langTX.png",
-		overFile ="langTX.png",
+		defaultFile = "images/langTX.png",
+		overFile ="images/langTX.png",
 		id = "langTX",
 		x = _W/2 ,
 		y = _H/2 + _H/8,
@@ -65,8 +65,8 @@ function scene:createScene( event )
 
 	back = widget.newButton
 	{
-		defaultFile = "back.png",
-		overFile ="back.png",
+		defaultFile = "images/back.png",
+		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,
 		y = _H/10,
@@ -77,8 +77,8 @@ function scene:createScene( event )
 
 	credits = widget.newButton
 	{
-		defaultFile = "credits.png",
-		overFile ="credits.png",
+		defaultFile = "images/credits.png",
+		overFile ="images/credits.png",
 		id = "credits",
 		x = _W/2,
 		y = _H/2 + _H/3,

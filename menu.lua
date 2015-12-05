@@ -21,15 +21,15 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	welcome = display.newImage ("welcome.png")
+	welcome = display.newImage ("images/welcome.png")
 	welcome.height = _H; welcome.width = _W + _W/4;
 	welcome.x = _W/2; welcome.y = _H/2;
 
 	
 	newGame = widget.newButton
 	{
-		defaultFile = "newGame.png",
-		overFile ="newGame_o.png",
+		defaultFile = "images/newGame.png",
+		overFile ="images/newGame_o.png",
 		id = "newGame",
 		x = _W/2,
 		y = _H/2 + _H/7,
@@ -40,8 +40,8 @@ function scene:createScene( event )
 	
 	settings = widget.newButton
 	{
-		defaultFile = "settings.png",
-		overFile ="settings.png",
+		defaultFile = "images/settings.png",
+		overFile ="images/settings.png",
 		id = "settings",
 		x = _W/3 - newGame.width/3,
 		y = _H/2 + newGame.width/2,
@@ -52,8 +52,8 @@ function scene:createScene( event )
 	
 	achieve = widget.newButton
 	{
-		defaultFile = "achievements.png",
-		overFile ="achievements.png",
+		defaultFile = "images/achievements.png",
+		overFile ="images/achievements.png",
 		id = "achievements",
 		x =_W/2 - newGame.width/4,
 		y = _H/2 + newGame.width/2,
@@ -64,8 +64,8 @@ function scene:createScene( event )
 
 	rank = widget.newButton
 	{
-		defaultFile = "ranking.png",
-		overFile ="ranking.png",
+		defaultFile = "images/ranking.png",
+		overFile ="images/ranking.png",
 		id = "ranking",
 		x =_W/2 + newGame.width/4,
 		y = _H/2 + newGame.width/2,
@@ -76,8 +76,8 @@ function scene:createScene( event )
 
 	upgrades = widget.newButton
 	{
-		defaultFile = "upgrades.png",
-		overFile ="upgrades.png",
+		defaultFile = "images/upgrades.png",
+		overFile ="images/upgrades.png",
 		id = "upgrades",
 		x = _W - newGame.width/4,
 		y = _H/2 + newGame.width/2,
