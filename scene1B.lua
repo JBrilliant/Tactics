@@ -19,14 +19,14 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	local background = display.newImage("scbg.jpg");
+	local background = display.newImage("images/scbg.jpg");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
 	
 	local back = widget.newButton
 	{
-		defaultFile = "back.png",
-		overFile ="back.png",
+		defaultFile = "images/back.png",
+		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,
 		y = _H/10,
@@ -35,18 +35,18 @@ function scene:createScene( event )
 		onRelease = buttonOnRelease
 	}	
 
-	local boy = display.newImage("boy_normal.png");
+	local boy = display.newImage("images/boy_normal.png");
 	boy.x = _W/2 - 210 ; boy.y = _H/2 + 30;
 	boy.width = 230; boy.height = 240;
 	
-	local scenario = display.newImage("sc1.png");
+	local scenario = display.newImage("images/sc1.png");
 	scenario.x = _W/3 +  _W/3 - 20; scenario.y = _H/3 + _H/5;
 	scenario.width = _W/2 + _W/3 + _W/10; scenario.height = _H/2 +_H/3 + _H/6;
 	
     local choice1 = widget.newButton
 	{
-		defaultFile = "sc1c1.png",
-		overFile ="sc1c1.png",
+		defaultFile = "images/sc1c1.png",
+		overFile ="images/sc1c1.png",
 		id = "choice1",
 		x = _W/3  + _W/3 - 20,
 		y = _H/2 + 20,
@@ -57,8 +57,8 @@ function scene:createScene( event )
 
 	local choice2 = widget.newButton
 	{
-		defaultFile = "sc1c2.png",
-		overFile ="sc1c2.png",
+		defaultFile = "images/sc1c2.png",
+		overFile ="images/sc1c2.png",
 		id = "choice2",
 		x = _W/3 + _W/3 - 20,
 		y =  _H/2 + 60,
@@ -70,8 +70,8 @@ function scene:createScene( event )
 	
 	local choice3 = widget.newButton
 	{
-		defaultFile = "sc1c3.png",
-		overFile ="sc1c3.png",
+		defaultFile = "images/sc1c3.png",
+		overFile ="images/sc1c3.png",
 		id = "choice3",
 		x = _W/3 + _W/3 - 20,
 		y =  _H/2 + 100,

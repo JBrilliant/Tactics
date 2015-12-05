@@ -15,7 +15,7 @@ end
 function scene:createScene( event )
 	local group = self.view
 	
-	local bg = display.newImage("map.png");
+	local bg = display.newImage("images/map.png");
 	bg.height = _H; bg.width = _W + _W/4;
 	bg.x = _W/2; bg.y = _H/2;
 	
@@ -25,8 +25,8 @@ function scene:createScene( event )
 
 	local level1 = widget.newButton
 	{
-		defaultFile = "level.png",
-		overFile ="level.png",
+		defaultFile = "images/level.png",
+		overFile ="images/level.png",
 		id = "level1",
 		x = _W/2 + _W/6 +8 ,
 		y = _H/2 + _H/4 +6, 
@@ -43,8 +43,8 @@ function scene:createScene( event )
 	
 	local back = widget.newButton
 	{
-		defaultFile = "back.png",
-		overFile ="back.png",
+		defaultFile = "images/back.png",
+		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,
 		y = _H/10,
@@ -76,7 +76,6 @@ local group = self.view
 end
 
 scene:addEventListener( "createScene", scene )
-
 scene:addEventListener( "destroyScene", scene )
 
 return scene

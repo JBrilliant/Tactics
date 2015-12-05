@@ -15,14 +15,14 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	local background = display.newImage("bgwrong.jpg");
+	local background = display.newImage("images/bgwrong.jpg");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
 	
 	local back = widget.newButton
 	{
-		defaultFile = "back.png",
-		overFile ="back.png",
+		defaultFile = "images/back.png",
+		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,
 		y = _H/10,
@@ -33,8 +33,8 @@ function scene:createScene( event )
 
 	local nexts = widget.newButton
 	{
-		defaultFile = "next.png",
-		overFile ="next.png",
+		defaultFile = "images/next.png",
+		overFile ="images/next.png",
 		id = "nexts",
 		x = _W + _W/40,
 		y = _H/10,
@@ -44,7 +44,7 @@ function scene:createScene( event )
 	}	
 
 
-	local wrong = display.newImage("wrong1.png");
+	local wrong = display.newImage("images/wrong1.png");
 	wrong.x = _W/2 + 10 ; wrong.y = _H/3 + _H/5;
 	wrong.width = _W/2 + _W/3 + _W/10; wrong.height = _H/2 +_H/3 + _H/6;
 

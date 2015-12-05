@@ -6,14 +6,14 @@ local back, boy, girl
 
 function scene:createScene( event )
 	local group = self.view
-	local choose = display.newImage("choose.png");
+	local choose = display.newImage("images/choose.png");
 		choose.height = _H; choose.width = _W + _W/4;
 		choose.x = _W/2; choose.y = _H/2;
 		
 	back = widget.newButton
 	{
-		defaultFile = "back.png",
-		overFile ="back.png",
+		defaultFile = "images/back.png",
+		overFile ="images/back.png",
 		x = _W/30,
 		y = _H/10,
 		height =  _H/9 + 17,
@@ -25,8 +25,8 @@ function scene:createScene( event )
 
 	boy = widget.newButton
 	{
-		defaultFile = "boy.png",
-		overFile ="boy.png",
+		defaultFile = "images/boy.png",
+		overFile ="images/boy.png",
 		x = _W/2 - 130 ,
 		y = _H/2 + 30,
 		height =  240,
@@ -38,8 +38,8 @@ function scene:createScene( event )
 	
 	girl = widget.newButton
 	{
-		defaultFile = "girl.png",
-		overFile ="girl.png",
+		defaultFile = "images/girl.png",
+		overFile ="images/girl.png",
 		x = _W/2 + 140 ,
 		y = _H/2 + 30,
 		height =  240,
