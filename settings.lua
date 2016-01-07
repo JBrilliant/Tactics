@@ -105,8 +105,6 @@ function scene:createScene( event )
 	    id = "sfxSwitch",
 	    onPress = onSwitchPress
 	}
-
-	-- musicSwitch:addEventListener("touch", onPress)
 	    	
 	group:insert( bg )
 	group:insert( back )
@@ -116,7 +114,6 @@ function scene:createScene( event )
 	group:insert( musicSwitch )
 	group:insert( sfxSwitch )
 	group:insert( credits )
-	-- group:insert( pickerWheel )
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
