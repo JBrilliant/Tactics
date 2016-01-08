@@ -12,7 +12,7 @@ local function buttonOnRelease(event)
 		elseif button == "boy" then
 			storyboard.gotoScene( "mapB", "fade", 200 )
 		elseif button == "girl" then
-			--storyboard.gotoScene( "mapG", "fade", 200 )
+			storyboard.gotoScene( "mapG", "fade", 200 )
 		end
 end
 

@@ -15,7 +15,7 @@ end
 function scene:createScene( event )
 	local group = self.view
 	
-	local bg = display.newImage("images/map.png");
+	local bg = display.newImage("images/map.jpg");
 	bg.height = _H; bg.width = _W + _W/4;
 	bg.x = _W/2; bg.y = _H/2;
 	
