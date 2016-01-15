@@ -15,7 +15,7 @@ end
 function scene:createScene( event )
 	local group = self.view
 	
-	local bg = display.newImage("images/map.jpg");
+	local bg = display.newImage("images/map.png");
 	bg.height = _H; bg.width = _W + _W/4;
 	bg.x = _W/2; bg.y = _H/2;
 	
@@ -25,18 +25,31 @@ function scene:createScene( event )
 
 	local level1 = widget.newButton
 	{
-		defaultFile = "images/level.png",
-		overFile ="images/level.png",
+		defaultFile = "images/level_candies_active.png",
+		overFile ="images/level_candies_active.png",
 		id = "level1",
-		x = _W/2 + _W/6 +8 ,
-		y = _H/2 + _H/4 +6, 
-		height = _H/13 +5,
-		width = _W/13 + 2 ,
+		x = _W/2 + _W/6  + 19,
+		y = _H/2 + _H/4 + 21, 
+		height = _W/15,
+		width = _W/15 ,
 		onRelease = buttonOnRelease
 	}	
 
+	local level2 = widget.newButton
+	{
+		defaultFile = "images/level_candies_inactive.png",
+		overFile ="images/level_candies_inactive.png",
+		id = "level2",
+		x = _W/2 + _W/4 + 31 ,
+		y = _H/2 + _H/4 , 
+		height = _W/16,
+		width = _W/16 ,
+		onRelease = buttonOnRelease
+	}
+
 	local function animate(event)
 		level1.rotation = level1.rotation + 3
+		-- level2.rotation = level2.rotation + 3
 	end
 	Runtime:addEventListener("enterFrame",animate);
 
@@ -66,6 +79,7 @@ function scene:createScene( event )
 		
 	group:insert( bg )
 	group:insert( level1 )
+	group:insert( level2 )
 	group:insert( back )
 end
 

@@ -7,7 +7,7 @@ local scene = storyboard.newScene()
 local widget = require("widget")
 
 		
-local welcome, newGame, settings, achieve, rank, upgrades
+local welcome, newGame, settings, achieve, rank, candy
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -25,6 +25,22 @@ function scene:createScene( event )
 	welcome.height = _H; welcome.width = _W + _W/4;
 	welcome.x = _W/2; welcome.y = _H/2;
 
+	candy = widget.newButton
+	{
+		defaultFile = "images/level_candies_inactive.png",
+		id = "candy",
+		x = _W/2  + 9,
+		y = _H/2 - 75 , 
+		height = _W/13,
+		width = _W/13,
+		onRelease = buttonOnRelease
+	}	
+	
+	local function animate(event)
+		candy.rotation = candy.rotation + 3
+	end
+	Runtime:addEventListener("enterFrame",animate);
+
 	
 	newGame = widget.newButton
 	{
@@ -38,24 +54,14 @@ function scene:createScene( event )
 		onRelease = buttonOnRelease
 	}
 	
-	settings = widget.newButton
-	{
-		defaultFile = "images/settings.png",
-		overFile ="images/settings.png",
-		id = "settings",
-		x = _W/3 - newGame.width/3,
-		y = _H/2 + newGame.width/2,
-		height =  _H/7,
-		width = _W/9 ,
-		onRelease = buttonOnRelease
-	}
+	
 	
 	achieve = widget.newButton
 	{
 		defaultFile = "images/achievements.png",
-		overFile ="images/achievements.png",
+		overFile ="images/achievements_o.png",
 		id = "achievements",
-		x =_W/2 - newGame.width/4,
+		x = _W/3 ,
 		y = _H/2 + newGame.width/2,
 		height =  _H/7,
 		width = _W/9 ,
@@ -65,21 +71,21 @@ function scene:createScene( event )
 	rank = widget.newButton
 	{
 		defaultFile = "images/ranking.png",
-		overFile ="images/ranking.png",
+		overFile ="images/ranking_o.png",
 		id = "ranking",
-		x =_W/2 + newGame.width/4,
+		x =_W/2 ,
 		y = _H/2 + newGame.width/2,
 		height =  _H/7,
 		width = _W/9 ,
 		onRelease = buttonOnRelease
 	}	
 
-	upgrades = widget.newButton
+	settings = widget.newButton
 	{
-		defaultFile = "images/upgrades.png",
-		overFile ="images/upgrades.png",
-		id = "upgrades",
-		x = _W - newGame.width/4,
+		defaultFile = "images/settings.png",
+		overFile ="images/settings_o.png",
+		id = "settings",
+		x =_W/3 + _W/3,
 		y = _H/2 + newGame.width/2,
 		height =  _H/7,
 		width = _W/9 ,
@@ -87,11 +93,12 @@ function scene:createScene( event )
 	}
 
 	group:insert( welcome)
+	group:insert( candy)
 	group:insert( newGame)
 	group:insert( settings)
 	group:insert( achieve)
 	group:insert( rank)
-	group:insert( upgrades)
+	
 end
 
 function scene:enterScene( event )
@@ -120,7 +127,6 @@ function scene:destroyScene( event )
 		settings= nil 
 		achieve= nil 
 		rank= nil  
-		upgrades= nil 
 	end
 
 end
