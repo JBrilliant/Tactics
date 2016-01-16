@@ -7,25 +7,23 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "character", "fade", 200 )
-		elseif button == "choice1" then
-			storyboard.gotoScene( "wrongAns1B", "fade", 200 )
-		elseif button == "choice2" then
-			storyboard.gotoScene( "wrongAns1B", "fade", 200 )
-		elseif button == "choice3" then
-			storyboard.gotoScene( "correctAns1B", "fade", 200 )
+		elseif button == "video" then
+		-- 	media.playVideo("level1.mp4", true)
+			display.newImage("images/lvl1.gif")
 		end
 end
 
 function scene:createScene( event )
 	local group = self.view
 
-	local background = display.newImage("images/lvl1.gif");
+	local background = display.newImage("images/bg.png");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
 	
+	-- media.playVideo("level1.mp4", true)
 	local back = widget.newButton
 	{
-		defaultFile = "images/back.png",
+		defaultFile = "images/back.png",			
 		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,
@@ -34,77 +32,71 @@ function scene:createScene( event )
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
-
-	-- local boy = display.newImage("images/boy_normal.png");
-	-- boy.x = _W/2 - 210 ; boy.y = _H/2 + 30;
-	-- boy.width = 230; boy.height = 240;
 	
-	-- local scenario = display.newImage("images/sc1.png");
-	-- scenario.x = _W/3 +  _W/3 - 20; scenario.y = _H/3 + _H/5;
-	-- scenario.width = _W/2 + _W/3 + _W/10; scenario.height = _H/2 +_H/3 + _H/6;
+-- 	local sceneArray = {"images/level1/scene01.jpg", "images/level1/scene02.jpg",
+-- "images/level1/scene03.jpg","images/level1/scene04.jpg",
+-- "images/level1/scene05.jpg","images/level1/scene06.jpg",
+-- "images/level1/scene07.jpg","images/level1/scene08.jpg",
+-- "images/level1/scene09.jpg"} 
 	
- --    local choice1 = widget.newButton
-	-- {
-	-- 	defaultFile = "images/sc1c1.png",
-	-- 	overFile ="images/sc1c1.png",
-	-- 	id = "choice1",
-	-- 	x = _W/3  + _W/3 - 20,
-	-- 	y = _H/2 + 20,
-	-- 	height =   _H/19,
-	-- 	width = _W/2 +_W/3 -10 ,
-	-- 	onRelease = buttonOnRelease
-	-- }	
-
-	-- local choice2 = widget.newButton
-	-- {
-	-- 	defaultFile = "images/sc1c2.png",
-	-- 	overFile ="images/sc1c2.png",
-	-- 	id = "choice2",
-	-- 	x = _W/3 + _W/3 - 20,
-	-- 	y =  _H/2 + 60,
-	-- 	height =   _H/19,
-	-- 	width =_W/2 +_W/5 ,
-	-- 	onRelease = buttonOnRelease
-	-- }	
-
+-- 	for i=1, 8	 do
+-- 		print(i)
+-- 		scene = display.newImage(sceneArray[i], 200, 60)
+-- 		scene.height = _H; scene.width = _W + _W/4;
+-- 		scene.x = _W/2; scene.y = _H/2;
+-- 		-- scene.alpha = 8
+-- 		transition.to( scene, {alpha=0,delay=1000,time=3000,onComplete=after } )
+-- 		-- timer.performWithDelay(3000,  10 )
+-- 	end
 	
-	-- local choice3 = widget.newButton
-	-- {
-	-- 	defaultFile = "images/sc1c3.png",
-	-- 	overFile ="images/sc1c3.png",
-	-- 	id = "choice3",
-	-- 	x = _W/3 + _W/3 - 20,
-	-- 	y =  _H/2 + 100,
-	-- 	height =   _H/19,
-	-- 	width =_W/2 +_W/3,
-	-- 	onRelease = buttonOnRelease
-	-- }	
-	-- --boy.scene = "mapB"
-	-- local anim;
-
-	-- anim = transition.to( scenario,{
-	-- 	time = 5000,
-	-- 	y= 50,
-	-- 	xScale = 2,
-	-- 	yScale = 2,
-	-- 	transition = easing.inQuad,
-	-- 	customProperty = 1000
-	-- });
-
-
-	-- local tmr;
-	-- tmr = timer.performWithDelay(1000, function(e)
-	-- 	transition.cancel(anim);
-	-- 	anim = nil;
-
-	-- 	timer.cancel(tmr);
-	-- 	tmr = nil;
-	-- end,1); 
-
+	local function scene1()
+		scene = display.newImage("images/level1/scene01.jpg", 200, 60)
+		scene.height = _H; scene.width = _W + _W/4;
+		scene.x = _W/2; scene.y = _H/2;
+		-- scene.alpha = 8
+		transition.to( scene, {alpha=0,time=3000, delay=2000 } )
+	end
 	
-	group:insert( background )
+	local function scene2()
+		scene = display.newImage("images/level1/scene02.jpg", 200, 60)
+		scene.height = _H; scene.width = _W + _W/4;
+		scene.x = _W/2; scene.y = _H/2;
+		-- scene.alpha = 8
+		transition.to( scene, {alpha=0,time=3000 } )
+	end
+
+	local function scene3()
+		scene = display.newImage("images/level1/scene03.jpg", 200, 60)
+		scene.height = _H; scene.width = _W + _W/4;
+		scene.x = _W/2; scene.y = _H/2;
+		-- scene.alpha = 8
+		transition.to( scene, {alpha=0,time=3000 } )
+	end
+
+	-- trans = {scene1, scene2, scene3}
+	-- for i=1, 3 do
+	-- 	trans[i]()
+	-- 	timer.performWithDelay(3000, trans[i](), 10)
+	-- end
+	scene1(); timer.performWithDelay(3000)
+	-- scene2(); timer.performWithDelay(3000)
+	-- scene3(); timer.performWithDelay(3000)
+		-- count = 0
+
+	-- local function repeatFade (event)
+	
+	-- frame2.alpha = 1
+	-- 	transition.to( frame2, { alpha=0, time=3000 } )
+	-- 	-- end
+
+	-- Fade out rectangle every second 20x using transition.to()       
+	
+	group:insert( background )	
+	--group:insert( sceneArray )
+	-- group:insert( frame2 )
 	group:insert( back )
-	-- group:insert( boy )
+	-- frame1:removeSelf()
+	-- group:insert( video )
 	-- group:insert( scenario )
 	-- group:insert( choice1 )
 	-- group:insert( choice2 )

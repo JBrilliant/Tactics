@@ -65,6 +65,7 @@ function scene:createScene( event )
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
+	
 --	level1.self = "self";
 	
 	-- function enterFrame( e )
