@@ -28,5 +28,11 @@ local sfx = require("sfx");
 -- forward declare the handle
 sfx.bgmusic = nil
 sfx.bgmusic = audio.loadSound("audio/Tango.wav")
+sfx.level1s1 = audio.loadSound("audio/level1/1.wav")
+sfx.level1s2 = audio.loadSound("audio/level1/2.wav")
+sfx.level1s3 = audio.loadSound("audio/level1/3.wav")
+sfx.level1s4 = audio.loadSound("audio/level1/4.wav")
+sfx.level1s5 = audio.loadSound("audio/level1/5.wav")
+sfx.level1s6 = audio.loadSound("audio/level1/6.wav")
 
 storyboard.gotoScene("menu")

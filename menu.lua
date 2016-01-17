@@ -104,7 +104,7 @@ end
 function scene:enterScene( event )
     -- sfx.bgmusic = audio.loadSound("bgmusic.mp3")
     if ( gameState.soundOn ) then
-  		 audio.play( sfx.bgmusic, sss{ loops = -1, channel = 1,
+  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1,
     							onComplete = function() 
                                     audio.dispose( sfx.bgmusic ) 
                                 end } )
