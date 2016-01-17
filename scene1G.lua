@@ -16,13 +16,23 @@ end
 function scene:createScene( event )
 	local group = self.view
 
--- 	local background = display.newImage("images/bg.png");
--- 	background.height = _H; background.width = _W + _W/4;
--- 	background.x = _W/2; background.y = _H/2;
--- --	transition.to( background, {alpha=0,time=3000, delay=2000 } )
--- 	group:insert(background)
-
+	local background = display.newImage("images/bg.png");
+	background.height = _H; background.width = _W + _W/4;
+	background.x = _W/2; background.y = _H/2;
+--	transition.to( background, {alpha=0,time=3000, delay=2000 } )
+	
 -- 	-- media.playVideo("level1.mp4", true)
+	local back = widget.newButton
+	{
+		defaultFile = "images/back.png",			
+		overFile ="images/back.png",
+		id = "back",
+		x = _W/30,
+		y = _H/10,
+		height =  _H/9 + 17,
+		width = _W/9 + 18 ,
+		onRelease = buttonOnRelease
+	}	
 	
 
 	local nextB = widget.newButton
@@ -36,136 +46,64 @@ function scene:createScene( event )
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
-	group:insert( nextB )
 	
-	local function scene1()
-		scene = display.newImage("images/level1/scene01.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		-- group:insert( scene )
-		transition.to( scene, {alpha=0,time=7000, delay=2000 } )
-		-- transition.to( scene, {alpha=1.0,time=7000, delay=2000 } )	
-	end
-	
-	scene1();
-	-- display.remove(scene)
-	-- timer.performWithDelay(1000, scene1)
+	local sheetOptions =
+	{
+	    width = 512,
+	    height = 256,
+	    numFrames = 8
+	}
 
-	local function scene2()
-		audio.play( sfx.level1s1, { loops = 0, channel = 1,
+	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
+	
+	local sequence= {
+    -- consecutive frames sequence
+    {
+        name = "normalRun",
+        start = 1,
+        count = 8,
+        time = 20000,
+        loopCount = 1,
+        loopDirection = "forward"
+    }
+	}
+	
+	local animation = display.newSprite( sheet1, sequence)
+		-- animation.height = _H-20; animation.width = _W ;
+		animation.x = _W/2; animation.y = _H/2 +20
+	
+	local function animate( ... )
+		animation:play()
+		-- body
+	end
+
+local function spriteListener( event )
+
+    local thisSprite = event.target  -- "event.target" references the sprite
+
+    if ( event.phase == "ended" ) then 
+    	timer.performWithDelay(3000, spriteListener) 
+        storyboard.gotoScene( "question1G", "fade", 200 )
+    end
+
+    if ( event.phase == "next") then
+    	audio.play( sfx.level1s1, { loops = 0, channel = 1,
     							onComplete = function() 
                                     audio.dispose( sfx.level1s1 ) 
                                 end } )
-		scene = display.newImage("images/level1/scene02.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=4000, delay=2000 } )		
-		-- scene:translate(100,100)
-		-- scene:removeSelf()
-		-- scene = nil
-	end
-	-- scene2();
-	-- timer.performWithDelay(3000, scene2)
-	
-	local function scene3()
-		scene = display.newImage("images/level1/scene03.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=3000, delay=2000 } )
-	end
-	-- timer.performWithDelay(5000, scene3)
-	-- display.remove(scene)
+    end
+end
 
-	local function scene4()
-		scene = display.newImage("images/level1/scene04.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=3000, delay=2000 } )
-	end
-	-- timer.performWithDelay(6000, scene4)
-	-- display.remove(scene)
+Runtime:addEventListener("enterFrame",animate);
 
-	local function scene5()
-		scene = display.newImage("images/level1/scene05.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=3000, delay=1000 } )
-	end
-	-- timer.performWithDelay(7000, scene5)
-	-- display.remove(scene)
+-- add the event listener to the sprite
+animation:addEventListener( "sprite", spriteListener )
+group:insert(background)
+group:insert(animation)
+group:insert( nextB )
+group:insert( back )
 
-	local function scene6()
-		scene = display.newImage("images/level1/scene06.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=6000, delay=3000 } )
-	end
-	-- timer.performWithDelay(8000, scene6)
-	-- display.remove(scene)
-	
-	-- timer.performWithDelay(10000, scene9)
-	
-	local function scene7()
-		scene = display.newImage("images/level1/scene07.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=5000, delay=3000 } )
-	end
-	-- timer.performWithDelay(11000, scene7)
-	-- display.remove(scene)
-
-	local function scene8()
-		audio.play( sfx.level1s2, { loops = 0, channel = 2,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s2 ) 
-                                end } )
-		scene = display.newImage("images/level1/scene08.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,time=4000, delay=3000 } )
-	end
-	-- timer.performWithDelay(15000, scene8)
-	-- display.remove(scene)
-
-	-- scene9()
-	local function scene9()
-		audio.play( sfx.level1s3, { loops = 0, channel = 3,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s3 ) 
-                                end } )
-		scene = display.newImage("images/level1/scene09.jpg",200,60)
-		scene.height = _H; scene.width = _W + _W/4;
-		scene.x = _W/2; scene.y = _H/2;
-		-- scene.alpha = 8
-		group:insert( scene )
-		transition.to( scene, {alpha=0,  time=3000, delay=3000 } )
-		-- display.remove(scene)
-	end-- scene9();	
-	-- timer.performWithDelay(18000, scene9)
-
-	-- local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
-	-- 	textQuest.x = _W/2
-	-- 	textQuest.y = _H/4
-	-- 	textQuest:setFillColor( 1,1,1 )
-	
-	
-	-- group:insert(textQuest)
-	
+		
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
@@ -176,5 +114,6 @@ end
 
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
+
 
 return scene

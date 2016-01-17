@@ -6,7 +6,7 @@ local widget = require("widget")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "scene1G", "fade", 200 )
+			storyboard.gotoScene( storyboard.getPrevious() )
 		elseif button == "video" then
 		-- 	media.playVideo("level1.mp4", true)
 			display.newImage("images/lvl1.gif")
@@ -39,6 +39,24 @@ function scene:createScene( event )
 		textQuest.y = _H/4
 		textQuest:setFillColor( 1,1,1 )
 	-- timer.performWithDelay(19000, scene9)
+
+
+	local choice1 = display.newImage("images/level1/scene9_1.jpg")
+	choice1.height = _H/4; choice1.width =  _W/4;
+	choice1.x = _W/4; choice1.y = _H/4;
+	choice1.customProperty = 100;
+
+	local animation = transition.to(choice1,{
+		time=5000, y = 50, xScale=2, yScale=2,
+		transition=easing.inQuad,customProperty=1000})
+
+	local tmr = timer.performWithDelay(3000,function(e){})
+		transition.cancel(animation)
+		animation = nil
+		timer.cancel(tmr)
+		tmr = nil
+	
+
 	group:insert(textQuest)
 	
 end
