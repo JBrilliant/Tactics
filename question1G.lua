@@ -36,27 +36,108 @@ function scene:createScene( event )
 	
 	local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
 		textQuest.x = _W/2
-		textQuest.y = _H/4
+		textQuest.y = _H/5
 		textQuest:setFillColor( 1,1,1 )
 	-- timer.performWithDelay(19000, scene9)
 
 
-	local choice1 = display.newImage("images/level1/scene9_1.jpg")
-	choice1.height = _H/4; choice1.width =  _W/4;
-	choice1.x = _W/4; choice1.y = _H/4;
-	choice1.customProperty = 100;
+	-- local choice1 = display.newImage("images/level1/scene9_2.jpg")
+	-- choice1.height = _H/4; choice1.width =  _W/4;
+	-- choice1.x = _W/4; choice1.y = _H/4;
+	-- choice1.customProperty = 100;
 
-	local animation = transition.to(choice1,{
-		time=5000, y = 50, xScale=2, yScale=2,
-		transition=easing.inQuad,customProperty=1000})
-
-	local tmr = timer.performWithDelay(3000,function(e){})
-		transition.cancel(animation)
-		animation = nil
-		timer.cancel(tmr)
-		tmr = nil
+		
+		
 	
+	local function txt()
+		local animation1 = transition.to(textQuest,{
+			time=1000, y = _H/2, xScale=2, yScale=2,
+			transition=easing.inQuad,customProperty=1000})
+		transition.to(textQuest,{transition=easing.inQuad,
+			xScale=1, yScale=1, y=_H/10,
+			time=500, delay=2000})
+					
+		-- local animation2 = transition.to(choice1,{
+		-- 	time=5000, y = 20, xScale=2, yScale=2,
+		-- 	transition=easing.inQuad,customProperty=1000,onComplete=after})
 
+		-- local animation2 = transition.to(textQuest,{
+		-- 	time=5000, y = 50, xScale=2, yScale=2,
+		-- 	transition=easing.inQuad,customProperty=1000})
+	end
+	txt()
+
+	local function choice1fn()
+		
+		local choice1 = widget.newButton
+		{
+			defaultFile = "images/level1/scene9_2.jpg",			
+			overFile ="images/level1/scene9_2.jpg",
+			id = "choice1",
+			x = _W/2 ,
+			y = _H/2 ,
+			height =   _H/4 + 30,
+			width = _W/3 + 30,
+			onRelease = buttonOnRelease
+		}	
+
+		local animation = transition.to(choice1,{
+				time=2000, --delay=2000,
+				x=_W/2 + 10, y = _W/2-100, xScale=9.5, yScale=9.5,
+				transition=easing.inQuad,customProperty=1000,onComplete=after})
+		transition.to(choice1,{time=1000,delay=4000,
+			x=_W/4 , y = _H/3 , 
+			xScale=1, yScale=1,
+			transition=easing.inQuad})	
+			
+		local tmr = timer.performWithDelay(1000,function(e)
+			transition.cancel(animation)
+			animation = nil
+			-- timer.cancel(tmr2)
+			tmr = nil
+		end,1);
+		
+		group:insert(choice1)
+	
+	end
+	timer.performWithDelay(3000,choice1fn,1)
+
+	local function choice2fn()
+		local choice2 = widget.newButton
+		{
+			defaultFile = "images/level1/scene9_3.jpg",			
+			overFile ="images/level1/scene9_3.jpg",
+			id = "choice2",
+			x = _W/2,
+			y = _H/2 ,
+			height =  _H/4 + 30,
+			width = _W/3 + 30,
+			onRelease = buttonOnRelease
+		}
+
+		local animation = transition.to(choice2,{
+				time=2000, 
+				x=_W/2 +10, y = _W/2-100, xScale=9.5, yScale=9.5,
+				transition=easing.inQuad,customProperty=1000,onComplete=after})
+		transition.to(choice2,{time=1000,delay=4000,
+			x=_W - _W/4, y = _H/3, 
+			xScale=1, yScale=1,
+			transition=easing.inQuad})		
+
+		local tmr = timer.performWithDelay(1000,function(e)
+			transition.cancel(animation)
+			animation = nil
+			-- timer.cancel(tmr2)
+			tmr = nil
+		end,1);
+
+		group:insert(choice2)
+	
+	end
+	timer.performWithDelay(10000,choice2fn,1)
+
+	
+	group:insert( back )
 	group:insert(textQuest)
 	
 end

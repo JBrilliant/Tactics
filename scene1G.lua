@@ -8,7 +8,6 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "character", "fade", 200 )
 		elseif button == "nextB" then
-		-- 	media.playVideo("level1.mp4", true)
 			storyboard.gotoScene( "question1G", "fade", 200 )
 		end
 end
@@ -19,9 +18,7 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
---	transition.to( background, {alpha=0,time=3000, delay=2000 } )
-	
--- 	-- media.playVideo("level1.mp4", true)
+
 	local back = widget.newButton
 	{
 		defaultFile = "images/back.png",			
@@ -57,46 +54,44 @@ function scene:createScene( event )
 	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
 	
 	local sequence= {
-    -- consecutive frames sequence
     {
         name = "normalRun",
         start = 1,
         count = 8,
-        time = 20000,
+        time = 16000,
         loopCount = 1,
         loopDirection = "forward"
     }
 	}
 	
 	local animation = display.newSprite( sheet1, sequence)
-		-- animation.height = _H-20; animation.width = _W ;
 		animation.x = _W/2; animation.y = _H/2 +20
-	
-	local function animate( ... )
 		animation:play()
-		-- body
-	end
+		
 
 local function spriteListener( event )
 
     local thisSprite = event.target  -- "event.target" references the sprite
 
-    if ( event.phase == "ended" ) then 
-    	timer.performWithDelay(3000, spriteListener) 
-        storyboard.gotoScene( "question1G", "fade", 200 )
-    end
-
-    if ( event.phase == "next") then
+     if ( thisSprite.frame == 2) then
     	audio.play( sfx.level1s1, { loops = 0, channel = 1,
     							onComplete = function() 
                                     audio.dispose( sfx.level1s1 ) 
                                 end } )
+    elseif ( thisSprite.frame == 8) then
+    	audio.play( sfx.level1s3, { loops = 0, channel = 1,
+    							onComplete = function() 
+                                    audio.dispose( sfx.level1s3 ) 
+                                end } )
+    	timer.performWithDelay(5000,function(e)
+			storyboard.gotoScene("question1G","fade",200)
+		end,1)
     end
+
+  
 end
 
-Runtime:addEventListener("enterFrame",animate);
 
--- add the event listener to the sprite
 animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(animation)
