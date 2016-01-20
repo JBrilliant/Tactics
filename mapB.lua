@@ -6,7 +6,7 @@ local widget = require("widget")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" then
-			storyboard.gotoScene( "scene1B", "fade", 200 )
+			-- storyboard.gotoScene( "scene1B", "fade", 200 )
 		elseif button == "back" then
 			storyboard.gotoScene( "character", "fade", 200 )
 		end
