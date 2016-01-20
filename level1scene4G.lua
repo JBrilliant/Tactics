@@ -8,7 +8,7 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
-			storyboard.gotoScene( "level1question1G", "fade", 200 )
+			storyboard.gotoScene( "level1question4G", "fade", 200 )
 		end
 end
 
@@ -48,47 +48,37 @@ function scene:createScene( event )
 	{
 	    width = 576,
 	    height = 320,
-	    numFrames = 9
+	    numFrames = 7
 	}
 
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
+	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet2.png", sheetOptions )
 	
 	local sequence= {
     {
         name = "normalRun",
         start = 1,
-        count = 9,
-        time = 20000,
+        count = 3,
+        time = 9000,
         loopCount = 1,
         loopDirection = "forward"
     }
 	}
 	
 	local animation = display.newSprite( sheet1, sequence)
-		animation.x = _W/2; animation.y = _H/2
+		animation.x = _W/2; animation.y = _H/2 
 		animation:play()
-		
+	
+	timer.performWithDelay(9000,function(e)
+			storyboard.gotoScene("level1question4G","fade",200)
+		end,1)	
 
 local function spriteListener( event )
 
     local thisSprite = event.target  -- "event.target" references the sprite
 
     
-    if ( thisSprite.frame == 2) then
-    	audio.play( sfx.level1s1, { loops = 0, channel = 1,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s1 ) 
-                                end } )
-    elseif (thisSprite.frame==8) then	thisSprite:setFrame(9)
-    elseif ( thisSprite.frame == 9) then
-    	thisSprite:setFrame(8)
-    	audio.play( sfx.level1s3, { loops = 0, channel = 1,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s3 ) 
-                                end } )
-    	timer.performWithDelay(5000,function(e)
-			storyboard.gotoScene("level1question1G","fade",200)
-		end,1)
+    if ( thisSprite.frame == 11) then
+    	
     end
 
   

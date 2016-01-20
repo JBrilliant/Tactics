@@ -8,7 +8,7 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
-			-- storyboard.gotoScene( "level1scene2G", "fade", 200 )
+			storyboard.gotoScene( "level1scene5G", "fade", 200 )
 		elseif button == "choice2" then
 			-- storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
@@ -35,10 +35,10 @@ function scene:createScene( event )
 		}	
 		group:insert( back )
 	
-	local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
-		textQuest.x = _W/2
-		textQuest.y = _H/5
-		textQuest:setFillColor( 1,1,1 )
+	-- local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
+	-- 	textQuest.x = _W/2
+	-- 	textQuest.y = _H/5
+	-- 	textQuest:setFillColor( 1,1,1 )
 	-- timer.performWithDelay(19000, scene9)
 
 
@@ -50,13 +50,13 @@ function scene:createScene( event )
 		
 		
 	
-	local function txt()
-		local animation1 = transition.to(textQuest,{
-			time=1000, y = _H/2, xScale=2, yScale=2,
-			transition=easing.inQuad,customProperty=1000})
-		transition.to(textQuest,{transition=easing.inQuad,
-			xScale=1, yScale=1, y=_H/10,
-			time=500, delay=2000})
+	-- local function txt()
+	-- 	local animation1 = transition.to(textQuest,{
+	-- 		time=1000, y = _H/2, xScale=2, yScale=2,
+	-- 		transition=easing.inQuad,customProperty=1000})
+	-- 	transition.to(textQuest,{transition=easing.inQuad,
+	-- 		xScale=1, yScale=1, y=_H/10,
+	-- 		time=500, delay=2000})
 					
 		-- local animation2 = transition.to(choice1,{
 		-- 	time=5000, y = 20, xScale=2, yScale=2,
@@ -65,15 +65,15 @@ function scene:createScene( event )
 		-- local animation2 = transition.to(textQuest,{
 		-- 	time=5000, y = 50, xScale=2, yScale=2,
 		-- 	transition=easing.inQuad,customProperty=1000})
-	end
-	txt()
+	-- end
+	-- txt()
 
 	local function choice1fn()
 		
 		local choice1 = widget.newButton
 		{
-			defaultFile = "images/level1/scene9_3.jpg",			
-			overFile ="images/level1/scene9_3.jpg",
+			defaultFile = "images/level1/scene16.jpg",			
+			overFile ="images/level1/scene16.jpg",
 			id = "choice1",
 			x = _W/2 ,
 			y = _H/2 ,
@@ -101,13 +101,13 @@ function scene:createScene( event )
 		group:insert(choice1)
 	
 	end
-	timer.performWithDelay(3000,choice1fn,1)
+	timer.performWithDelay(1000,choice1fn,1)
 
 	local function choice2fn()
 		local choice2 = widget.newButton
 		{
-			defaultFile = "images/level1/scene9_31.jpg",			
-			overFile ="images/level1/scene9_31.jpg",
+			defaultFile = "images/level1/scene17.jpg",			
+			overFile ="images/level1/scene17.jpg",
 			id = "choice2",
 			x = _W/2,
 			y = _H/2 ,
@@ -135,12 +135,12 @@ function scene:createScene( event )
 		group:insert(choice2)
 	
 	end
-	timer.performWithDelay(10000,choice2fn,1)
+	timer.performWithDelay(8000,choice2fn,1)
 
 
 	
 	group:insert( back )
-	group:insert(textQuest)
+	-- group:insert(textQuest)
 	
 end
 
