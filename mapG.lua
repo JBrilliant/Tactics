@@ -6,7 +6,7 @@ local widget = require("widget")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" then
-			storyboard.gotoScene( "level1scene1G", "fade", 200 )
+			storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "back" then
 			storyboard.gotoScene( "character", "fade", 200 )
 		end
@@ -43,7 +43,7 @@ function scene:createScene( event )
 	
 	local back = widget.newButton
 	{
-		defaultFile = "images/back.png",
+		defaultFile = "images/back.png",			
 		overFile ="images/back.png",
 		id = "back",
 		x = _W/30,

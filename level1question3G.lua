@@ -1,4 +1,4 @@
---Cry. tell your parents
+--Are you being teased?
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
@@ -9,7 +9,7 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
-			 storyboard.gotoScene( "level1scene2G", "fade", 200 )
+			 storyboard.gotoScene( "level1scene6G", "fade", 200 )
 		elseif button == "choice2" then
 			-- storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
@@ -25,7 +25,7 @@ function scene:createScene( event )
 	group:insert(background)
 		-- group:insert( back )
 	
-	local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
+	local textQuest =  display.newText( "What will you say?", 270, 10, native.systemFontBold, 24 )
 		textQuest.x = _W/2
 		textQuest.y = _H/5
 		textQuest:setFillColor( 1,1,1 )
@@ -62,8 +62,8 @@ function scene:createScene( event )
 		
 		local choice1 = widget.newButton
 		{
-			defaultFile = "images/level1/scene9_3.jpg",			
-			overFile ="images/level1/scene9_3.jpg",
+			defaultFile = "images/level1/scene24.jpg",			
+			overFile ="images/level1/scene24.jpg",
 			id = "choice1",
 			x = _W/2 ,
 			y = _H/2 ,
@@ -96,8 +96,8 @@ function scene:createScene( event )
 	local function choice2fn()
 		local choice2 = widget.newButton
 		{
-			defaultFile = "images/level1/scene9_31.jpg",			
-			overFile ="images/level1/scene9_31.jpg",
+			defaultFile = "images/level1/scene25.jpg",			
+			overFile ="images/level1/scene25.jpg",
 			id = "choice2",
 			x = _W/2,
 			y = _H/2 ,

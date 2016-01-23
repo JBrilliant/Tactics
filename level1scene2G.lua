@@ -1,3 +1,4 @@
+--1A. Nothing. They will stop soon.
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
@@ -21,24 +22,24 @@ function scene:createScene( event )
 
 	local back = widget.newButton
 	{
-		defaultFile = "images/back.png",			
-		overFile ="images/back.png",
+		defaultFile = "images/back2.png",			
+		overFile ="images/back2.png",
 		id = "back",
 		x = _W/30,
-		y = _H/10,
+		y = _H - _H/10,
 		height =  _H/9 + 17,
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
-	}	
+	}
 	
 
 	local nextB = widget.newButton
 	{
-		defaultFile = "images/next.png",			
-		overFile ="images/next.png",
+		defaultFile = "images/next2.png",			
+		overFile ="images/next2.png",
 		id = "nextB",
-		x = _W - 30,
-		y = _H/10,
+		x = _W -_W/30,
+		y = _H - _H/10,
 		height =  _H/9 + 17,
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
@@ -57,8 +58,8 @@ function scene:createScene( event )
     {
         name = "normalRun",
         start = 10,
-        count = 2,
-        time = 6000,
+        count = 3,
+        time = 9000,
         loopCount = 1,
         loopDirection = "forward"
     }
@@ -68,7 +69,7 @@ function scene:createScene( event )
 		animation.x = _W/2; animation.y = _H/2 
 		animation:play()
 	
-	timer.performWithDelay(7000,function(e)
+	timer.performWithDelay(8000,function(e)
 			storyboard.gotoScene("level1question2G","fade",200)
 		end,1)	
 

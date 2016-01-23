@@ -1,3 +1,4 @@
+--Why did you lie?
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
@@ -18,14 +19,14 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
-
+	
 	local back = widget.newButton
 	{
-		defaultFile = "images/back.png",			
-		overFile ="images/back.png",
+		defaultFile = "images/back2.png",			
+		overFile ="images/back2.png",
 		id = "back",
 		x = _W/30,
-		y = _H/10,
+		y = _H - _H/10,
 		height =  _H/9 + 17,
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
@@ -34,15 +35,16 @@ function scene:createScene( event )
 
 	local nextB = widget.newButton
 	{
-		defaultFile = "images/next.png",			
-		overFile ="images/next.png",
+		defaultFile = "images/next2.png",			
+		overFile ="images/next2.png",
 		id = "nextB",
 		x = _W - 30,
-		y = _H/10,
+		y = _H - _H/10,
 		height =  _H/9 + 17,
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
+	
 	
 	local sheetOptions =
 	{
