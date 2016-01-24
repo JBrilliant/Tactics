@@ -4,6 +4,9 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 
+local energy = {}
+local numberOfEnergy = 5
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -19,12 +22,7 @@ function scene:createScene( event )
 	-- local background = display.newImage("images/bg.png");
 	-- background.height = _H; background.width = _W + _W/4;
 	-- background.x = _W/2; background.y = _H/2;
-	for i=1,5 do
-		local energy = display.newImage("images/energy.png")
-		energy.x = _W/90 + (20*i) -_W/15; energy.y = _H/15
-		energy.width = 20; energy.height = 25
-		group:insert(energy)
-	end
+	
 	
 	local candy = display.newImage("images/candy.png")
 	candy.x = _W - 20; candy.y = _H/15
@@ -36,7 +34,7 @@ function scene:createScene( event )
 		   	x = _W - 5,
 		   	y =  _H/15,
 		   	maxDigits = 3,
-		   	leadingZeros = true,
+		   	leadingZeros = false,
 		   	filename = "scorefile.txt",
 		})
 	scoreText:setFillColor( 1,0,0 )
@@ -91,7 +89,14 @@ function scene:createScene( event )
 	local animation = display.newSprite( sheet1, sequence)
 		animation.x = _W/2; animation.y = _H/2
 		animation:play()
-		
+		group:insert(animation)
+
+		for i=1,numberOfEnergy do
+			energy[i] = display.newImage("images/energy.png")
+			energy[i].x = _W/90 + (20*i) -_W/15; energy[i].y = _H/15
+			energy[i].width = 20; energy[i].height = 25
+			group:insert(energy[i])
+		end
 
 local function spriteListener( event )
 
@@ -121,7 +126,6 @@ end
 
 
 animation:addEventListener( "sprite", spriteListener )
-group:insert(animation)
 group:insert( nextB )
 group:insert( back )
 -- group:insert( energy )

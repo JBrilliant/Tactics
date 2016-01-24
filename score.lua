@@ -1,5 +1,6 @@
-local M = {}  -- Create the local module table (this will hold our functions and data)
+local M = {}  -- Create the local module table (this will hold our functions and data) ::: score, energy, level, music, sfx, language
 M.score = 0  -- Set the initial score to 0
+--M.energy = 0
 
 function M.init( options )
    local customOptions = options or {}

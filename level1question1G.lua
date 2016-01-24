@@ -4,6 +4,9 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 
+local energy = {}
+local numberOfEnergy = 5
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -30,13 +33,7 @@ function scene:createScene( event )
 	group:insert(background)
 	
 	
-
-	for i=1,5 do
-		local energy = display.newImage("images/energy.png")
-		energy.x = _W/90 + (20*i) -_W/15; energy.y = _H/15
-		energy.width = 20; energy.height = 25
-		group:insert(energy)
-	end
+	
 	
 	local candy = display.newImage("images/candy.png")
 	candy.x = _W - 20; candy.y = _H/15
@@ -48,7 +45,7 @@ function scene:createScene( event )
 		   	x = _W - 5,
 		   	y =  _H/15,
 		   	maxDigits = 3,
-		   	leadingZeros = true,
+		   	leadingZeros = false,
 		   	filename = "scorefile.txt",
 		})
 	scoreText:setFillColor( 1,0,0 )
@@ -210,7 +207,12 @@ function scene:createScene( event )
 group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)
-
+for i=1,numberOfEnergy do
+		energy[i] = display.newImage("images/energy.png")
+		energy[i].x = _W/90 + (20*i) -_W/15; energy[i].y = _H/15
+		energy[i].width = 20; energy[i].height = 25
+		group:insert(energy[i])
+	end
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:

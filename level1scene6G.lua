@@ -3,6 +3,10 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
+local score = require("score")
+
+local energy = {}
+local numberOfEnergy = 5
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -19,6 +23,14 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png");
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
+
+	local candy = display.newImage("images/candy.png")
+	candy.x = _W - 20; candy.y = _H/15
+	candy.width = 80; candy.height = 25
+
+	local scoreText = display.newText(score.get(), 270, 10, "Helvetica", 18 )
+	scoreText.x = _W - 5; scoreText.y = _H/15
+	scoreText:setFillColor( 1,0,0 )
 
 	local back = widget.newButton
 	{
@@ -68,7 +80,9 @@ function scene:createScene( event )
 	local animation = display.newSprite( sheet1, sequence)
 		animation.x = _W/2; animation.y = _H/2 
 		animation:play()
-	
+		group:insert(animation)
+
+
 	timer.performWithDelay(15000,function(e)
 			storyboard.gotoScene("levelpassedG","fade",200)
 			--Level 1 passed!!!!!!!!
@@ -92,7 +106,14 @@ group:insert(background)
 group:insert(animation)
 group:insert( nextB )
 group:insert( back )
-
+group:insert( candy )
+group:insert( scoreText )
+	for i=1,numberOfEnergy do
+		energy[i] = display.newImage("images/energy.png")
+		energy[i].x = _W/90 + (20*i) -_W/15; energy[i].y = _H/15
+		energy[i].width = 20; energy[i].height = 25
+		group:insert(energy[i])
+	end
 		
 end
 
