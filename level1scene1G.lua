@@ -2,6 +2,7 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
+local score = require("score")
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -18,7 +19,28 @@ function scene:createScene( event )
 	-- local background = display.newImage("images/bg.png");
 	-- background.height = _H; background.width = _W + _W/4;
 	-- background.x = _W/2; background.y = _H/2;
+	for i=1,5 do
+		local energy = display.newImage("images/energy.png")
+		energy.x = _W/90 + (20*i) -_W/15; energy.y = _H/15
+		energy.width = 20; energy.height = 25
+		group:insert(energy)
+	end
+	
+	local candy = display.newImage("images/candy.png")
+	candy.x = _W - 20; candy.y = _H/15
+	candy.width = 80; candy.height = 25
 
+	local scoreText = score.init({
+		   	fontSize = 18,
+		   	font = "Helvetica",
+		   	x = _W - 5,
+		   	y =  _H/15,
+		   	maxDigits = 3,
+		   	leadingZeros = true,
+		   	filename = "scorefile.txt",
+		})
+	scoreText:setFillColor( 1,0,0 )
+	
 	local back = widget.newButton
 	{
 		defaultFile = "images/back2.png",			
@@ -43,6 +65,8 @@ function scene:createScene( event )
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
+	
+	
 	
 	local sheetOptions =
 	{
@@ -97,10 +121,12 @@ end
 
 
 animation:addEventListener( "sprite", spriteListener )
--- group:insert(background)
 group:insert(animation)
 group:insert( nextB )
 group:insert( back )
+-- group:insert( energy )
+group:insert(candy)
+group:insert(scoreText)
 
 		
 end

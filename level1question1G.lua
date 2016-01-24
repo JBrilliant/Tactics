@@ -2,14 +2,19 @@ local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
+local score = require("score")
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( storyboard.getPrevious() )
 		elseif button == "choice1" then
+			score.add(10)
+			score.save()
 			storyboard.gotoScene( "level1scene2G", "fade", 200 )
 		elseif button == "choice2" then
+			score.add(20)
+			score.save()
 			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		elseif button == "choice3" then
 			storyboard.gotoScene( "level1scene4G", "fade", 200 )
@@ -24,8 +29,30 @@ function scene:createScene( event )
 	background.x = _W/2; background.y = _H/2;
 	group:insert(background)
 	
-		
-		
+	
+
+	for i=1,5 do
+		local energy = display.newImage("images/energy.png")
+		energy.x = _W/90 + (20*i) -_W/15; energy.y = _H/15
+		energy.width = 20; energy.height = 25
+		group:insert(energy)
+	end
+	
+	local candy = display.newImage("images/candy.png")
+	candy.x = _W - 20; candy.y = _H/15
+	candy.width = 80; candy.height = 25
+
+	local scoreText = score.init({
+		   	fontSize = 18,
+		   	font = "Helvetica",
+		   	x = _W - 5,
+		   	y =  _H/15,
+		   	maxDigits = 3,
+		   	leadingZeros = true,
+		   	filename = "scorefile.txt",
+		})
+	scoreText:setFillColor( 1,0,0 )
+	
 	local textQuest =  display.newText( "What will you do?", 270, 10, native.systemFontBold, 24 )
 		textQuest.x = _W/2
 		textQuest.y = _H/5
@@ -55,7 +82,7 @@ function scene:createScene( event )
 			width = _W/3 + 30,
 			onRelease = buttonOnRelease
 		}	
-
+		-- choice1:setEnabled(false)
 		local animation = transition.to(choice1,{
 			time=2000, --delay=2000,
 			x=_W/2 + 10, y = _W/2-100, xScale=9.5, yScale=9.5,
@@ -66,6 +93,7 @@ function scene:createScene( event )
 			xScale=1, yScale=1,
 			transition=easing.inQuad})	
 		-- transition.to(text, {alpha=1, time=2000, x = _W-10; y = _H - _H/5})	--text
+		-- choice1:setEnabled(true)
 			
 		local tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation)
@@ -81,7 +109,7 @@ function scene:createScene( event )
 	timer.performWithDelay(8000,function(e)
 		local text =  display.newText( "Nothing. They will stop soon.", 270, 10, native.systemFontBold, 10 )
 			text.x = _W/4 ; text.y = _H/2 +10
-			text:setFillColor( 0,0,0 )
+			text:setFillColor( 1,1,1)
 			group:insert(text)
 		end,1)
 		
@@ -122,7 +150,7 @@ function scene:createScene( event )
 	timer.performWithDelay(15000,function(e)
 		local text =  display.newText( "Go to your parents.", 270, 10, native.systemFontBold, 10 )
 			text.x = _W-_W/4 ; text.y = _H/2 +10
-			text:setFillColor( 0,0,0 )
+			text:setFillColor( 1,1,1 )
 			group:insert(text)
 			-- group:insert( back )
 		end,1)
@@ -163,7 +191,7 @@ function scene:createScene( event )
 	timer.performWithDelay(23000,function(e)
 		local text =  display.newText( "Tease her also.", 270, 10, native.systemFontBold, 10 )
 			text.x = _W/2; text.y = _H - 15
-			text:setFillColor( 0,0,0 )
+			text:setFillColor( 1,1,1 )
 			group:insert(text)
 		local back = widget.newButton
 		{
@@ -179,8 +207,10 @@ function scene:createScene( event )
 		group:insert( back )
 		end,1)
 	
-	group:insert(textQuest)
-	
+group:insert(textQuest)
+group:insert(candy)
+group:insert(scoreText)
+
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
