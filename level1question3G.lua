@@ -6,7 +6,7 @@ local widget = require("widget")
 local score = require("score")
 
 local energy = {}
-local numberOfEnergy = 5
+local numberOfEnergy = 3
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -158,9 +158,9 @@ function scene:createScene( event )
 	group:insert(scoreText)
 	for i=1,numberOfEnergy do
 		energy[i] = display.newImage("images/energy.png")
-		energy[i].x = _W/90 + (20*i) -_W/15; energy[i].y = _H/15
-		energy[i].width = 20; energy[i].height = 25
-		group:insert(energy[i])
+			energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15
+			energy[i].width = 26; energy[i].height = 25
+			group:insert(energy[i])
 	end
 end
 

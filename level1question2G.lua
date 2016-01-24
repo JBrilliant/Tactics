@@ -6,16 +6,16 @@ local widget = require("widget")
 local score = require("score")
 
 local energy = {}
-local numberOfEnergy = 5
+local numberOfEnergy = 3
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
-			 storyboard.gotoScene( "level1scene2G", "fade", 200 )
+			 storyboard.gotoScene( "level1scene7G", "fade", 200 )
 		elseif button == "choice2" then
-			-- storyboard.gotoScene( "level1scene3G", "fade", 200 )
+			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
 
@@ -159,9 +159,9 @@ function scene:createScene( event )
 	group:insert(scoreText)
 	for i=1,numberOfEnergy do
 		energy[i] = display.newImage("images/energy.png")
-		energy[i].x = _W/90 + (20*i) -_W/15; energy[i].y = _H/15
-		energy[i].width = 20; energy[i].height = 25
-		group:insert(energy[i])
+			energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15
+			energy[i].width = 26; energy[i].height = 25
+			group:insert(energy[i])
 	end
 end
 

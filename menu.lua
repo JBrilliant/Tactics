@@ -13,6 +13,8 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "newGame" then
 			storyboard.gotoScene( "character", "fade", 200 )
+		elseif button == "achievements" then
+			storyboard.gotoScene( "achievements", "fade", 200 )
 		elseif button == "settings" then
 			storyboard.gotoScene( "settings", "fade", 200 )
 		end
