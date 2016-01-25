@@ -2,6 +2,7 @@ local storyboard = require("storyboard")
 local scene = storyboard.newScene()
 local widget = require("widget")
 
+
 -- gameState.soundOn = nil
 
 local achieve, back
@@ -12,10 +13,9 @@ local function buttonOnRelease( event )
 			storyboard.gotoScene( "menu", "fade", 200 )
 			-- storyboard.gotoScene( "achievements", "fade", 200 )
 			-- 	elseif button == "back" then
-					
 		end
+--gameState.soundOn = nilend
 end
-
 function scene:createScene( event )
 	local group = self.view
 
@@ -40,17 +40,18 @@ function scene:createScene( event )
 	-- group:insert( bg )
 	group:insert( achieve )
 	group:insert( back )
+
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 	local group = self.view
 	-- widgets must be manually removed, such as life
-	if back and achieve then
+	if back and achievements then
 		back:removeSelf()
-		achieve:removeSelf()
+		achievements:removeSelf()
 		back = nil 
-		achieve = nil 
+		achievements = nil 
 	end
 end
 
