@@ -5,14 +5,14 @@ local widget = require("widget")
 
 -- gameState.soundOn = nil
 
-local achieve, back, nextB
+local achieve, back
 
 local function buttonOnRelease( event )
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "menu", "fade", 200 )
-		elseif button == "nextB" then
 			storyboard.gotoScene( "achievements2", "fade", 200 )
+		elseif button == "nextB" then
+			storyboard.gotoScene( "achievements4", "fade", 200 )
 		end
 --gameState.soundOn = nilend
 end
@@ -32,7 +32,7 @@ function scene:createScene( event )
 		onRelease = buttonOnRelease
 	}	
 
-	achieve = display.newImage("images/inside_achievements.png");
+	achieve = display.newImage("images/inside_achievements2.png");
 		achieve.height = _H; achieve.width = _W + _W/4;
 		achieve.x = _W/2; achieve.y = _H/2;
 
@@ -47,6 +47,7 @@ function scene:createScene( event )
 		width = _W/9 + 18 ,
 		onRelease = buttonOnRelease
 	}	
+
 
 
 	-- group:insert( bg )
@@ -65,7 +66,8 @@ function scene:destroyScene( event )
 		achievements:removeSelf()
 		nextB:removeSelf()
 		back = nil 
-		achievements = nil 
+		achievements = nil
+		nextB = nil 
 	end
 end
 
