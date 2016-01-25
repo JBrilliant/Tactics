@@ -13,9 +13,11 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
+			 score.add(20)
+			 score.save()
 			 storyboard.gotoScene( "level1scene6G", "fade", 200 )
 		elseif button == "choice2" then
-			-- storyboard.gotoScene( "level1scene3G", "fade", 200 )
+			storyboard.gotoScene( "level1scene2G", "fade", 200 )
 		end
 end
 

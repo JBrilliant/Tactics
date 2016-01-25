@@ -6,16 +6,16 @@ local widget = require("widget")
 local score = require("score")
 
 local energy = {}
-local numberOfEnergy = 2
+local numberOfEnergy = 1
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
-			storyboard.gotoScene( "level1scene5G", "fade", 200 )
+			storyboard.gotoScene( "levelfailedG", "fade", 200 )
 		elseif button == "choice2" then
-			storyboard.gotoScene( "level1scene5G", "fade", 200 )
+			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
 
@@ -78,8 +78,8 @@ function scene:createScene( event )
 		
 		local choice1 = widget.newButton
 		{
-			defaultFile = "images/level1/scene16.jpg",			
-			overFile ="images/level1/scene16.jpg",
+			defaultFile = "images/level1/scene30.jpg",			
+			overFile ="images/level1/scene30.jpg",
 			id = "choice1",
 			x = _W/2 ,
 			y = _H/2 ,

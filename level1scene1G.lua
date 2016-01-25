@@ -103,7 +103,7 @@ local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite
 
     
-    if ( thisSprite.frame == 2) then
+    if ( thisSprite.frame == 1) then
     	sequence.time = 5000
     	audio.play( sfx.level1s1, { loops = 0, channel = 1,
     							onComplete = function() 
@@ -112,10 +112,10 @@ local function spriteListener( event )
     elseif (thisSprite.frame==8) then	thisSprite:setFrame(9)
     elseif ( thisSprite.frame == 9) then
     	thisSprite:setFrame(8)
-    	audio.play( sfx.level1s3, { loops = 0, channel = 1,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s3 ) 
-                                end } )
+    	-- audio.play( sfx.level1s3, { loops = 0, channel = 1,
+    	-- 						onComplete = function() 
+     --                                audio.dispose( sfx.level1s3 ) 
+     --                            end } )
     	timer.performWithDelay(5000,function(e)
 			storyboard.gotoScene("level1question1G","fade",200)
 		end,1)

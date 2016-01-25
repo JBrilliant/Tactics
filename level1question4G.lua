@@ -15,7 +15,7 @@ local function buttonOnRelease(event)
 		elseif button == "choice1" then
 			storyboard.gotoScene( "level1scene5G", "fade", 200 )
 		elseif button == "choice2" then
-			storyboard.gotoScene( "level1scene5G", "fade", 200 )
+			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
 
