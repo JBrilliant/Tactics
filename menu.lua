@@ -7,7 +7,7 @@ local scene = storyboard.newScene()
 local widget = require("widget")
 
 		
-local welcome, newGame, settings, achievements, rank, candy
+local welcome, newGame, settings, achieve, rank, candy
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -17,6 +17,8 @@ local function buttonOnRelease(event)
 			storyboard.gotoScene( "achievements", "fade", 200 )
 		elseif button == "settings" then
 			storyboard.gotoScene( "settings", "fade", 200 )
+		elseif button == "achieve" then
+			storyboard.gotoScene("achievements", "fade", 200)
 		end
 end
 
@@ -58,7 +60,7 @@ function scene:createScene( event )
 	
 	
 	
-	achievements = widget.newButton
+	achieve = widget.newButton
 	{
 		defaultFile = "images/achievements.png",
 		overFile ="images/achievements_o.png",
@@ -98,7 +100,7 @@ function scene:createScene( event )
 	group:insert( candy)
 	group:insert( newGame)
 	group:insert( settings)
-	group:insert( achievements)
+	group:insert( achieve)
 	group:insert( rank)
 	
 end
@@ -119,16 +121,16 @@ function scene:destroyScene( event )
 	local group = self.view
 
 	-- widgets must be manually removed, such as life
-	if newGame and settings and achievements and rank and upgrades then
+	if newGame and settings and achieve and rank and upgrades then
 		newGame:removeSelf()
 		settings:removeSelf()
-		achievements:removeSelf()
+		achieve:removeSelf()
 		rank:removeSelf()
 		upgrades:removeSelf()
 		newGame = nil 
-		settings= nil 
-		achievements= nil 
-		rank= nil  
+		settings = nil 
+		achieve = nil 
+		rank = nil  
 	end
 
 end
