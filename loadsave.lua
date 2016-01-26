@@ -8,6 +8,7 @@ local _validLocations = {
    [system.TemporaryDirectory] = true
 }
 
+
 function M.saveTable(t, filename, location)
     if location and (not _validLocations[location]) then
      error("Attempted to save a table to an invalid location", 2)
@@ -92,5 +93,9 @@ function M.print_r ( t )
 end
 
 M.printTable = M.print_r
+
+-- function M.minus()
+--     M.energy = M.energy - 1
+-- end
 
 return M

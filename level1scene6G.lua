@@ -6,7 +6,7 @@ local widget = require("widget")
 local score = require("score")
 
 local energy = {}
-local numberOfEnergy = 3
+local numberOfEnergy = 3  
 
 local function buttonOnRelease(event)
 	local button = event.target.id

@@ -1,21 +1,33 @@
 --4. What was that? Nothing mam
+local loadsave = require( "loadsave" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
+local energyM = require("energy")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 2
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
+			energyM.minus()
+			energyM.save()
+			gameSettings.energy = energyM.get()
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.gotoScene( "level1scene5G", "fade", 200 )
 		elseif button == "choice2" then
-			storyboard.gotoScene( "level1scene3G", "fade", 200 )
+			score.add(20)
+			score.save()
+			gameSettings.score = score.get()
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			loadsave.printTable(gameSettings)storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
 

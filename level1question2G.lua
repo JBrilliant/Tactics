@@ -1,20 +1,34 @@
 --Cry. tell your parents
+local loadsave = require( "loadsave" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
+local energyM = require("energy")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 3
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200  )
 		elseif button == "choice1" then
-			 storyboard.gotoScene( "level1scene7G", "fade", 200 )
+			--MINUS ENERGY
+			energyM.minus()
+			energyM.save()
+			gameSettings.energy = energyM.get()
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			loadsave.printTable(gameSettings)
+			storyboard.gotoScene( "level1scene7G", "fade", 200 )
 		elseif button == "choice2" then
+			score.add(20)
+			score.save()
+			gameSettings.score = score.get()
+			loadsave.printTable(gameSettings)
 			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
@@ -53,11 +67,11 @@ function scene:createScene( event )
 	
 	local function txt()
 		local animation1 = transition.to(textQuest,{
-			time=1000, y = _H/2, xScale=2, yScale=2,
+			time=500, y = _H/2, xScale=2, yScale=2,
 			transition=easing.inQuad,customProperty=1000})
 		transition.to(textQuest,{transition=easing.inQuad,
 			xScale=1, yScale=1, y=_H/10,
-			time=500, delay=2000})
+			time=500, delay=1000})
 					
 		-- local animation2 = transition.to(choice1,{
 		-- 	time=5000, y = 20, xScale=2, yScale=2,
@@ -77,22 +91,22 @@ function scene:createScene( event )
 			overFile ="images/level1/scene9_3.jpg",
 			id = "choice1",
 			x = _W/2 ,
-			y = _H/2 ,
+			y = _H/3 + _H/4 ,
 			height =   _H/4 + 30,
 			width = _W/3 + 30,
 			onRelease = buttonOnRelease
 		}	
 
 		local animation = transition.to(choice1,{
-				time=2000, --delay=2000,
-				x=_W/2 + 10, y = _W/2-100, xScale=9.5, yScale=9.5,
+				time=500, --delay=2000,
+				x=_W/2 + 10, y = _W/2-100, xScale=2, yScale=2,
 				transition=easing.inQuad,customProperty=1000,onComplete=after})
-		transition.to(choice1,{time=1000,delay=4000,
+		transition.to(choice1,{time=500,delay=1000,
 			x=_W/4 , y = _H/2 , 
 			xScale=1, yScale=1,
 			transition=easing.inQuad})	
 			
-		local tmr = timer.performWithDelay(1000,function(e)
+		local tmr = timer.performWithDelay(500,function(e)
 			transition.cancel(animation)
 			animation = nil
 			-- timer.cancel(tmr2)
@@ -102,7 +116,7 @@ function scene:createScene( event )
 		group:insert(choice1)
 	
 	end
-	timer.performWithDelay(3000,choice1fn,1)
+	timer.performWithDelay(2000,choice1fn,1)
 
 	local function choice2fn()
 		local choice2 = widget.newButton
@@ -111,22 +125,22 @@ function scene:createScene( event )
 			overFile ="images/level1/scene9_31.jpg",
 			id = "choice2",
 			x = _W/2,
-			y = _H/2 ,
+			y = _H/3 + _H/4 ,
 			height =  _H/4 + 30,
 			width = _W/3 + 30,
 			onRelease = buttonOnRelease
 		}
 
 		local animation = transition.to(choice2,{
-				time=2000, 
-				x=_W/2 +10, y = _W/2-100, xScale=9.5, yScale=9.5,
+				time=500, 
+				x=_W/2 +10, y = _W/2-100, xScale=2, yScale=2,
 				transition=easing.inQuad,customProperty=1000,onComplete=after})
-		transition.to(choice2,{time=1000,delay=4000,
+		transition.to(choice2,{time=500,delay=1000,
 			x=_W - _W/4, y = _H/2, 
 			xScale=1, yScale=1,
 			transition=easing.inQuad})		
 
-		local tmr = timer.performWithDelay(1000,function(e)
+		local tmr = timer.performWithDelay(500,function(e)
 			transition.cancel(animation)
 			animation = nil
 			-- timer.cancel(tmr2)
@@ -136,8 +150,8 @@ function scene:createScene( event )
 		group:insert(choice2)
 	
 	end
-	timer.performWithDelay(10000,choice2fn,1)
-	timer.performWithDelay(10000,function(e)
+	timer.performWithDelay(4000,choice2fn,1)
+	timer.performWithDelay(5000,function(e)
 		local back = widget.newButton
 		{
 			defaultFile = "images/back2.png",			
@@ -168,9 +182,17 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
-
+	if back and choice1 and choice2  then
+		back:removeSelf()
+		choice1:removeSelf()
+		choice2:removeSelf()
+		back = nil 
+		choice1 = nil 
+		choice2 = nil  
+	end
 end
 
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

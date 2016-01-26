@@ -1,11 +1,14 @@
+local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 3
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -19,11 +22,6 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	-- local background = display.newImage("images/bg.png");
-	-- background.height = _H; background.width = _W + _W/4;
-	-- background.x = _W/2; background.y = _H/2;
-	
-	
 	local candy = display.newImage("images/candy.png")
 	candy.x = _W - 20; candy.y = _H/15
 	candy.width = 80; candy.height = 25
@@ -73,7 +71,7 @@ function scene:createScene( event )
 	    numFrames = 9
 	}
 
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
+	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions)
 	
 	local sequence= {
     {

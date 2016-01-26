@@ -1,13 +1,13 @@
-local gameState = require( "gamestate" )
+local loadsave = require( "loadsave" )
 local sfx = require( "sfx" )
-
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
-
 local widget = require("widget")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+
 		
-local welcome, newGame, settings, achieve, rank, candy
+local welcome, newGame, settings, achieve, credits, candy
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -17,8 +17,8 @@ local function buttonOnRelease(event)
 			storyboard.gotoScene( "achievements", "fade", 200 )
 		elseif button == "settings" then
 			storyboard.gotoScene( "settings", "fade", 200 )
-		elseif button == "achieve" then
-			storyboard.gotoScene("achievements", "fade", 200)
+		elseif button == "credits" then
+			-- storyboard.gotoScene("credits", "fade", 200)
 		end
 end
 
@@ -72,11 +72,11 @@ function scene:createScene( event )
 		onRelease = buttonOnRelease
 	}
 
-	rank = widget.newButton
+	credits = widget.newButton
 	{
-		defaultFile = "images/ranking.png",
-		overFile ="images/ranking_o.png",
-		id = "ranking",
+		defaultFile = "images/Icon-xhdpi.png",
+		overFile ="images/Icon-xxxhdpi.png",
+		id = "credits",
 		x =_W/2 ,
 		y = _H/2 + newGame.width/2,
 		height =  _H/7,
@@ -101,13 +101,13 @@ function scene:createScene( event )
 	group:insert( newGame)
 	group:insert( settings)
 	group:insert( achieve)
-	group:insert( rank)
+	group:insert( credits)
 	
 end
 
 function scene:enterScene( event )
     -- sfx.bgmusic = audio.loadSound("bgmusic.mp3")
-    if ( gameState.soundOn ) then
+    if ( gameSettings.musicOn  ) then
   		 audio.play( sfx.bgmusic, { loops = -1, channel = 1,
     							onComplete = function() 
                                     audio.dispose( sfx.bgmusic ) 

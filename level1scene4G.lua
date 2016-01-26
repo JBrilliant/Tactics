@@ -1,12 +1,16 @@
 --1C. Tease her also.
+local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
+local energyM = require("energy")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 2
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id

@@ -1,12 +1,15 @@
 --1A. Nothing. They will stop soon.
+local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 3
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id

@@ -8,24 +8,20 @@ _H = display.contentHeight;
 
 local storyboard = require("storyboard");
 local sfx = require("sfx");
---local widget = require("widget")
-	
---display.setStatusBar(display.HiddenStatusBar);
+local loadsave = require("loadsave");
 
---composer.gotoScene("menu");
 
--- local mainGroup = display.newGroup();
+-- save default game settings
+gameSettings = {}
+gameSettings.musicOn = true
+gameSettings.soundOn = true
+gameSettings.lang = "english"
+gameSettings.score = 0
+gameSettings.energy = 3
+gameSettings.level = 1
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 
--- local function main()
-
--- 	mainGroup:insert(director.currentView)
--- 	mainGroup:insert(director.nextView)
---     director:changeScene("menu");
--- 	return true; 
--- end
-
--- 
--- forward declare the handle
+-- voiceover
 sfx.bgmusic = nil
 sfx.bgmusic = audio.loadSound("audio/Tango.wav")
 sfx.level1s1 = audio.loadSound("audio/level1/Voice 1.3gpp")

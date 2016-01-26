@@ -1,19 +1,22 @@
  --Yes. Level 1 End. Win
+local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = 2
+local numberOfEnergy = gameSettings.energy
+loadsave.printTable(gameSettings.energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
-			storyboard.gotoScene( "level1question2G", "fade", 200 )
+			storyboard.gotoScene( "level1question6G", "fade", 200 )
 		end
 end
 
@@ -84,7 +87,7 @@ function scene:createScene( event )
 
 
 	timer.performWithDelay(9000,function(e)
-			storyboard.gotoScene("level1question2G","fade",200)
+			storyboard.gotoScene("level1question6G","fade",200)
 			--Level 1 passed!!!!!!!!
 		end,1)	
 

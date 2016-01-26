@@ -16,6 +16,7 @@ local function buttonOnRelease( event )
 		end
 --gameState.soundOn = nilend
 end
+
 function scene:createScene( event )
 	local group = self.view
 
