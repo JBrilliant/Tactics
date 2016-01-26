@@ -13,12 +13,15 @@ local function buttonOnRelease(event)
 			storyboard.gotoScene( "settings", "fade", 200 )
 		elseif button == "english" then
 			gameSettings.lang = "english"
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "tagalog" then
 			gameSettings.lang = "tagalog"
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "bicol" then
 			gameSettings.lang = "bicol"
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.gotoScene("menu", "fade", 200)
 		end
 end

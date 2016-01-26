@@ -9,17 +9,11 @@ _H = display.contentHeight;
 local storyboard = require("storyboard");
 local sfx = require("sfx");
 local loadsave = require("loadsave");
+local gamestate = require("gamestate");
 
 
 -- save default game settings
-gameSettings = {}
-gameSettings.musicOn = true
-gameSettings.soundOn = true
-gameSettings.lang = "english"
-gameSettings.score = 0
-gameSettings.energy = 3
-gameSettings.level = 1
-loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 
 -- voiceover
 sfx.bgmusic = nil

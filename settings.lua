@@ -13,12 +13,14 @@ local bg, back,  musicSwitch, sfxSwitch, lang
 local function onSwitchPress( event )
     local switch = event.target.id
     	if switch == "musicSwitch" then
-    		if audio.isChannelPlaying( 1 )  then
+    		if audio.isChannelPlaying( 1 ) and  gameSettings.musicOn == true then
 				audio.pause( 1 )
 				gameSettings.musicOn = false;
-			elseif audio.isChannelPaused( 1 ) then
+				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			elseif audio.isChannelPaused( 1 ) and gameSettings.musicOn == false then
 				audio.resume( 1 )
 				gameSettings.musicOn = true;
+				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			end
 	    elseif switch == "sfxSwitch" then
 	    	--stop sfx
@@ -76,16 +78,18 @@ function scene:createScene( event )
 		y = _H/2 - _H/3 + 20,
 		style = "onOff",
 	    id = "musicSwitch",
-	    initialSwitchState = true,
+	    initialSwitchState = gameSettings.musicOn,
 	    onPress =  onSwitchPress
 	}
 	
+
 	sfxSwitch = widget.newSwitch
 	{
 	    x = _W/2 + _W/4,
 		y = _H/2 ,
 		style = "onOff",
 	    id = "sfxSwitch",
+	    initialSwitchState = gameSettings.soundOn,
 	    onPress = onSwitchPress
 	}
 	    	

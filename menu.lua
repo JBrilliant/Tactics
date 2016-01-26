@@ -74,8 +74,8 @@ function scene:createScene( event )
 
 	credits = widget.newButton
 	{
-		defaultFile = "images/Icon-xhdpi.png",
-		overFile ="images/Icon-xxxhdpi.png",
+		defaultFile = "images/tactics icon.png",
+		overFile ="images/tactics icon.png",
 		id = "credits",
 		x =_W/2 ,
 		y = _H/2 + newGame.width/2,

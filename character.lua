@@ -1,8 +1,10 @@
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
-
 local widget = require("widget")
+local loadsave = require("loadsave")
+local gamestate = require("gamestate")
 
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local back, boy, girl
 
 local function buttonOnRelease(event)
@@ -10,8 +12,14 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "boy" then
-			storyboard.gotoScene( "mapB", "fade", 200 )
+			gameSettings.character = "boy"
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			loadsave.printTable(gameSettings)
+			storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "girl" then
+			gameSettings.character = "girl"
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			loadsave.printTable(gameSettings)
 			storyboard.gotoScene( "mapG", "fade", 200 )
 		end
 end
