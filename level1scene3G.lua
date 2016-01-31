@@ -8,14 +8,15 @@ local score = require("score")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = gameSettings.energy
-loadsave.printTable(gameSettings.energy)
+local numberOfEnergy = gameSettings.levels[1].energy
+loadsave.printTable(gameSettings.levels[1].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "mapG", "fade", 200 )
+			storyboard.gotoScene( "level1question2G", "fade", 200 )
 		elseif button == "nextB" then
+			storyboard.removeScene( "level1scene3G", false )
 			storyboard.gotoScene( "level1question3G", "fade", 200 )
 		end
 end
@@ -27,30 +28,12 @@ function scene:createScene( event )
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
 	
-	local back = widget.newButton
-	{
-		defaultFile = "images/back2.png",			
-		overFile ="images/back2.png",
-		id = "back",
-		x = _W/30,
-		y = _H - _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
+	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17,
+		width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	
 
-	local nextB = widget.newButton
-	{
-		defaultFile = "images/next2.png",			
-		overFile ="images/next2.png",
-		id = "nextB",
-		x = _W - 30,
-		y = _H - _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
+	-- local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - 30, y = _H - _H/10,
+	-- 	height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	
 	
 	local candy = display.newImage("images/candy.png")
@@ -67,7 +50,12 @@ function scene:createScene( event )
 	scenario.x = _W/2; scenario.y = _H/2;
 	
 	timer.performWithDelay(4000,function(e)
-			storyboard.gotoScene("level1question3G","fade",200)
+			local nextB = widget.newButton{
+				defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W -_W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
+				onRelease = buttonOnRelease }	
+			group:insert( nextB )
+			-- storyboard.gotoScene("level1question3G","fade",200)
+			-- storyboard.prugeScene("level1scene3G",false)
 		end,1)	
 
 
@@ -76,7 +64,6 @@ function scene:createScene( event )
 --animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(scenario)
-group:insert( nextB )
 group:insert( back )
 group:insert( candy )
 group:insert( scoreText )

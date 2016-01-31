@@ -9,26 +9,25 @@ local energyM = require("energy")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = gameSettings.energy
-loadsave.printTable(gameSettings.energy)
+local numberOfEnergy = gameSettings.levels[1].energy
+loadsave.printTable(gameSettings.levels[1].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "mapG", "fade", 200  )
+			storyboard.gotoScene( storyboard.getPrevious(), "fade", 200  )
 		elseif button == "choice1" then
-			energyM.minus()
-			energyM.save()
-			gameSettings.energy = energyM.get()
+			energyM.minus(); energyM.save(); gameSettings.levels[1].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)
+			storyboard.removeScene( "level1question5G", false )
 			storyboard.gotoScene( "levelfailedG", "fade", 200 )
 		elseif button == "choice2" then
-			energyM.minus()
-			energyM.save()
-			gameSettings.energy = energyM.get()
+			energyM.minus(); energyM.save(); gameSettings.levels[1].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)storyboard.gotoScene( "level1scene3G", "fade", 200 )
+			storyboard.removeScene( "level1question5G", false )
+			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		end
 end
 
@@ -91,26 +90,11 @@ function scene:createScene(
 
 	local function choice1fn()
 		
-		local choice1 = widget.newButton
-		{
-			defaultFile = "images/level1/scene30.jpg",			
-			overFile ="images/level1/scene30.jpg",
-			id = "choice1",
-			x = _W/2 ,
-			y = _H/2 ,
-			height =   _H/4 + 30,
-			width = _W/3 + 30,
-			onRelease = buttonOnRelease
-		}	
+		local choice1 = widget.newButton { defaultFile = "images/level1/scene30.jpg", overFile ="images/level1/scene30.jpg", id = "choice1", x = _W/2 , y = _H/2 , height =   _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }	
 
-		local animation = transition.to(choice1,{
-				time=2000, --delay=2000,
-				x=_W/2 + 10, y = _W/2-100, xScale=9.5, yScale=9.5,
+		local animation = transition.to(choice1,{ time=2000, x=_W/2 + 10, y = _W/2-100, xScale=9.5, yScale=9.5,
 				transition=easing.inQuad,customProperty=1000,onComplete=after})
-		transition.to(choice1,{time=1000,delay=4000,
-			x=_W/4 , y = _H/2 , 
-			xScale=1, yScale=1,
-			transition=easing.inQuad})	
+		transition.to(choice1,{time=1000,delay=4000, x=_W/4 , y = _H/2 , xScale=1, yScale=1, transition=easing.inQuad})	
 			
 		local tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation)
@@ -125,17 +109,7 @@ function scene:createScene(
 	timer.performWithDelay(3000,choice1fn,1)
 
 	local function choice2fn()
-		local choice2 = widget.newButton
-		{
-			defaultFile = "images/level1/scene17.jpg",			
-			overFile ="images/level1/scene17.jpg",
-			id = "choice2",
-			x = _W/2,
-			y = _H/2 ,
-			height =  _H/4 + 30,
-			width = _W/3 + 30,
-			onRelease = buttonOnRelease
-		}
+		local choice2 = widget.newButton { defaultFile = "images/level1/scene17.jpg", id = "choice2", x = _W/2, y = _H/2 , height =  _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease}
 
 		local animation = transition.to(choice2,{
 				time=2000, 
@@ -158,17 +132,10 @@ function scene:createScene(
 	end
 	timer.performWithDelay(11000,choice2fn,1)
 	timer.performWithDelay(14000,function(e)
-		local back = widget.newButton
-		{
-			defaultFile = "images/back2.png",			
-			overFile ="images/back2.png",
-			id = "back",
-			x = _W/30,
-			y = _H - _H/10,
-			height =  _H/9 + 17,
-			width = _W/9 + 18 ,
-			onRelease = buttonOnRelease
-			}
+		local back = widget.newButton {
+		defaultFile = "images/back2.png", overFile ="images/back2.png",
+		id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
+		onRelease = buttonOnRelease }	
 		group:insert( back )
 		end,1)
 

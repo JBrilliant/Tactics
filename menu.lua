@@ -7,7 +7,7 @@ local widget = require("widget")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 		
-local welcome, newGame, settings, achieve, credits, candy
+local welcome, newGame, settings, achieve, credits, candy 
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -28,20 +28,34 @@ function scene:createScene( event )
 	welcome = display.newImage ("images/welcome.png")
 	welcome.height = _H; welcome.width = _W + _W/4;
 	welcome.x = _W/2; welcome.y = _H/2;
-
-	candy = widget.newButton
-	{
-		defaultFile = "images/level_candies_inactive.png",
-		id = "candy",
-		x = _W/2  + 9,
-		y = _H/2 - 75 , 
-		height = _W/13,
-		width = _W/13,
-		onRelease = buttonOnRelease
-	}	
 	
+	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
+
+	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet4.png", sheetOptions)
+	
+	local sequence= { { name = "normalRun", start = 3, count = 2, time = 2000,  loopDirection = "forward" }}
+	
+	local animation = display.newSprite( sheet1, sequence)
+		animation.x = _W/2; animation.y = _H/2
+		animation:play()
+		
+	-- local candy = {}
+	-- for i=1, 6 do 
+	-- 	candy[i] = display.newImage ("images/level_candies_active.png")
+	-- 	candy[i].height = _W/13; candy[i].width = _W/13;
+	-- 	candy[i].x =_W/30 +100*i; candy[i].y = _H/2 + 50 ; candy[i].alpha = 0.3
+	-- 	group:insert( candy[i])
+	-- end
+	
+		candy = display.newImage ("images/level_candies_active.png")
+		candy.height = _W/13; candy.width = _W/13;
+		candy.x =_W/2 + 9;candy.y = _H/2 - 75 ; candy.alpha = 0.8
+
+
 	local function animate(event)
+		-- for i=1, 6 do 
 		candy.rotation = candy.rotation + 3
+		-- end
 	end
 	Runtime:addEventListener("enterFrame",animate);
 
@@ -67,19 +81,19 @@ function scene:createScene( event )
 		id = "achievements",
 		x = _W/3 ,
 		y = _H/2 + newGame.width/2,
-		height =  _H/7,
+		height =  _H/6,
 		width = _W/9 ,
 		onRelease = buttonOnRelease
 	}
 
 	credits = widget.newButton
 	{
-		defaultFile = "images/tactics icon.png",
+		defaultFile = "images/tactics iconn.png",
 		overFile ="images/tactics icon.png",
 		id = "credits",
 		x =_W/2 ,
 		y = _H/2 + newGame.width/2,
-		height =  _H/7,
+		height =  _H/5,
 		width = _W/9 ,
 		onRelease = buttonOnRelease
 	}	
@@ -91,13 +105,14 @@ function scene:createScene( event )
 		id = "settings",
 		x =_W/3 + _W/3,
 		y = _H/2 + newGame.width/2,
-		height =  _H/7,
+		height =  _H/6,
 		width = _W/9 ,
 		onRelease = buttonOnRelease
 	}
 
 	group:insert( welcome)
-	group:insert( candy)
+	group:insert(animation)
+		group:insert( candy)
 	group:insert( newGame)
 	group:insert( settings)
 	group:insert( achieve)

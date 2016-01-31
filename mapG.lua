@@ -101,14 +101,29 @@ function scene:createScene( event )
         end
         if ( i <= gamestate.gameSettings.unlockedLevels ) then
 			level[i]:setEnabled( true )
+			local function animate(event)
+				level[i].rotation = level[i].rotation + 3
+			end
+			Runtime:addEventListener("enterFrame",animate);
         else 
             level[i]:setEnabled( false ) 
             level[i].defaultFile = "images/level_candies_inactive.png"
             level[i].alpha = 0.5
         end   
 		group:insert( level[i] )
-
-        local star = {} 
+	
+		local star = {} 
+        
+		for j = 1, 3 do
+        	 star[j] = display.newPolygon( 0, 0, starVertices )
+                star[j]:setFillColor( 1, 0.9, 1 )
+                star[j].strokeWidth = 1
+                star[j]:setStrokeColor(  1, 0.9, 0 )
+                star[j].x = level[i].x + (j * 16) - 32
+                star[j].y = level[i].y + 22
+                star[j].alpha = 0.3
+                group:insert( star[j] )
+        end     
         if ( gamestate.gameSettings.levels[i] and gamestate.gameSettings.levels[i].stars and gamestate.gameSettings.levels[i].stars > 0 ) then
             for j = 1, gamestate.gameSettings.levels[i].stars do
                 star[j] = display.newPolygon( 0, 0, starVertices )
@@ -120,16 +135,17 @@ function scene:createScene( event )
                 group:insert( star[j] )
             end
         end
+        	
+        -- end
 		
  	end
 
-	local function animate(event)
-		for i=1, gamestate.maxLevels do 
-		level[i].rotation = level[i].rotation + 3
-		end
-	end
-	Runtime:addEventListener("enterFrame",animate);
-
+	-- local function animate(event)
+	-- 	for i=1, gamestate.maxLevels do 
+	-- 	level[i].rotation = level[i].rotation + 3
+	-- 	end
+	-- end
+	
 	
 	
 --	level1.self = "self";

@@ -8,14 +8,16 @@ local score = require("score")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = gameSettings.energy
-loadsave.printTable(gameSettings.energy)
+local numberOfEnergy = gameSettings.levels[1].energy
+loadsave.printTable(gameSettings.levels[1].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "mapG", "fade", 200 )
+			-- storyboard.purgeScene( "level1scene2G", false )
+			storyboard.gotoScene("level1question1G", "fade", 200 )
 		elseif button == "nextB" then
+			storyboard.purgeScene( "level1scene2G", false )
 			storyboard.gotoScene( "level1question2G", "fade", 200 )
 		end
 end
@@ -35,60 +37,33 @@ function scene:createScene( event )
 	scoreText.x = _W - 5; scoreText.y = _H/15
 	scoreText:setFillColor( 1,0,0 )
 	
-	local back = widget.newButton
-	{
-		defaultFile = "images/back2.png",			
-		overFile ="images/back2.png",
-		id = "back",
-		x = _W/30,
-		y = _H - _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
+	local back = widget.newButton{
+		defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17,
+		width = _W/9 + 18 ,onRelease = buttonOnRelease
 	}
 	
 
-	local nextB = widget.newButton
-	{
-		defaultFile = "images/next2.png",			
-		overFile ="images/next2.png",
-		id = "nextB",
-		x = _W -_W/30,
-		y = _H - _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
 	
-	local sheetOptions =
-	{
-	    width = 576,
-	    height = 320,
-	    numFrames = 12
-	}
+	
+	local sheetOptions = { width = 576, height = 320, numFrames = 12}
 
 	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
 	
-	local sequence= {
-    {
-        name = "normalRun",
-        start = 10,
-        count = 3,
-        time = 9000,
-        loopCount = 1,
-        loopDirection = "forward"
-    }
-	}
+	local sequence= { {name = "normalRun", start = 10,count = 3, time = 9000, loopCount = 1, loopDirection = "forward" } }
 	
 	local animation = display.newSprite( sheet1, sequence)
 		animation.x = _W/2; animation.y = _H/2 
 		animation:play()
 		-- group:insert(animation)
 
-		
-
 	timer.performWithDelay(8000,function(e)
-			storyboard.gotoScene("level1question2G","fade",200)
+			-- storyboard.gotoScene("level1question2G","fade",200)
+			local nextB = widget.newButton{
+			defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W -_W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
+			onRelease = buttonOnRelease}		
+			group:insert( nextB )
+		-- storyboard.gotoScene("level1question2G","fade",200)
+		-- storyboard.purgeScene( "level1scene2G", false )
 		end,1)	
 
 -- end 
@@ -109,7 +84,6 @@ end
 animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(animation)
-group:insert( nextB )
 group:insert( back )
 -- group:insert( energy )
 group:insert( candy )
