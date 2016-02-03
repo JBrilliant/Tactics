@@ -2,8 +2,8 @@
 local M = {}
 M.maxLevels = 10
 M.gameSettings = {}
-M.gameSettings.character = ""
-M.gameSettings.musicOn = true
+M.gameSettings.character = " "
+M.gameSettings.musicOn = false
 M.gameSettings.soundOn = true
 M.gameSettings.lang = "english"
 -- M.gameSettings.score = 0

@@ -3,13 +3,17 @@ local scene = storyboard.newScene()
 local widget = require("widget")
 local loadsave = require("loadsave")
 local gamestate = require("gamestate")
+local sfx = require( "sfx" ) 
 
 local starVertices = { 0,-8,1.763,-2.427,7.608,-2.472,2.853,0.927,4.702,6.472,0.0,3.0,-4.702,6.472,-2.853,0.927,-7.608,-2.472,-1.763,-2.427 }
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" then
 			storyboard.gotoScene( "level1question1G", "fade", 200 )
+			if  gameSettings.musicOn == true then
+				audio.pause( 1 ) end
 		elseif button == "level2" then
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level3" then
@@ -26,7 +30,7 @@ local function buttonOnRelease(event)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level9" then
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level10" then
+		elseif button == "level10" then 
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "back" then
 			storyboard.gotoScene( "character", "fade", 200 )

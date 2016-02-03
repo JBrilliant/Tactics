@@ -17,11 +17,11 @@ loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirec
 
 -- voiceover
 sfx.bgmusic = nil
-sfx.bgmusic = audio.loadSound("audio/Tango.wav")
-sfx.level1s1 = audio.loadSound("audio/level1/Voice 1.3gpp")
-sfx.level1s2 = audio.loadSound("audio/level1/Voice 2.3gpp")
-sfx.level1s3 = audio.loadSound("audio/level1/Voice 3.3gpp")
-sfx.level1s4 = audio.loadSound("audio/level1/Voice 4.3gpp")
+sfx.bgmusic = audio.loadSound("audio/bgmusic.3gp")
+sfx.level1s1 = audio.loadSound("audio/level1/English/Voice 15.3gpp")
+sfx.level1s2 = audio.loadSound("audio/level1/English/Voice 16.3gpp")
+sfx.level1s3 = audio.loadSound("audio/level1/English/Voice 17.3gpp")
+sfx.level1s4 = audio.loadSound("audio/level1/English/Voice 18.3gpp")
 sfx.level1s5 = audio.loadSound("audio/level1/Voice 5.3gpp")
 sfx.level1s6 = audio.loadSound("audio/level1/Voice 5(2).3gpp")
 
