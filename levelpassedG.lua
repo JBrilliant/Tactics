@@ -8,14 +8,15 @@ local score = require("score")
 local energyM = require("energy")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+local curLvl = gameSettings.currentLevel
 local energy = {}
-local numberOfEnergy = gameSettings.levels[1].energy
-loadsave.printTable(gameSettings.levels[1].energy)
+local numberOfEnergy = gameSettings.levels[curLvl].energy
+loadsave.printTable(gameSettings.levels[curLvl].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			 Runtime:removeEventListener("enterFrame", animate); storyboard.purgeScene( "mapG", false )
+			 Runtime:removeEventListener("enterFrame", animate); storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
 			 storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
 			-- storyboard.gotoScene( "level1question2G", "fade", 200 )
@@ -28,10 +29,10 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
 	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
-	local scoreText = display.newText(gameSettings.levels[1].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
+	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	local text =  display.newText( "Congratulations!", 270, 10, "riffic", 24 ); text.x = _W/2; text.y = _H/10; text:setFillColor( 1,1,1 )
-	local animation1 = transition.to(text,{ time=1000, delay=300,y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
-	transition.to(text,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=500, delay=1000})
+	local animation1 = transition.to(text,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+	transition.to(text,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, delay=2000, alpha=0})
 
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet2.png", sheetOptions )
@@ -39,13 +40,14 @@ function scene:createScene( event )
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2+10; animation.y = _H/2 
 		animation:play()
 	
-	if gameSettings.levels[1].score >= 40 then
-		gameSettings.levels[1].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	elseif gameSettings.levels[1].score >= 20 and gameSettings.levels[1].score  < 40 then
-		gameSettings.levels[1].stars = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	else gameSettings.levels[1].stars = 1
+	if gameSettings.levels[curLvl].score >= 40 then
+		gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+	elseif gameSettings.levels[curLvl].score >= 20 and gameSettings.levels[curLvl].score  < 40 then
+		gameSettings.levels[curLvl].stars = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+	else gameSettings.levels[curLvl].stars = 1
 	end
 	gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+	gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	loadsave.printTable(gameSettings)
 	group:insert(background)
 	group:insert(animation)
@@ -54,18 +56,26 @@ function scene:createScene( event )
 	group:insert( back )
 	group:insert(text)
 	local star = {}
-	if ( gameSettings.levels[1] and gameSettings.levels[1].stars and gameSettings.levels[1].stars > 0 ) then
-        for j = 1, gameSettings.levels[1].stars do
+	if ( gameSettings.levels[curLvl] and gameSettings.levels[curLvl].stars and gameSettings.levels[curLvl].stars > 0 ) then
+        for j = 1, gameSettings.levels[curLvl].stars do
         	star[j] = display.newImage("images/star.png"); star[j].x= _W/4 + _W/8*j; star[j].y=_H/5; star[j].height=_W/8; star[j].width=_W/8;
-        	transition.to(star[j],{ time=1000, delay=300,y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
-			transition.to(star[j],{transition=easing.inQuad, xScale=1, yScale=1, y=_H/4, time=500, delay=1000})
+        	transition.to(star[j],{ time=500, delay=300,y = _H/3, xScale=1, yScale=1, transition=easing.inQuad,customProperty=1000})
+			transition.to(star[j],{transition=easing.inQuad, xScale=1, yScale=1, y=_H/4, time=2000, delay=2000, alpha=0})
 			group:insert( star[j] )
         end
     end
-	-- storyboard.purgeScene("mapG",false)
-	timer.performWithDelay(8000,function(e)
-			-- storyboard.gotoScene("level1question2G","fade",200)
-		end,1)	
+	
+	local function achieveUnlocked()
+		transition.to(animation,{transition=fade, time=2000, delay=2000, alpha=0})
+		local text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
+		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+		local badge = display.newImage("images/badge "..curLvl..".png"); badge.x = _W/2; badge.y = _H/2; badge.height = _H/3; badge.width = _W/4
+		transition.to(badge,{ time=1000, delay=300,y = _H/3, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+		group:insert( text1)
+		group:insert( badge)
+	end
+	
+	--timer.performWithDelay(8000,achieveUnlocked(),1)	
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite

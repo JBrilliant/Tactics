@@ -10,7 +10,7 @@ M.gameSettings.lang = "english"
 -- M.gameSettings.energy = 3
 M.gameSettings.currentLevel = 1
 M.gameSettings.unlockedLevels = 1
-M.gameSettings.unlockedAchieve = 2
+M.gameSettings.unlockedAchieve = 0
 M.gameSettings.levels = {}
 
 -- for i=1, M.maxLevels do
