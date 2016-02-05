@@ -16,7 +16,7 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			storyboard.purgeScene( "level1scene2G", false )
-			storyboard.gotoScene("level1question1G", "fade", 200 )
+			storyboard.gotoScene("mapG", "fade", 200 )
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
 			storyboard.gotoScene( "level1question2G", "fade", 200 )
@@ -29,7 +29,7 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
 	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease }
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15; candy.width = 80; candy.height = 25
-	local scoreText = display.newText(gameSettings.levels[1].score, 270, 10, "Helvetica", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )	
+	local scoreText = display.newText(gameSettings.levels[1].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )	
 	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12}
 	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet1.png", sheetOptions )
@@ -40,10 +40,10 @@ function scene:createScene( event )
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite  
     if ( thisSprite.frame == 1) then
-    	audio.play( sfx.level1s2, { loops = 0, channel = 3,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s2 ) 
-                                end } )
+    	-- audio.play( sfx.level1s2, { loops = 0, channel = 3,
+    	-- 						onComplete = function() 
+     --                                audio.dispose( sfx.level1s2 ) 
+     --                            end } )
     	timer.performWithDelay(11000,function(e)
 			local nextB = widget.newButton { 
 				defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB",

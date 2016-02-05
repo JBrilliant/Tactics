@@ -32,58 +32,11 @@ function scene:createScene( event )
 	background.height = _H; background.width = _W + _W/4;
 	background.x = _W/2; background.y = _H/2;
 	group:insert(background)
-	
 		
-	back = widget.newButton
-	{
-		defaultFile = "images/back.png",
-		overFile ="images/back.png",
-		id = "back",
-		x = _W/30,
-		y = _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
-
-	english = widget.newButton
-	{
-		defaultFile = "images/english.png",
-		overFile ="images/english.png",
-		id = "english",
-		x = _W /2,
-		y = _H/10 + 80,
-		height =  _H/7,
-		width = _W/2,
-		onRelease = buttonOnRelease
-	}	
-
-	tagalog = widget.newButton
-	{
-		defaultFile = "images/tagalog.png",
-		overFile ="images/tagalog.png",
-		id = "tagalog",
-		x = _W /2,
-		y = _H/10 + 80*2,
-		height =  _H/7,
-		width = _W/2,
-		onRelease = buttonOnRelease
-	}	
-
-	bicol = widget.newButton
-	{
-		defaultFile = "images/bicol.png",
-		overFile ="images/bicol.png",
-		id = "bicol",
-		x = _W /2,
-		y = _H/10 + 80*3,
-		height =  _H/7,
-		width = _W/2,
-		onRelease = buttonOnRelease
-	}	
-	
-
-	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	english = widget.newButton { defaultFile = "images/english.png", overFile ="images/english.png", id = "english", x = _W /2, y = _H/10 + 80, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
+	tagalog = widget.newButton { defaultFile = "images/tagalog.png", overFile ="images/tagalog.png", id = "tagalog", x = _W /2, y = _H/10 + 80*2, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
+	bicol = widget.newButton { defaultFile = "images/bicol.png", overFile ="images/bicol.png", id = "bicol", x = _W /2, y = _H/10 + 80*3, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
 	-- group:insert( choose )
 	group:insert( back )
 	group:insert( english )
