@@ -31,7 +31,7 @@ function scene:createScene( event )
 
 	welcome = display.newImage ("images/welcome.png"); welcome.height = _H; welcome.width = _W + _W/4; welcome.x = _W/2; welcome.y = _H/2;
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet4.png", sheetOptions)
+	local sheet1 = graphics.newImageSheet( "images/english/girl/level1/imgsheet4.png", sheetOptions)
 	local sequence= { { name = "normalRun", start = 3, count = 2, time = 2000,  loopDirection = "forward" }}
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2
 		animation:play()

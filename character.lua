@@ -26,45 +26,13 @@ end
 
 function scene:createScene( event )
 	local group = self.view
-	local choose = display.newImage("images/choose.png");
+	local choose = display.newImage("images/"..gameSettings.lang.."/choose.jpg");
 		choose.height = _H; choose.width = _W + _W/4;
 		choose.x = _W/2; choose.y = _H/2;
 		
-	back = widget.newButton
-	{
-		defaultFile = "images/back.png",
-		overFile ="images/back.png",
-		id = "back", 
-		x = _W/30,
-		y = _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
-
-	boy = widget.newButton
-	{
-		defaultFile = "images/boy.png",
-		overFile ="images/boy.png",
-		id = "boy",
-		x = _W/2 - 130 ,
-		y = _H/2 + 30,
-		height =  240,
-		width = 230 ,
-		onRelease = buttonOnRelease
-	}	
-	
-	girl = widget.newButton
-	{
-		defaultFile = "images/girl.png",
-		overFile ="images/girl.png",
-		id = "girl",
-		x = _W/2 + 140 ,
-		y = _H/2 + 30,
-		height =  240,
-		width = 230 ,
-		onRelease = buttonOnRelease
-	}	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/40, y = _H/15, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	boy = widget.newButton { defaultFile = "images/boy_normal.png", overFile ="images/boy.png", id = "boy", x = _W/2 - 130 , y = _H/2 + 30, height =  240, width = 230 , onRelease = buttonOnRelease }	
+	girl = widget.newButton { defaultFile = "images/girl_normal.png", overFile ="images/girl.png", id = "girl", x = _W/2 + 140 , y = _H/2 + 30, height =  240, width = 230 , onRelease = buttonOnRelease }	
 		
 	group:insert( choose )
 	group:insert( back )

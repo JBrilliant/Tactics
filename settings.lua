@@ -41,37 +41,10 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	bg = display.newImage("images/settings_bg.png");
-		bg.height = _H; bg.width = _W + _W/4;
-		bg.x = _W/2; bg.y = _H/2;
-	
-	
-	lang = widget.newButton
-	{
-		defaultFile = "images/chooselang.png",
-		overFile ="images/chooselang.png",
-		id = "langTX",
-		x = _W/2 ,
-		y = _H/2 + _H/3,
-		height =   _H/6,
-		width = _W/2 + _W/6 ,
-		onRelease = buttonOnRelease
-	}
+	bg = display.newImage("images/settings_bg.png"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	lang = widget.newButton { defaultFile = "images/"..gameSettings.lang.."/chooselang.png", overFile ="images/"..gameSettings.lang.."/chooselang.png", id = "langTX", x = _W/2 , y = _H/2 + _H/3, height =   _H/6, width = _W/2 + _W/6 , onRelease = buttonOnRelease }
 
-	back = widget.newButton
-	{
-		defaultFile = "images/back.png",
-		overFile ="images/back.png",
-		id = "back",
-		x = _W/30,
-		y = _H/10,
-		height =  _H/9 + 17,
-		width = _W/9 + 18 ,
-		onRelease = buttonOnRelease
-	}	
-
-	
-	
 	musicSwitch = widget.newSwitch
 	{
 	    x = _W/2 + _W/4,

@@ -32,7 +32,8 @@ function scene:createScene( event )
 	local j = 1
 	local box = {}
 	for i=5, 8 do 
-		box[i] = display.newImage("images/"..gameSettings.lang.."/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
+		box[i] = display.newImage("images/english/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
+		-- box[i] = display.newImage("images/"..gameSettings.lang.."/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
 		group:insert(box[i])
 		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (125*j) - 60; badge[i].y = _H/4 + 15;
 		group:insert(badge[i])
