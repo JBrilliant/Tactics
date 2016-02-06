@@ -26,22 +26,22 @@ function scene:createScene( event )
 	-- nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	bg = display.newImage("images/bgplain.jpg"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )
-	group:insert( back )
 	-- group:insert( nextB )
 	
 	local badge = {}
 	local j = 1
-	-- local box = {}
+	local box = {}
 	for i=5, 8 do 
-		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (120*j) - 60; badge[i].y = _H/4 + 30;
+		box[i] = display.newImage("images/"..gameSettings.lang.."/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
+		group:insert(box[i])
+		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (125*j) - 60; badge[i].y = _H/4 + 15;
 		group:insert(badge[i])
 		j = j + 1
-		-- box[i] = display.newRect(badge[i].x + (120*i) - 60,  _H/4 + 30, _W/5 + 25, _H/3); box[i]:setFillColor(205, 192, 203)
-		-- group:insert(box[i])
-		if ( i > gameSettings.unlockedAchieve ) then
-			badge[i].alpha = 0.3
+		if ( i > gameSettings.unlockedAchieve) then
+			badge[i].alpha = 0.5; box[i].alpha = 0.5
         end  
-	end	
+	end
+	group:insert( back )
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:

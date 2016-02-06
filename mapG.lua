@@ -12,46 +12,66 @@ loadsave.printTable(gameSettings)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); 
 			storyboard.gotoScene( "trivia1G", "fade", 200 ); print("GIRLLL<3!!!"); --Runtime:removeEventListener("enterFrame", animate);
 		elseif button == "level1" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			print("BOYYYYYY!!!<3")-- storyboard.gotoScene( "level1scene1G", "fade", 200 )
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level2" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level3" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level3" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level4" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level4" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level5" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level5" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level6" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level6" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level7" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level7" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level8" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level8" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level9" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level9" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level10" and gameSettings.character == "girl" then
+			gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "level10" and gameSettings.character == "boy" then
+			gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "back" then
 			if gameSettings.character == "boy" or gameSettings.character == "girl" then

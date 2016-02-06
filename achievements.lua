@@ -20,25 +20,26 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
-	nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/40, y = _H/15, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	nextB = widget.newButton { defaultFile = "images/next.png", overFile ="images/next.png", id = "nextB", x = _W - _W/80, y = _H/15, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	bg = display.newImage("images/bgplain.jpg"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )
-	group:insert( back )
-	group:insert( nextB )
 	
 	local badge = {}
-	-- local box = {}
+	local box = {}
 	for i=1, 4 do 
-		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (120*i) - 60; badge[i].y = _H/4 + 30;
+		box[i] = display.newImage("images/"..gameSettings.lang.."/b"..i..".png"); box[i].x = box[i].x + (125*i) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
+		group:insert(box[i])
+		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (125*i) - 60; badge[i].y = _H/4 + 15;
 		group:insert(badge[i])
-		-- box[i] = display.newRect(badge[i].x + (120*i) - 60,  _H/4 + 30, _W/5 + 25, _H/3); box[i]:setFillColor(205, 192, 203)
-		-- group:insert(box[i])
 		 if ( i > gameSettings.unlockedAchieve) then
-			badge[i].alpha = 0.3
+			badge[i].alpha = 0.5; box[i].alpha = 0.5
         end  
 	end	
-end
+group:insert( back )
+	group:insert( nextB )
+
+	end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )

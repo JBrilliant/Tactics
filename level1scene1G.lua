@@ -8,9 +8,10 @@ local sceneClass = require("sceneClass")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = gameSettings.levels[1].energy
-loadsave.printTable(gameSettings.levels[1].energy)
-
+local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[1].energy; 
+loadsave.printTable(gameSettings.levels[curLvl].energy)
+score.set(0); score.save(); gameSettings.levels[curLvl] = score.get()
+--local tmr
 -- local function tmr()
 -- 	local tmr = timer.performWithDelay(4500,function(e)
 -- 			storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); tmr = nil--
@@ -51,7 +52,7 @@ local function spriteListener( event )
                                 end } )
     elseif (thisSprite.frame==8) then	thisSprite:setFrame(9)
     elseif ( thisSprite.frame == 9) then thisSprite:setFrame(8)	
-  	  	local tmr = timer.performWithDelay(4500,function(e)
+  	  	 timer.performWithDelay(4500,function(e)
 			storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 		end,1)
     end
@@ -79,6 +80,7 @@ local group = self.view
 		back = nil 
 		nextB = nil 
 	end
+	--timer.cancel(tmr)
 end
 
 scene:addEventListener( "createScene", scene )

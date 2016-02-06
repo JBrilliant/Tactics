@@ -11,6 +11,7 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 local energy = {}
 local numberOfEnergy = gameSettings.levels[1].energy
+gameSettings.levels[1].score = 0
 loadsave.printTable(gameSettings.levels[1].energy)
 
 local function buttonOnRelease(event)
@@ -48,7 +49,6 @@ function scene:createScene( event )
 	local textQuest =  display.newText( "What will you do?", 270, 10, "riffic", 24 ); textQuest.x = _W/2; textQuest.y = _H/5; textQuest:setFillColor( 1,1,1 )
 	local animation1 = transition.to(textQuest,{ time=1000, y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
 	transition.to(textQuest,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=500, delay=1000})
-
 
 local images = {"images/level1/scene9_2.jpg", "images/level1/scene9_31.jpg", "images/level1/scene12.jpg"}
 local randomImages = {}

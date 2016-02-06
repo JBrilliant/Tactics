@@ -19,7 +19,7 @@ local function buttonOnRelease(event)
 			 Runtime:removeEventListener("enterFrame", animate); storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
 			 storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
-			-- storyboard.gotoScene( "level1question2G", "fade", 200 )
+			--storyboard.gotoScene( "level2scene1G", "fade", 200 )
 		end
 end
 
@@ -66,16 +66,18 @@ function scene:createScene( event )
     end
 	
 	local function achieveUnlocked()
-		transition.to(animation,{transition=fade, time=2000, delay=2000, alpha=0})
+		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
 		local text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
-		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		local badge = display.newImage("images/badge "..curLvl..".png"); badge.x = _W/2; badge.y = _H/2; badge.height = _H/3; badge.width = _W/4
-		transition.to(badge,{ time=1000, delay=300,y = _H/3, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+		transition.to(badge,{ time=1000, delay=300,y = _H/2 + 50, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+		local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 		group:insert( text1)
 		group:insert( badge)
+		group:insert( nextB)
 	end
 	
-	--timer.performWithDelay(8000,achieveUnlocked(),1)	
+	timer.performWithDelay(5000,achieveUnlocked,1)	
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite
