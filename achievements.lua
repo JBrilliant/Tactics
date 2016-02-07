@@ -34,7 +34,7 @@ function scene:createScene( event )
 		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (125*i) - 60; badge[i].y = _H/4 + 15;
 		group:insert(badge[i])
 		 if ( i > gameSettings.unlockedAchieve) then
-			badge[i].alpha = 0.5; box[i].alpha = 0.5
+			badge[i].alpha = 0.3; box[i].alpha = 0.3
         end  
 	end	
 group:insert( back )

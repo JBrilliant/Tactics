@@ -17,7 +17,8 @@ local function buttonOnRelease(event)
 			storyboard.gotoScene( "trivia1G", "fade", 200 ); print("GIRLLL<3!!!"); --Runtime:removeEventListener("enterFrame", animate);
 		elseif button == "level1" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			print("BOYYYYYY!!!<3")-- storyboard.gotoScene( "level1scene1G", "fade", 200 )
+			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); 
+			print("BOYYYYYY!!!<3"); storyboard.gotoScene( "trivia1G", "fade", 200 )
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)

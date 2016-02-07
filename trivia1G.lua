@@ -8,9 +8,9 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 function scene:createScene( event )
 	local group = self.view
 
-	local sheetOptions = { width = 576, height = 320, numFrames = 11 }
-	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet1.png", sheetOptions )
-	local sequence= { { name = "normalRun",  start = 5, count = 7, time = 5000, loopCount = 1, loopDirection = "forward" } }
+	local sheetOptions = { width = 576, height = 320, numFrames = 7 }
+	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..gameSettings.currentLevel.."/imgsheet1.png", sheetOptions )
+	local sequence= { { name = "normalRun",  start = 1, count = 7, time = 5000, loopCount = 1, loopDirection = "forward" } }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
 		animation:play()
 	

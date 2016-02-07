@@ -39,7 +39,7 @@ function scene:createScene( event )
 		group:insert(badge[i])
 		j = j + 1
 		if ( i > gameSettings.unlockedAchieve) then
-			badge[i].alpha = 0.5; box[i].alpha = 0.5
+			badge[i].alpha = 0.3; box[i].alpha = 0.3
         end  
 	end
 	group:insert( back )

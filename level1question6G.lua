@@ -10,8 +10,8 @@ local sceneClass = require("sceneClass")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local numberOfEnergy = gameSettings.levels[1].energy
-loadsave.printTable(gameSettings.levels[1].energy)
+local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
+loadsave.printTable(gameSettings.levels[curLvl].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -44,7 +44,7 @@ function scene:createScene( event )
 	local animation1 = transition.to(textQuest,{ time=500, y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
 	transition.to(textQuest,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=500, delay=1000})
 		
-	local images = {"images/level1/scene9_3.jpg", "images/level1/scene9_31.jpg"}
+	local images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene1a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene1b.jpg"}
 	local randomImages = {}
 	for i, v in ipairs(images) do randomImages[i] = v end
 	sceneClass.shuffle(randomImages)
@@ -77,7 +77,7 @@ group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)
 for i=1,numberOfEnergy do
-	energy[i] = display.newImage("images/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
+	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])
 end
 end

@@ -32,7 +32,7 @@ function scene:createScene( event )
 	-- local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - 30, y = _H - _H/10,
 	-- 	height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet2.png", sheetOptions )
+	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet3.png", sheetOptions )
 	local sequence= { { name = "normalRun", start = 8, count = 3, time = 9000, loopCount = 1, loopDirection = "forward" } }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
 		animation:play()
@@ -65,7 +65,7 @@ group:insert( back )
 group:insert( candy )
 group:insert( scoreText )
 	for i=1,numberOfEnergy do
-		energy[i] = display.newImage("images/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
+		energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 		group:insert(energy[i])
 	end
 		

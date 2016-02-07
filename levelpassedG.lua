@@ -6,6 +6,7 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
+local gamestate = require("gamestate")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local curLvl = gameSettings.currentLevel
@@ -35,10 +36,11 @@ function scene:createScene( event )
 	transition.to(text,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, delay=2000, alpha=0})
 
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet2.png", sheetOptions )
+	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
 	local sequence= { { name = "normalRun",  start = 11, count = 2, time = 1000, loopDirection = "forward" } }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2+10; animation.y = _H/2 
 		animation:play()
+	gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	
 	if gameSettings.levels[curLvl].score >= 40 then
 		gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
@@ -81,14 +83,12 @@ function scene:createScene( event )
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite
-    if ( thisSprite.frame == 11) then
-    end
 end
 
 animation:addEventListener( "sprite", spriteListener )
 
 for i=1,numberOfEnergy do
-	energy[i] = display.newImage("images/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
+	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])
 end	
 end
