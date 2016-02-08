@@ -17,21 +17,23 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.purgeScene( "level1scene3G", false )
+			storyboard.removeScene( "level1scene3G", false )
 			storyboard.gotoScene( "level1scene3G", "fade", 200  )
 		elseif button == "choice1" then
-			score.add(20); score.save(); gameSettings.levels[1].score = score.get()
+			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)
 			storyboard.removeScene( "level1question3G", false )
-			storyboard.gotoScene( "level1scene6G", "fade", 200 )
+			if curLvl == 1 then storyboard.gotoScene( "level1scene6G", "fade", 200 ) 
+			elseif curLvl == 2 then storyboard.gotoScene( "level1scene4G", "fade", 200 ) end
 		elseif button == "choice2" then
-			energyM.minus(); energyM.save(); gameSettings.levels[1].energy = energyM.get()
+			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			gameSettings.energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)		
 			loadsave.printTable(gameSettings)
 			storyboard.removeScene( "level1question3G", false )
-			storyboard.gotoScene( "level1scene2G", "fade", 200 )
+			if curLvl == 1 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) 
+			elseif curLvl == 2 then storyboard.gotoScene( "level1scene4G", "fade", 200 ) end
 		end
 end
 
@@ -46,7 +48,12 @@ function scene:createScene( event )
 	local animation1 = transition.to(textQuest,{ time=1000, y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
 	transition.to(textQuest,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=500, delay=2000})
 	
-	local images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene24.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene25.jpg"}
+	local images = {}
+	if curLvl == 1 then
+		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene24.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene25.jpg"}
+	elseif curLvl == 2 then
+		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene2a.png", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene2b.png"}
+	end
 	local randomImages = {}
 	for i, v in ipairs(images) do randomImages[i] = v end
 	sceneClass.shuffle(randomImages)

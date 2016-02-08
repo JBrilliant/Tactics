@@ -9,7 +9,7 @@ M.gameSettings.lang = "english"
 -- M.gameSettings.score = 0
 -- M.gameSettings.energy = 3
 M.gameSettings.currentLevel = 1
-M.gameSettings.unlockedLevels = 1
+M.gameSettings.unlockedLevels = 2
 M.gameSettings.unlockedAchieve = 0
 M.gameSettings.levels = {}
 

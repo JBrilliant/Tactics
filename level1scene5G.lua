@@ -17,6 +17,7 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
+			storyboard.removeScene(storyboard.getCurrentSceneName(), false)
 			storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene("level1question4G", "fade", 200 )
 		elseif button == "nextB" then
 			storyboard.removeScene( "level1scene5G", false )
@@ -34,18 +35,22 @@ function scene:createScene( event )
 	-- local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - 30, y = _H - _H/10,
 	-- 	height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet3.png", sheetOptions )
-	local sequence= { { name = "normalRun",  start = 5,  count = 3, time = 9000, loopCount = 1, loopDirection = "forward" } }	
-	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
+	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
+	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
+	local sequence= { { name = "level1",  start = 5,  count = 3, time = 9000, loopCount = 1, loopDirection = "forward" },
+					{ name = "level2",  start = 11,  count = 2, time = 9000, loopCount = 1, loopDirection = "forward" }  }	
+	local animation 
+	if curLvl == 1 then animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
+	elseif curLvl ==  2 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level2")  end
 		animation:play()
 
 	timer.performWithDelay(9000,function(e)
-			local nextB = widget.newButton{
-				defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W -_W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
-				onRelease = buttonOnRelease }	
-			group:insert( nextB )
-			-- storyboard.gotoScene("level1question5G","fade",200)
-			-- storyboard.prugeScene("level1scene5G",false)
+			-- local nextB = widget.newButton{
+			-- 	defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W -_W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
+			-- 	onRelease = buttonOnRelease }	
+			-- group:insert( nextB )
+			if curLvl == 1 then storyboard.gotoScene("level1question5G","fade",200)
+			elseif curLvl == 2 then storyboard.gotoScene("level1question6G","fade",200) end-- storyboard.prugeScene("level1scene5G",false)
 		end,1)	
 
 local function spriteListener( event )

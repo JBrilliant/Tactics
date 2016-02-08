@@ -4,6 +4,7 @@ local sfx = require( "sfx" )
 local gamestate = require( "gamestate" )
 local loadsave = require("loadsave")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+loadsave.printTable(gameSettings); print("TRIVIA")
 
 function scene:createScene( event )
 	local group = self.view

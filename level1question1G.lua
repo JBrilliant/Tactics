@@ -18,21 +18,21 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			-- storyboard.purgeScene( "level1question1G", false ); 
-			storyboard.purgeScene( "level1scene1G", false )
+			storyboard.removeScene( "level1scene1G", false )
 			storyboard.gotoScene( "level1scene1G", "fade", 200  )
 		elseif button == "choice1" then
-			score.add(10); score.save(); gameSettings.levels[1].score = score.get()
-			energyM.minus(); energyM.save(); gameSettings.levels[1].energy = energyM.get()
+			score.add(10); score.save(); gameSettings.levels[curLvl].score = score.get()
+			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.purgeScene( "level1question1G", false )
 			storyboard.gotoScene( "level1scene2G", "fade", 200 )
 		elseif button == "choice2" then
-			score.add(20); score.save(); gameSettings.levels[1].score = score.get()
+			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.purgeScene( "level1question1G", false )
 			storyboard.gotoScene( "level1scene3G", "fade", 200 )
 		elseif button == "choice3" then
-			energyM.minus(); energyM.save(); gameSettings.levels[1].energy = energyM.get()
+			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.purgeScene( "level1question1G", false )
 			storyboard.gotoScene( "level1scene4G", "fade", 200 )

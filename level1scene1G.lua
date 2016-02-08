@@ -5,11 +5,13 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 local sceneClass = require("sceneClass")
+local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+loadsave.printTable(gameSettings);
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
-loadsave.printTable(gameSettings.levels[curLvl].energy)
+  print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
 --local tmr
 -- local function tmr()
 -- 	local tmr = timer.performWithDelay(4500,function(e)
@@ -21,7 +23,7 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.purgeScene( storyboard.getCurrentSceneName(), false ); audio.stop( 2 ); audio.resume(1)
+			storyboard.removeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
 			storyboard.gotoScene( "mapG", "fade", 200 );-- timer.cancel(tmr()); --tmr = nil
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
@@ -40,20 +42,23 @@ function scene:createScene( event )
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions)	
 	local sequence= { { name = "level1", start = 1, count = 9, time = 17500, loopCount = 1, loopDirection = "forward" },
-					 { name = "level2", start = 1, count = 9, time = 17500, loopCount = 1, loopDirection = "forward" }}	
-	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2
+					 { name = "level2", start = 1, count = 6, time = 16000, loopCount = 1, loopDirection = "forward" }}	
+	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
+	print("LEVEL "..curLvl.." NA! scene 1"); 
+	if (curLvl == 2) then  animation:setSequence("level2")  end
 		animation:play()
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite    
     if ( thisSprite.frame == 2) then
-    	audio.play( sfx.level1s1, { loops = 0, channel = 2,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s1 ) 
-                                end } )
-  	elseif ( thisSprite.frame == 9) then
+    	audio.play( sfx.level1s1, { loops = 0, channel = 2,  onComplete = function() audio.dispose( sfx.level1s1 )  end } )
+  	elseif (curLvl == 1 and  thisSprite.frame == 9) or (curLvl == 2 and  thisSprite.frame == 6) then
   	  	 timer.performWithDelay(4500,function(e)
-			storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+			if curLvl == 1 then
+				storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+			elseif curLvl == 2 then
+				storyboard.gotoScene( "level1question2G", "fade", 200); 
+			end
 		end,1)
     end
 end

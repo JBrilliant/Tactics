@@ -13,19 +13,17 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); 
-			storyboard.gotoScene( "trivia1G", "fade", 200 ); print("GIRLLL<3!!!"); --Runtime:removeEventListener("enterFrame", animate);
+			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); storyboard.gotoScene( "trivia1G", "fade", 200 );  --Runtime:removeEventListener("enterFrame", animate);
 		elseif button == "level1" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); 
-			print("BOYYYYYY!!!<3"); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			storyboard.removeScene( "trivia1G", false ); storyboard.removeScene( "level1scene1G", false ); storyboard.gotoScene( "trivia1G", "fade", 200 )
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! girl")
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level2" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! boy")
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level3" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
@@ -86,17 +84,12 @@ function scene:createScene( event )
 	
 	local bg = display.newImage("images/map.png"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )
-	
 	local back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	group:insert( back )
 	
 	local level = {}
-
- 	for i=1, gamestate.maxLevels do 
- 			level[i] = widget.newButton	{
-			defaultFile = "images/level.png", overFile ="images/level_candies_active.png",
-			height = _W/15,	width = _W/15 ,  --strokeColor =  1, 0, 0 ),
-			onRelease = buttonOnRelease	}
+	for i=1, gamestate.maxLevels do 
+ 			level[i] = widget.newButton	{ defaultFile = "images/level.png", overFile ="images/level_candies_active.png", height = _W/15,	width = _W/15 ,   onRelease = buttonOnRelease	}
  		if i==1 then
  			level[i].x = _W/2 + _W/6  + 19; level[i].y = _H/2 + _H/4 + 21; level[i].id = "level"..tostring( i )
  		elseif i==2 then
@@ -110,7 +103,7 @@ function scene:createScene( event )
  		elseif i==6 then
  			level[i].x = _W/2 + 18;	level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
  		elseif i==7 then
- 			level[i].x = _W/2 -_W/8;	level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
+ 			level[i].x = _W/2 -_W/8; level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
  		elseif i==8 then
  			level[i].x = _W/2 - _W/3 + 27 ;level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
  		elseif i==9 then
@@ -125,8 +118,7 @@ function scene:createScene( event )
         if ( i <= gameSettings.unlockedLevels ) then
 			level[i]:setEnabled( true )
         else 
-            level[i]:setEnabled( false ) 
-            level[i].defaultFile = "images/level_candies_inactive.png"
+            level[i]:setEnabled( false );--level[i].defaultFile = "images/level_candies_inactive.png"
             level[i].alpha = 0.3
         end   
 		group:insert( level[i] )
@@ -134,22 +126,12 @@ function scene:createScene( event )
 		local star = {}      
 		for j = 1, 3 do
         	 star[j] = display.newPolygon( 0, 0, starVertices )
-                star[j]:setFillColor( 1, 0.9, 1 )
-                star[j].strokeWidth = 1
-                star[j]:setStrokeColor(  1, 0.9, 0 )
-                star[j].x = level[i].x + (j * 16) - 32
-                star[j].y = level[i].y + 22
-                star[j].alpha = 0.3
+                star[j]:setFillColor( 1, 0.9, 1 ); star[j].strokeWidth = 1; star[j]:setStrokeColor(  1, 0.9, 0 ); star[j].x = level[i].x + (j * 16) - 32; star[j].y = level[i].y + 22; star[j].alpha = 0.3
                 group:insert( star[j] )
         end     
         if ( gameSettings.levels[i] and gameSettings.levels[i].stars and gameSettings.levels[i].stars > 0 ) then
             for j = 1, gameSettings.levels[i].stars do
-                star[j] = display.newPolygon( 0, 0, starVertices )
-                star[j]:setFillColor( 1, 0.9, 0 )
-                star[j].strokeWidth = 0.5
-                star[j]:setStrokeColor( 1, 0.9, 0 )
-                star[j].x = level[i].x + (j * 16) - 32
-                star[j].y = level[i].y + 22
+                star[j] = display.newPolygon( 0, 0, starVertices ); star[j]:setFillColor( 1, 0.9, 0 ); star[j].strokeWidth = 0.5; star[j]:setStrokeColor( 1, 0.9, 0 ); star[j].x = level[i].x + (j * 16) - 32; star[j].y = level[i].y + 22
                 group:insert( star[j] )
             end
         end

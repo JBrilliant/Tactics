@@ -8,9 +8,10 @@ local score = require("score")
 local energyM = require("energy")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+local curLvl = gameSettings.currentLevel
 local energy = {}
-local numberOfEnergy = gameSettings.levels[1].energy
-loadsave.printTable(gameSettings.levels[1].energy)
+local numberOfEnergy = gameSettings.levels[curLvl].energy
+loadsave.printTable(gameSettings.levels[curLvl].energy)
 
 local function buttonOnRelease(event)
 	local button = event.target.id
@@ -27,12 +28,14 @@ function scene:createScene( event )
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
 	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
-	local scoreText = display.newText(gameSettings.levels[1].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
+	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/level1/imgsheet4.png", sheetOptions )	
-	local sequence= {  { name = "normalRun", start = 1,  count = 2, time = 1000, loopDirection = "forward" } }
+	local sheet1 = graphics.newImageSheet( "images/english/girl/level1/imgsheet4.png", sheetOptions )	
+	local sequence= {  { name = "girl", start = 1,  count = 2, time = 1000, loopDirection = "forward" },
+					{ name = "boy", start = 5,  count = 2, time = 1000, loopDirection = "forward" } }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2+10; animation.y = _H/2 
+	if gameSettings.character == "boy" then animation:setSequence("boy") end
 		animation:play()
 	
 	timer.performWithDelay(8000,function(e)

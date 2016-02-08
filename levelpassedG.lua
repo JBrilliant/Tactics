@@ -17,7 +17,8 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			 Runtime:removeEventListener("enterFrame", animate); storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
+			 -- Runtime:removeEventListener("enterFrame", animate);
+			 storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
 			 storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
 			--storyboard.gotoScene( "level2scene1G", "fade", 200 )
@@ -32,16 +33,21 @@ function scene:createScene( event )
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	local text =  display.newText( "Congratulations!", 270, 10, "riffic", 24 ); text.x = _W/2; text.y = _H/10; text:setFillColor( 1,1,1 )
-	local animation1 = transition.to(text,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+	transition.to(text,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
 	transition.to(text,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, delay=2000, alpha=0})
-
+	print("umabot dito")
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
-	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
+	local sheet1 = graphics.newImageSheet( "images/english/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
 	local sequence= { { name = "normalRun",  start = 11, count = 2, time = 1000, loopDirection = "forward" } }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2+10; animation.y = _H/2 
-		animation:play()
-	gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	
+		animation:play()	
+	group:insert(background)
+	group:insert(animation)
+	group:insert( candy )
+	group:insert( scoreText )
+	group:insert( back )
+	group:insert(text)
+	print("umabot dito sa stars")
 	if gameSettings.levels[curLvl].score >= 40 then
 		gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	elseif gameSettings.levels[curLvl].score >= 20 and gameSettings.levels[curLvl].score  < 40 then
@@ -51,12 +57,6 @@ function scene:createScene( event )
 	gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	loadsave.printTable(gameSettings)
-	group:insert(background)
-	group:insert(animation)
-	group:insert( candy )
-	group:insert( scoreText )
-	group:insert( back )
-	group:insert(text)
 	local star = {}
 	if ( gameSettings.levels[curLvl] and gameSettings.levels[curLvl].stars and gameSettings.levels[curLvl].stars > 0 ) then
         for j = 1, gameSettings.levels[curLvl].stars do
@@ -66,7 +66,7 @@ function scene:createScene( event )
 			group:insert( star[j] )
         end
     end
-	
+	print("umabot dito sa achievement")
 	local function achieveUnlocked()
 		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
 		local text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )

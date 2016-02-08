@@ -45,6 +45,18 @@ function scene:createScene( event )
 	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	lang = widget.newButton { defaultFile = "images/"..gameSettings.lang.."/chooselang.png", overFile ="images/"..gameSettings.lang.."/chooselang.png", id = "langTX", x = _W/2 , y = _H/2 + _H/3, height =   _H/6, width = _W/2 + _W/6 , onRelease = buttonOnRelease }
 
+local options = {
+    frames = {
+        { x=0, y=0, width=160, height=44 },
+        { x=0, y=45, width=42, height=42 },
+        { x=44, y=45, width=42, height=42 },
+        { x=88, y=44, width=96, height=44 }
+    },
+    sheetContentWidth = 184,
+    sheetContentHeight = 88
+	}
+	local onOffSwitchSheet = graphics.newImageSheet( "images/widget-on-off-sheet.png", options )
+
 	musicSwitch = widget.newSwitch
 	{
 	    x = _W/2 + _W/4,
@@ -52,7 +64,22 @@ function scene:createScene( event )
 		style = "onOff",
 	    id = "musicSwitch",
 	    initialSwitchState = gameSettings.musicOn,
-	    onPress =  onSwitchPress
+	    onPress =  onSwitchPress,
+
+	    sheet = onOffSwitchSheet,
+
+	        onOffBackgroundFrame = 1,
+	        onOffBackgroundWidth = 160,
+	        onOffBackgroundHeight = 44,
+	        onOffMask = "images/widget-on-off-mask.png",
+
+	        onOffHandleDefaultFrame = 2,
+	        onOffHandleOverFrame = 3,
+
+	        onOffOverlayFrame = 4,
+	        onOffOverlayWidth = 96,
+	        onOffOverlayHeight = 44
+
 	}
 	
 
@@ -65,7 +92,8 @@ function scene:createScene( event )
 	    initialSwitchState = gameSettings.soundOn,
 	    onPress = onSwitchPress
 	}
-	    	
+	
+	
 	group:insert( bg )
 	group:insert( back )
 	group:insert( lang )

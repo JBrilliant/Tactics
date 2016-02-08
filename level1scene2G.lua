@@ -15,11 +15,12 @@ gameSettings.levels[curLvl].score = score.get()
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.purgeScene( "level1scene2G", false )
+			storyboard.removeScene(storyboard.getCurrentSceneName(), false)
 			storyboard.gotoScene("mapG", "fade", 200 )
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
-			storyboard.gotoScene( "level1question2G", "fade", 200 )
+			if curLvl == 1 then storyboard.gotoScene( "level1question2G", "fade", 200 ) 
+			elseif curLvl == 2 then storyboard.gotoScene( "level1question3G", "fade", 200 ) end
 		end
 end
 
@@ -33,8 +34,10 @@ function scene:createScene( event )
 	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12}
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
-	local sequence= { {name = "normalRun", start = 10,count = 3, time = 11000, loopCount = 1, loopDirection = "forward" } }
+	local sequence= { {name = "level1", start = 10,count = 3, time = 11000, loopCount = 1, loopDirection = "forward" },
+						{name = "level2", start = 7,count = 2, time = 4000, loopCount = 1, loopDirection = "forward" }  }
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
+	if (curLvl == 2) then  animation:setSequence("level2")  end
 		animation:play()
 
 local function spriteListener( event )
@@ -44,16 +47,19 @@ local function spriteListener( event )
     	-- 						onComplete = function() 
      --                                audio.dispose( sfx.level1s2 ) 
      --                            end } )
-    	timer.performWithDelay(11000,function(e)
-			local nextB = widget.newButton { 
-				defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB",
-				x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
-				onRelease = buttonOnRelease }	
-			group:insert( nextB )
-
+    	if (curLvl == 1) then timer.performWithDelay(11000,function(e)
+			-- local nextB = widget.newButton { 
+			-- 	defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB",
+			-- 	x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
+			-- 	onRelease = buttonOnRelease }	
+			-- group:insert( nextB )
 			storyboard.gotoScene( "level1question2G", "fade", 200 )
 			-- storyboard.removeScene( storyboard.getCurrentSceneName(), false )
-		end,1)
+			end,1)
+    	elseif curLvl == 2 then timer.performWithDelay(4000,function(e) 
+    		storyboard.gotoScene( "level1question3G", "fade", 200 )
+			end,1)
+    	end
     end
 end
 
