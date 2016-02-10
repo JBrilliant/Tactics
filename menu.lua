@@ -22,7 +22,7 @@ local function buttonOnRelease(event)
 		elseif button == "settings" then
 			storyboard.gotoScene( "settings", "fade", 200 )
 		elseif button == "credits" then
-			-- storyboard.gotoScene("credits", "fade", 200)
+			storyboard.gotoScene( "creditshow", "fade", 200)
 		end
 end
 
@@ -73,16 +73,18 @@ function scene:destroyScene( event )
 	local group = self.view
 
 	-- widgets must be manually removed, such as life
-	if newGame and settings and achieve and rank and upgrades then
+	if newGame and settings and achieve and rank and upgrades and credits then
 		newGame:removeSelf()
 		settings:removeSelf()
 		achieve:removeSelf()
 		rank:removeSelf()
 		upgrades:removeSelf()
+		credits:removeSelf()
 		newGame = nil 
 		settings = nil 
 		achieve = nil 
-		rank = nil  
+		rank = nil
+		credits = nil  
 	end
 
 end

@@ -12,7 +12,7 @@ loadsave.printTable(gameSettings);
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
   print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
---local tmr
+-- local tmr
 -- local function tmr()
 -- 	local tmr = timer.performWithDelay(4500,function(e)
 -- 			storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); tmr = nil--
@@ -23,7 +23,7 @@ local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.le
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			storyboard.removeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
+			storyboard.purgeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
 			storyboard.gotoScene( "mapG", "fade", 200 );-- timer.cancel(tmr()); --tmr = nil
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
@@ -48,12 +48,12 @@ function scene:createScene( event )
 	if (curLvl == 2) then  animation:setSequence("level2")  end
 		animation:play()
 
-local function spriteListener( event )
+function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite    
     if ( thisSprite.frame == 2) then
     	audio.play( sfx.level1s1, { loops = 0, channel = 2,  onComplete = function() audio.dispose( sfx.level1s1 )  end } )
   	elseif (curLvl == 1 and  thisSprite.frame == 9) or (curLvl == 2 and  thisSprite.frame == 6) then
-  	  	 timer.performWithDelay(4500,function(e)
+  	  	timer.performWithDelay(4500,function(e)
 			if curLvl == 1 then
 				storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 			elseif curLvl == 2 then
@@ -85,7 +85,7 @@ local group = self.view
 		back = nil 
 		nextB = nil 
 	end
-	--timer.cancel(tmr)
+	--  timer.cancel(tmr)
 end
 
 scene:addEventListener( "createScene", scene )

@@ -90,7 +90,20 @@ local options = {
 		style = "onOff",
 	    id = "sfxSwitch",
 	    initialSwitchState = gameSettings.soundOn,
-	    onPress = onSwitchPress
+	    onPress = onSwitchPress,
+	    sheet = onOffSwitchSheet,
+
+	        onOffBackgroundFrame = 1,
+	        onOffBackgroundWidth = 160,
+	        onOffBackgroundHeight = 44,
+	        onOffMask = "images/widget-on-off-mask.png",
+
+	        onOffHandleDefaultFrame = 2,
+	        onOffHandleOverFrame = 3,
+
+	        onOffOverlayFrame = 4,
+	        onOffOverlayWidth = 96,
+	        onOffOverlayHeight = 44
 	}
 	
 	
