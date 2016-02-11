@@ -56,9 +56,10 @@ function scene:createScene( event )
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions)	
 	local sequence= { { name = "level1", start = 1, count = 9, time = 17500, loopCount = 1, loopDirection = "forward" },
 					 { name = "level2", start = 1, count = 6, time = 16000, loopCount = 1, loopDirection = "forward" },
-					 { name = "level3", start = 1, count = 2, time = 6000, loopCount = 1, loopDirection = "forward" }}	
+					 { name = "level3", start = 1, count = 2, time = 6000, loopCount = 1, loopDirection = "forward" },
+					 { name = "level4", start = 1, count = 2, time = 4000, loopCount = 1, loopDirection = "forward" }}	
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
-	animation:setSequence("level"..tostring(curLvl));	print("LEVEL "..curLvl.." NA! scene 1"); 
+	animation:setSequence("level"..tostring(curLvl));	
 	-- if (curLvl == 2) then  animation:setSequence("level2")  
 	-- elseif (curLvl == 3) then  animation:setSequence("level3") end
 		animation:play()
@@ -75,7 +76,7 @@ if curLvl == 1 then t = 17500 elseif curLvl == 2 then t = 1600 elseif curLvl == 
 tmr = timer.performWithDelay(t,function(e)
 	if curLvl == 1 or curLvl == 3 then 
 		print("curLvl ==3!!!!"); storyboard.gotoScene( "level1question1G", "fade", 200)
-	elseif curLvl == 2 then storyboard.gotoScene( "level1question2G", "fade", 200) 
+	elseif curLvl == 2 or  curLvl == 4 then storyboard.gotoScene( "level1question2G", "fade", 200) 
 	end
 end,1)
 

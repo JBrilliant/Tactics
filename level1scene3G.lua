@@ -13,6 +13,7 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 gameSettings.levels[curLvl].score = score.get()
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then

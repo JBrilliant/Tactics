@@ -49,7 +49,7 @@ function scene:createScene( event )
 	if curLvl == 1 then
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene2a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene1b.jpg"}
 	elseif curLvl == 2 then
-		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene5b.png", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene5a.png"}
+		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene5b.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene5a.jpg"}
 	end
 	local randomImages = {}
 	for i, v in ipairs(images) do randomImages[i] = v end

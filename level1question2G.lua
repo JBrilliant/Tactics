@@ -48,8 +48,8 @@ function scene:createScene( event )
 	local images = {}
 	if curLvl == 1 then
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene2a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/scene1b.jpg"}
-	elseif curLvl == 2 then
-		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene1a.png", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene1b.png"}
+	elseif curLvl == 2  or curLvl == 4 then
+		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene1a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level2/scene1b.jpg"}
 	elseif curLvl == 3 then
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level3/scene1a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level3/scene3b.jpg"}
 	end	
