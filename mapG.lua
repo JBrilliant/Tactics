@@ -26,10 +26,10 @@ local function buttonOnRelease(event)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level3" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level3" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level4" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )

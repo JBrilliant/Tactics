@@ -13,11 +13,13 @@ local curLvl = gameSettings.currentLevel
 local energy = {}
 local numberOfEnergy = gameSettings.levels[curLvl].energy
 loadsave.printTable(gameSettings.levels[curLvl].energy)
+local tmr
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			 -- Runtime:removeEventListener("enterFrame", animate);
+			 timer.cancel(tmr)
 			 storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
 			 storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
@@ -79,7 +81,7 @@ function scene:createScene( event )
 		group:insert( nextB)
 	end
 	
-	timer.performWithDelay(5000,achieveUnlocked,1)	
+	tmr = timer.performWithDelay(5000,achieveUnlocked,1)	
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite

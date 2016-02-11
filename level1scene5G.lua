@@ -9,14 +9,14 @@ local energyM = require("energy")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
-local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
-loadsave.printTable(gameSettings.levels[curLvl].energy)
-gameSettings.levels[curLvl].score = score.get()
-loadsave.printTable(gameSettings.levels[curLvl].energy)
+local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; loadsave.printTable(gameSettings.levels[curLvl].energy)
+gameSettings.levels[curLvl].score = score.get(); loadsave.printTable(gameSettings.levels[curLvl].energy)
+local tmr, t;
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
+			timer.cancel(tmr) 
 			storyboard.removeScene(storyboard.getCurrentSceneName(), false)
 			storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene("level1question4G", "fade", 200 )
 		elseif button == "nextB" then
@@ -32,39 +32,34 @@ function scene:createScene( event )
 	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease }
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15; candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )	
-	-- local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - 30, y = _H - _H/10,
-	-- 	height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+		
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
 	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
 	local sequence= { { name = "level1",  start = 5,  count = 3, time = 9000, loopCount = 1, loopDirection = "forward" },
-					{ name = "level2",  start = 11,  count = 2, time = 9000, loopCount = 1, loopDirection = "forward" }  }	
+					  { name = "level2",  start = 11,  count = 2, time = 9000, loopCount = 1, loopDirection = "forward" },
+					  { name = "level3",  start = 5,  count = 4, time = 16000, loopCount = 1, loopDirection = "forward" }, }	
 	local animation 
 	if curLvl == 1 then animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
-	elseif curLvl ==  2 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level2")  end
-		animation:play()
+	elseif curLvl ==  2 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level2")
+	elseif curLvl ==  3 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level3") 
+	end
+	animation:play()
 
-	timer.performWithDelay(9000,function(e)
-			-- local nextB = widget.newButton{
-			-- 	defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W -_W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 ,
-			-- 	onRelease = buttonOnRelease }	
-			-- group:insert( nextB )
-			if curLvl == 1 then storyboard.gotoScene("level1question5G","fade",200)
-			elseif curLvl == 2 then storyboard.gotoScene("level1question6G","fade",200) end-- storyboard.prugeScene("level1scene5G",false)
-		end,1)	
-
+	
 local function spriteListener( event )
-
     local thisSprite = event.target  -- "event.target" references the sprite
-
-    
-    if ( thisSprite.frame == 11) then
-    	
+    if ( thisSprite.frame == 11) then	
     end
-
-  
 end
 
+if curLvl == 1 or curLvl == 2 then t = 9000 elseif curLvl == 3 then t = 16000 end
+tmr = timer.performWithDelay(t,function(e)
+	if curLvl == 1 then storyboard.gotoScene( "level1question5G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+	elseif curLvl == 2 then storyboard.gotoScene( "level1question6G", "fade", 200); 
+	elseif curLvl == 3 then storyboard.gotoScene( "level1question2G", "fade", 200); 
+	end
+end,1)
 
 animation:addEventListener( "sprite", spriteListener )
 group:insert(background)

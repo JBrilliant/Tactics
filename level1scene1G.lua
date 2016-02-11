@@ -12,17 +12,30 @@ loadsave.printTable(gameSettings);
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
   print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
--- local tmr
--- local function tmr()
--- 	local tmr = timer.performWithDelay(4500,function(e)
--- 			storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); tmr = nil--
+local tmr, t;
+--  function tmr()
+-- 		if curLvl == 1 then t = 17500 elseif curLvl == 2 then t = 1600  end
+-- 		tmr = timer.performWithDelay(t,function(e)
+-- 			if curLvl == 1 then
+-- 				storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+-- 			elseif curLvl == 2 then
+-- 				storyboard.gotoScene( "level1question2G", "fade", 200); 
+-- 			end
 -- 		end,1)
--- 	return tmr
+-- 	-- return tmr
+-- end
+
+-- local function cancelTimer( event )
+--     print('cancelling timout, timer:', tmr)
+--     timer.cancel(tmr) 
+--     storyboard.removeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
+-- 			storyboard.gotoScene( "mapG", "fade", 200 );
 -- end
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
+			timer.cancel(tmr) 
 			storyboard.purgeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
 			storyboard.gotoScene( "mapG", "fade", 200 );-- timer.cancel(tmr()); --tmr = nil
 		elseif button == "nextB" then
@@ -42,27 +55,29 @@ function scene:createScene( event )
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions)	
 	local sequence= { { name = "level1", start = 1, count = 9, time = 17500, loopCount = 1, loopDirection = "forward" },
-					 { name = "level2", start = 1, count = 6, time = 16000, loopCount = 1, loopDirection = "forward" }}	
+					 { name = "level2", start = 1, count = 6, time = 16000, loopCount = 1, loopDirection = "forward" },
+					 { name = "level3", start = 1, count = 2, time = 6000, loopCount = 1, loopDirection = "forward" }}	
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
-	print("LEVEL "..curLvl.." NA! scene 1"); 
-	if (curLvl == 2) then  animation:setSequence("level2")  end
+	animation:setSequence("level"..tostring(curLvl));	print("LEVEL "..curLvl.." NA! scene 1"); 
+	-- if (curLvl == 2) then  animation:setSequence("level2")  
+	-- elseif (curLvl == 3) then  animation:setSequence("level3") end
 		animation:play()
 
-function spriteListener( event )
+local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite    
     if ( thisSprite.frame == 2) then
     	audio.play( sfx.level1s1, { loops = 0, channel = 2,  onComplete = function() audio.dispose( sfx.level1s1 )  end } )
-  	elseif (curLvl == 1 and  thisSprite.frame == 9) or (curLvl == 2 and  thisSprite.frame == 6) then
-  	  	timer.performWithDelay(4500,function(e)
-			if curLvl == 1 then
-				storyboard.gotoScene( "level1question1G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
-			elseif curLvl == 2 then
-				storyboard.gotoScene( "level1question2G", "fade", 200); 
-			end
-		end,1)
+ --  	elseif (curLvl == 1 and  thisSprite.frame == 9) or (curLvl == 2 and  thisSprite.frame == 6) then
     end
 end
 
+if curLvl == 1 then t = 17500 elseif curLvl == 2 then t = 1600 elseif curLvl == 3 then t = 6000  end
+tmr = timer.performWithDelay(t,function(e)
+	if curLvl == 1 or curLvl == 3 then 
+		print("curLvl ==3!!!!"); storyboard.gotoScene( "level1question1G", "fade", 200)
+	elseif curLvl == 2 then storyboard.gotoScene( "level1question2G", "fade", 200) 
+	end
+end,1)
 
 animation:addEventListener( "sprite", spriteListener )
 group:insert(animation)
@@ -85,7 +100,7 @@ local group = self.view
 		back = nil 
 		nextB = nil 
 	end
-	--  timer.cancel(tmr)
+	  -- timer.cancel(tmr)
 end
 
 scene:addEventListener( "createScene", scene )

@@ -12,10 +12,12 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
 loadsave.printTable(gameSettings.levels[curLvl].energy)
+local tmr, t;
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
+			timer.cancel(tmr)
 			storyboard.removeScene( "level1scene5G", false )
 			storyboard.gotoScene( "level1scene5G", "fade", 200  )
 		elseif button == "choice1" then
@@ -60,25 +62,25 @@ function scene:createScene(event )
 		local choice1 = widget.newButton { defaultFile = randomImages[1], id = "choice"..tostring(table.indexOf( images, randomImages[1] )), x = _W/2 , y = _H/2 , height =   _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }	
 		local animation = transition.to(choice1,{ time=500, x=_W/2 + 10, y = _W/2-100, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		transition.to(choice1,{time=500,delay=1000, x=_W/4 , y = _H/2 , xScale=1, yScale=1, transition=easing.inQuad})	
-		local tmr = timer.performWithDelay(1000,function(e)
+		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation); animation = nil; tmr = nil
 		end,1);	
 		group:insert(choice1)
 	end
-	timer.performWithDelay(2000,choice1fn,1)
+	tmr = timer.performWithDelay(2000,choice1fn,1)
 
 	local function choice2fn()
 		local choice2 = widget.newButton { defaultFile = randomImages[2], id = "choice"..tostring(table.indexOf( images, randomImages[2] )), x = _W/2, y = _H/2 , height =  _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease}
 		local animation = transition.to(choice2,{ time=500, x=_W/2 +10, y = _W/2-100, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		transition.to(choice2,{time=500,delay=1000, x=_W - _W/4, y = _H/2,  xScale=1, yScale=1, transition=easing.inQuad})		
-		local tmr = timer.performWithDelay(1000,function(e)
+		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation);animation = nil; tmr = nil
 		end,1);
 
 		group:insert(choice2)
 	
 	end
-	timer.performWithDelay(3000,choice2fn,1)
+	tmr = timer.performWithDelay(3000,choice2fn,1)
 	
 group:insert( background )	
 group:insert( back )	
