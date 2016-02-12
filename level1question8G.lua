@@ -54,9 +54,9 @@ function scene:createScene( event )
 
 	local function choice1fn()		
 		local choice1 = widget.newButton { defaultFile = randomImages[1], id = "choice"..tostring(table.indexOf( images, randomImages[1] )), x = _W/2 , y = _H/2 + _H/3 , height =   _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }	
-		local animation = transition.to(choice1,{ time=500,  x=_W/2 + 10, y = _W/2-100, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-			transition.to(choice1,{time=300,delay=500, x=_W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})	
-		tmr = timer.performWithDelay(500,function(e)
+		local animation = transition.to(choice1,{ time=500,  x=_W/2 + 10, y = _W/2-70, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+			transition.to(choice1,{time=500,delay=2500, x=_W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})	
+		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation); animation = nil; --tmr = nil-- timer.cancel(tmr);
 		end,1); print("tmr = choice1fn")
 		group:insert(choice1)	
@@ -65,26 +65,26 @@ function scene:createScene( event )
 		
 	local function choice2fn()	
 		local choice2 = widget.newButton { defaultFile = randomImages[2], id = "choice"..tostring(table.indexOf( images, randomImages[2] )), x = _W/2, y = _H/2 + _H/3, height =  _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }
-		local animation = transition.to(choice2,{ time=500,  x=_W/2 +10, y = _W/2-100, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-			transition.to(choice2,{time=300,delay=500, x=_W - _W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})		
-		tmr = timer.performWithDelay(500,function(e)
+		local animation = transition.to(choice2,{ time=500,  x=_W/2 +10, y = _W/2-70, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+			transition.to(choice2,{time=500,delay=2500, x=_W - _W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})		
+		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation); animation = nil; --tmr = nil-- timer.cancel(tmr);
 		end,1); print("tmr = choice2fn")
 		group:insert(choice2)	
 	end
-	tmr = timer.performWithDelay(4000,choice2fn,1); print("tmr = choice2fn 2")
+	tmr = timer.performWithDelay(5500,choice2fn,1); print("tmr = choice2fn 2")
 
 	
 	local function choice3fn()
 		local choice3 = widget.newButton { defaultFile = randomImages[3], id = "choice"..tostring(table.indexOf( images, randomImages[3] )), x = _W/2, y = _H/2 + _H/4, height =  _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }
-		local animation = transition.to(choice3,{ time=500, x=_W/2 +10, y = _W/2-100, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-			transition.to(choice3,{time=300,delay=500, x=_W/2 , y = _H/2 + 80 ,  xScale=1, yScale=1, transition=easing.inQuad})		
-		tmr = timer.performWithDelay(500,function(e) 
+		local animation = transition.to(choice3,{ time=500, x=_W/2 +10, y = _W/2-70, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+			transition.to(choice3,{time=500,delay=2500, x=_W/2 , y = _H/2 + 80 ,  xScale=1, yScale=1, transition=easing.inQuad})		
+		tmr = timer.performWithDelay(1000,function(e) 
 			transition.cancel(animation); animation = nil; --tmr = nil-- timer.cancel(tmr2);
-		end,1); print("tmr = choice3fn")
+		end,1); print("tmr = choice3fn") 
 		group:insert(choice3)
 	end
-	tmr = timer.performWithDelay(5000,choice3fn,1);print("tmr = choice3fn 2")
+	tmr = timer.performWithDelay(8000,choice3fn,1);print("tmr = choice3fn 2")
 	
 group:insert( background )	
 group:insert( back )	

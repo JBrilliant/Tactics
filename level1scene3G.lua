@@ -41,9 +41,10 @@ function scene:createScene( event )
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene4.jpg")
 	elseif curLvl == 3 then
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene1a.jpg")
+	elseif curLvl == 4 then
+		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene3.jpg")
 	end
-	scenario.height = _H; scenario.width = _W + _W/4;
-	scenario.x = _W/2; scenario.y = _H/2;
+	scenario.height = _H; scenario.width = _W + _W/4; scenario.x = _W/2; scenario.y = _H/2;
 	
 	audio.play( sfx.level1s3, { loops = 0, channel = 3,
     							onComplete = function() 
@@ -53,7 +54,7 @@ function scene:createScene( event )
 
 -- if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 4000  end
 tmr = timer.performWithDelay(8000,function(e)
-	if curLvl == 1 then storyboard.gotoScene( "level1question3G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+	if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "level1question3G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question5G", "fade", 200); 
 	elseif curLvl == 3 then storyboard.gotoScene( "levelpassedG", "fade", 200); 
 	end

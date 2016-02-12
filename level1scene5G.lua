@@ -38,11 +38,15 @@ function scene:createScene( event )
 	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
 	local sequence= { { name = "level1",  start = 5,  count = 3, time = 9000, loopCount = 1, loopDirection = "forward" },
 					  { name = "level2",  start = 11,  count = 2, time = 9000, loopCount = 1, loopDirection = "forward" },
-					  { name = "level3",  start = 5,  count = 4, time = 16000, loopCount = 1, loopDirection = "forward" }, }	
+					  { name = "level3",  start = 5,  count = 4, time = 16000, loopCount = 1, loopDirection = "forward" },
+					  { name = "level4",  start = 7,  count = 2, time = 8000, loopCount = 1, loopDirection = "forward" },
+					  { name = "level4G",  start = 8,  count = 2, time = 8000, loopCount = 1, loopDirection = "forward" } }	
 	local animation 
 	if curLvl == 1 then animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
 	elseif curLvl ==  2 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level2")
 	elseif curLvl ==  3 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level3") 
+	elseif curLvl ==  4 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level4") 
+	elseif curLvl ==  4 and gamesSettings.character == "girl" then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level4G") 
 	end
 	animation:play()
 
@@ -53,9 +57,9 @@ local function spriteListener( event )
     end
 end
 
-if curLvl == 1 or curLvl == 2 then t = 9000 elseif curLvl == 3 then t = 16000 end
+if curLvl == 1 or curLvl == 2 then t = 9000 elseif curLvl == 3 then t = 16000 elseif curLvl == 4 then t = 8000 end
 tmr = timer.performWithDelay(t,function(e)
-	if curLvl == 1 then storyboard.gotoScene( "level1question5G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+	if curLvl == 1 or curLvl == 4  then storyboard.gotoScene( "level1question5G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question6G", "fade", 200); 
 	elseif curLvl == 3 then storyboard.gotoScene( "level1question2G", "fade", 200); 
 	end

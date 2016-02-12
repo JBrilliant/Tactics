@@ -32,16 +32,22 @@ function scene:createScene( event )
 	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease }
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15; candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )	
-	
-	local sheetOptions = { width = 576, height = 320, numFrames = 12}
-	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
-	local sequence= { {name = "level1", start = 10,count = 3, time = 11000, loopCount = 1, loopDirection = "forward" },
-						{name = "level2", start = 7,count = 2, time = 4000, loopCount = 1, loopDirection = "forward" },
-						{name = "level3", start = 1,count = 4, time = 8000, loopCount = 1, loopDirection = "forward" }  }
-	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
-	animation:setSequence("level"..tostring(curLvl))
-	-- if (curLvl == 2) then  animation:setSequence("level2")  elseif (curLvl == 3) then  animation:setSequence("level3")  end
-		animation:play()
+	local scenario, sheetOptions, sheet1, sequence, animation
+	if curLvl == 4 and gameSettings.character == "girl" then
+		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene4.jpg")
+		scenario.height = _H; scenario.width = _W + _W/4; scenario.x = _W/2; scenario.y = _H/2;
+		group:insert(scenario)
+	else
+		sheetOptions = { width = 576, height = 320, numFrames = 12}
+		sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
+		sequence= { {name = "level1", start = 10,count = 3, time = 11000, loopCount = 1, loopDirection = "forward" },
+							{name = "level2", start = 7,count = 2, time = 4000, loopCount = 1, loopDirection = "forward" },
+							{name = "level3", start = 1,count = 4, time = 8000, loopCount = 1, loopDirection = "forward" },
+							{name = "level4", start = 3,count = 2, time = 6000, loopCount = 1, loopDirection = "forward" }   }
+		animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
+		animation:setSequence("level"..tostring(curLvl)); animation:play()
+		-- if (curLvl == 2) then  animation:setSequence("level2")  elseif (curLvl == 3) then  animation:setSequence("level3")  end
+	end
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite  
@@ -53,11 +59,12 @@ local function spriteListener( event )
     end
 end
 
-if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 4000 elseif curLvl == 3 then t = 8000  end
+if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 4000 elseif curLvl == 3 then t = 8000 elseif curLvl == 4 then t = 6000  end
 tmr = timer.performWithDelay(t,function(e)
 	if curLvl == 1 then storyboard.gotoScene( "level1question2G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question3G", "fade", 200); 
 	elseif curLvl == 3 then storyboard.gotoScene( "level1question7G", "fade", 200); 
+	elseif curLvl == 4 then storyboard.gotoScene( "level1question2G", "fade", 200); 
 	end
 end,1)
 

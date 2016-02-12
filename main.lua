@@ -12,11 +12,11 @@ local loadsave = require("loadsave");
 local gamestate = require("gamestate");
 
 
--- save default game settings
+-- set default game settings
 loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
--- voiceover
+-- voiceovers
 sfx.bgmusic = nil
 sfx.bgmusic = audio.loadSound("audio/bgmusic.3gp")
 sfx.level1s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/Voice 15.3gpp")

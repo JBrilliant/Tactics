@@ -13,35 +13,44 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); storyboard.gotoScene( "trivia1G", "fade", 200 );  --Runtime:removeEventListener("enterFrame", animate);
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 );  --Runtime:removeEventListener("enterFrame", animate);
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level1" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.purgeScene( "trivia1G", false ); storyboard.purgeScene( "level1scene1G", false ); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! girl")
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! boy")
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level3" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level3" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level4" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level4" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level5" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level5" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+			if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level6" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
