@@ -12,13 +12,13 @@ loadsave.printTable(gameSettings)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 );  --Runtime:removeEventListener("enterFrame", animate);
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 );  
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
-		elseif button == "level1" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		elseif button == "level1" and gameSettings.character == "boy" then
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 		elseif button == "level2" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! girl")
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )

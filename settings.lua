@@ -30,7 +30,7 @@ end
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "langTX" then
-			storyboard.gotoScene( "chooseLang", "fade", 200 )
+			storyboard.removeAll(); storyboard.gotoScene( "chooseLang", "fade", 200 )
 		elseif button == "back" then
 			storyboard.gotoScene( "menu", "fade", 200 )
 		-- elseif button == "credits" then

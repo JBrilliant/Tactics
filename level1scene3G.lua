@@ -52,7 +52,7 @@ function scene:createScene( event )
 
 
 -- if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 4000  end
-tmr = timer.performWithDelay(8000,function(e)
+tmr = timer.performWithDelay(8000,function(e) storyboard.removeAll()
 	if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "level1question3G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question5G", "fade", 200); 
 	elseif curLvl == 3 then storyboard.gotoScene( "levelpassedG", "fade", 200); 

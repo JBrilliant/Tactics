@@ -60,8 +60,9 @@ end
 
 if curLvl == 1 then t = 17500 elseif curLvl == 2 then t = 1600 elseif curLvl == 3 then t = 6000 elseif curLvl == 4 then t = 8000  end
 tmr = timer.performWithDelay(t,function(e)
+	storyboard.removeAll()
 	if curLvl == 1 or curLvl == 3 then 
-		print("curLvl ==3!!!!"); storyboard.gotoScene( "level1question1G", "fade", 200)
+		print("curLvl ==3!!!!");storyboard.gotoScene( "level1question1G", "fade", 200)
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question2G", "fade", 200) 
 	elseif curLvl == 4 then storyboard.gotoScene( "level1question6G", "fade", 200) 
 	end

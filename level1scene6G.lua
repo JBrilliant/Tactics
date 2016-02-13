@@ -49,7 +49,7 @@ local function spriteListener( event )
 end
 
 if curLvl == 1 then t = 16000 elseif curLvl == 3 then t = 3000  end
-tmr = timer.performWithDelay(t,function(e)
+tmr = timer.performWithDelay(t,function(e) storyboard.removeAll()
 	if curLvl == 1 then
 		storyboard.gotoScene( "levelpassedG", "fade", 200);  
 	elseif curLvl == 3 then storyboard.gotoScene( "levelfailedG", "fade", 200); 

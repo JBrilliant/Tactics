@@ -48,7 +48,7 @@ function scene:createScene( event )
 	if curLvl == 1 then animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2 
 	elseif curLvl == 2 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level2")  
 	elseif curLvl == 3 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level3")  
-	elseif curLvl == 4 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level4")  
+	elseif curLvl == 4 and gameSettings.character == "boy" then animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level4")  
 	elseif curLvl == 4 and gameSettings.character == "girl" then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level4G")  end
 		animation:play()
 
@@ -63,7 +63,7 @@ local function spriteListener( event )
 end
 
 if curLvl == 1 then t = 9000 elseif curLvl == 2 then t = 4000 elseif curLvl == 3 or curLvl == 4 then t = 8000 end
-tmr = timer.performWithDelay(t,function(e)
+tmr = timer.performWithDelay(t,function(e) storyboard.removeAll()
 	if curLvl == 1 and curLvl == 2 or curLvl == 4 then storyboard.gotoScene("level1question4G","fade",200) 
 	elseif curLvl == 3 then storyboard.gotoScene("level1question8G","fade",200)  end 
 end,1)
