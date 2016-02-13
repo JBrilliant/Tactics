@@ -10,7 +10,8 @@ local gamestate = require( "gamestate" )
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 loadsave.printTable(gameSettings);
 local energy = {}
-local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
+local curLvl = gameSettings.currentLevel; 
+local numberOfEnergy = gameSettings.levels[curLvl].energy; 
   print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
 local tmr, t;
 
@@ -19,7 +20,8 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr) 
-			storyboard.purgeScene(storyboard.getCurrentSceneName(), false); audio.stop( 2 ); audio.resume(1)
+			-- storyboard.purgeScene(storyboard.getCurrentSceneName(), false); 
+			storyboard.removeAll(); audio.stop( 2 ); audio.resume(1)
 			storyboard.gotoScene( "mapG", "fade", 200 );-- timer.cancel(tmr()); --tmr = nil
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )

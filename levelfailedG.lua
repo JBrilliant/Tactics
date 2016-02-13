@@ -16,7 +16,7 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			 storyboard.gotoScene( "mapG", "fade", 200 )
+			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
 			-- storyboard.gotoScene( "level1question2G", "fade", 200 )
 		end

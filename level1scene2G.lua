@@ -16,8 +16,7 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr) 
-			storyboard.removeScene(storyboard.getCurrentSceneName(), false)
-			storyboard.gotoScene("mapG", "fade", 200 )
+			storyboard.removeAll();storyboard.gotoScene("mapG", "fade", 200 )
 		elseif button == "nextB" then
 			storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
 			if curLvl == 1 then storyboard.gotoScene( "level1question2G", "fade", 200 ) 

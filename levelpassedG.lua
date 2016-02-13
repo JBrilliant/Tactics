@@ -20,8 +20,7 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			 -- Runtime:removeEventListener("enterFrame", animate);
 			 timer.cancel(tmr)
-			 storyboard.purgeScene( "mapG", false ); storyboard.purgeScene( "achievements", false );  storyboard.purgeScene( "achievements2", false )
-			 storyboard.gotoScene( "mapG", "fade", 200 )
+			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
 			--storyboard.gotoScene( "level2scene1G", "fade", 200 )
 		end

@@ -18,7 +18,7 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr)
-			storyboard.removeScene( "level1scene5G", false )
+			storyboard.removeAll();
 			storyboard.gotoScene( "level1scene5G", "fade", 200  )
 		elseif button == "choice1" then
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()

@@ -16,7 +16,7 @@ local tmr, t;
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			timer.cancel(tmr) ;storyboard.removeScene( "level1scene7G", false )
+			timer.cancel(tmr) ; storyboard.removeAll();
 			storyboard.gotoScene( "level1scene7G", "fade", 200  )
 		elseif button == "choice1" then
 			--MINUS ENERGY
