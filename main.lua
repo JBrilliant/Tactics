@@ -18,7 +18,7 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 -- voiceovers
 sfx.bgmusic = nil
-sfx.bgmusic = audio.loadSound("audio/bgmusic.3gp")
+sfx.bgmusic = audio.loadSound("audio/bgmusic.m4a")
 sfx.level1s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/Voice 15.3gpp")
 sfx.level1s2 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/Voice 16.3gpp")
 sfx.level1s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/Voice 17.3gpp")
