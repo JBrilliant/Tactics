@@ -1,6 +1,6 @@
 --default settings
 local M = {}
-M.maxLevels = 10
+M.maxLevels = 5
 M.gameSettings = {}
 M.gameSettings.character = " "
 M.gameSettings.musicOn = true

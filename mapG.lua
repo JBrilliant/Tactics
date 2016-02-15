@@ -98,24 +98,24 @@ function scene:createScene( event )
  			level[i] = widget.newButton	{ defaultFile = "images/level.png", overFile ="images/level_candies_active.png", height = _W/15,	width = _W/15 ,   onRelease = buttonOnRelease	}
  		if i==1 then
  			level[i].x = _W/2 + _W/6  + 19; level[i].y = _H/2 + _H/4 + 21; level[i].id = "level"..tostring( i )
+ 		-- elseif i==2 then
+			-- level[i].x = _W/2 + _W/3 - 8;	level[i].y =  _H/2 + _H/4; level[i].id = "level"..tostring( i )
  		elseif i==2 then
-			level[i].x = _W/2 + _W/3 - 8;	level[i].y =  _H/2 + _H/4; level[i].id = "level"..tostring( i )
- 		elseif i==3 then
  			level[i].x = _W/2 + _W/3 - 8;	level[i].y = _H/2 + 20; level[i].id = "level"..tostring( i )
+ 		-- elseif i==4 then
+ 			-- level[i].x = _W/2 + _W/3 - 8; level[i].y = _H/2 - 40; level[i].id = "level"..tostring( i )
+ 		elseif i==3 then
+ 			level[i].x = _W/2 + _H/4 ;	level[i].y = _H/2 - 50; level[i].id = "level"..tostring( i )
+ 		-- elseif i==6 then
+ 			-- level[i].x = _W/2 + 18;	level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
  		elseif i==4 then
- 			level[i].x = _W/2 + _W/3 - 8; level[i].y = _H/2 - 40; level[i].id = "level"..tostring( i )
+ 			level[i].x = _W/2 -_W/9; level[i].y = _H/2 - 50; level[i].id = "level"..tostring( i )
+ 		-- elseif i==8 then
+ 			-- level[i].x = _W/2 - _W/3 + 27 ;level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
  		elseif i==5 then
- 			level[i].x = _W/2 + _H/4 + 14;	level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
- 		elseif i==6 then
- 			level[i].x = _W/2 + 18;	level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
- 		elseif i==7 then
- 			level[i].x = _W/2 -_W/8; level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
- 		elseif i==8 then
- 			level[i].x = _W/2 - _W/3 + 27 ;level[i].y = _H/2 - 43; level[i].id = "level"..tostring( i )
- 		elseif i==9 then
- 			level[i].x = _W/2 - _W/3 + 27; level[i].y = _H/2 - _H/4 - 10; level[i].id = "level"..tostring( i )
- 		elseif i==10 then
- 			level[i].x = _W/2 - _W/3 + 27; level[i].y = _H/15; level[i].id = "level"..tostring( i )
+ 			level[i].x = _W/2 - _W/3 + 27; level[i].y = _H/2 - _H/3; level[i].id = "level"..tostring( i )
+ 		-- elseif i==10 then
+ 			-- level[i].x = _W/2 - _W/3 + 27; level[i].y = _H/15; level[i].id = "level"..tostring( i )
  		end	
 
 		if ( gameSettings.unlockedLevels == nil ) then
@@ -123,13 +123,14 @@ function scene:createScene( event )
         end
         if ( i <= gameSettings.unlockedLevels ) then
 			level[i]:setEnabled( true )
-			level[i].rotation = 0
-			if level[i] ~= nil then
-		        function animate(event)
-					level[i].rotation = level[i].rotation + 3
-				end
-				Runtime:addEventListener("enterFrame",animate);	
-			end
+			-- level[i].rotation = 0
+			-- if level[i] ~= nil then
+		 --        function animate(event)
+			-- 		level[i].rotation = level[i].rotation + 3
+			-- 	end
+			-- 	Runtime:addEventListener("enterFrame",animate);	
+			-- end
+			transition.to(level[i],{time= 1200, rotation=180, iterations = 0})	
         else 
             level[i]:setEnabled( false );--level[i].defaultFile = "images/level_candies_inactive.png"
             level[i].alpha = 0.3
@@ -150,15 +151,7 @@ function scene:createScene( event )
         end
        
  	end
- -- 	for i=1, gameSettings.unlockedLevels do 
- -- 	-- level[i].rotation =0;
-	-- 	if level[i] ~= nil then
-	-- 		function animate(event)
-	-- 			level[i]:rotate(3)
-	-- 		end
-	-- 		Runtime:addEventListener("enterFrame",animate);	
-	-- 	end
-	-- end
+
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:

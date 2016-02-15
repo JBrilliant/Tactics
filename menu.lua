@@ -43,7 +43,7 @@ function scene:createScene( event )
 	-- Runtime:addEventListener("enterFrame",animate);
 	
 	newGame = widget.newButton { defaultFile = "images/newGame.png", overFile ="images/newGame_o.png", id = "newGame", x = _W/2, y = _H/2 + _H/7, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }
-	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievementss", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
+	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
 	credits = widget.newButton { defaultFile = "images/tactics iconn.png", overFile ="images/tactics icon.png", id = "credits", x =_W/2 , y = _H/2 + newGame.width/2, height =  _H/5, width = _W/9 , onRelease = buttonOnRelease }	
 	settings = widget.newButton { defaultFile = "images/settings.png", overFile ="images/settings_o.png", id = "settings", x =_W/3 + _W/3, y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
 
@@ -73,20 +73,17 @@ function scene:destroyScene( event )
 	local group = self.view
 	-- Runtime:removeEventListener("enterFrame",animate);
 	-- widgets must be manually removed, such as life
-	if newGame and settings and achieve and rank and upgrades and credits and candy then
+	if newGame and settings and achieve and rank and upgrades and credits then
 		newGame:removeSelf()
 		settings:removeSelf()
-		achieve:removeSelf()
 		rank:removeSelf()
 		upgrades:removeSelf()
 		credits:removeSelf()
-		candy:removeSelf()
 		newGame = nil 
 		settings = nil 
 		achieve = nil 
 		rank = nil
 		credits = nil  
-		candy = nil
 	end
 
 end
