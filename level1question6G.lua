@@ -11,8 +11,10 @@ local sceneClass = require("sceneClass")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
+if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
+print("level1question6")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -23,13 +25,13 @@ local function buttonOnRelease(event)
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)
-			storyboard.removeScene( "level1question6G", false )
-			if curLvl == 1 then storyboard.gotoScene( "levelfailedG", "fade", 200 )
+			storyboard.removeAll();--storyboard.removeScene( "level1question6G", false )
+			if curLvl == 1 or curLvl == 2 then storyboard.gotoScene( "levelfailedG", "fade", 200 )
 			elseif curLvl == 4 then  storyboard.gotoScene( "level1scene2G", "fade", 200 ) end
 		elseif button == "choice2" then
 			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
 			loadsave.printTable(gameSettings)
-			storyboard.removeScene( "level1question6G", false )
+			storyboard.removeAll(); print("question6 error")--storyboard.removeScene( "level1question6G", false )
 			if curLvl == 1 then storyboard.gotoScene( "level1scene3G", "fade", 200 ) 
 			elseif curLvl == 2 then storyboard.gotoScene( "levelpassedG", "fade", 200 )
 			elseif curLvl == 4 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) end
@@ -40,7 +42,7 @@ function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	-- local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	local textQuest =  display.newText( "What will you do?", 270, 10,"riffic", 24 ); textQuest.x = _W/2; textQuest.y = _H/5; textQuest:setFillColor( 1,1,1 )	
@@ -80,9 +82,12 @@ function scene:createScene( event )
 		group:insert(choice2)
 	end
 	tmr = timer.performWithDelay(4500,choice2fn,1)
-	
+	tmr = timer.performWithDelay(5500,function(e) 
+		local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+		group:insert( back )
+		end,1);
 group:insert( background )	
-group:insert( back )	
+-- group:insert( back )	
 group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)

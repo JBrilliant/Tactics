@@ -10,16 +10,17 @@ local energyM = require("energy")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; loadsave.printTable(gameSettings.levels[curLvl].energy)
+if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 gameSettings.levels[curLvl].score = score.get(); loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
-
+print("level1scene5")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr) 
 			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene("level1question4G", "fade", 200 )
 		elseif button == "nextB" then
-			storyboard.removeScene( "level1scene5G", false )
+			storyboard.removeAll(); storyboard.removeScene( "level1scene5G", false )
 			storyboard.gotoScene( "level1question5G", "fade", 200 )
 		end
 end
@@ -36,8 +37,8 @@ function scene:createScene( event )
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level1/imgsheet3.png", sheetOptions )
 	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions )
 	local sequence= { { name = "level1",  start = 5,  count = 3, time = 9000, loopCount = 1, loopDirection = "forward" },
-					  { name = "level2",  start = 11,  count = 2, time = 9000, loopCount = 1, loopDirection = "forward" },
-					  { name = "level3",  start = 5,  count = 4, time = 16000, loopCount = 1, loopDirection = "forward" },
+					  { name = "level2",  start = 11,  count = 2, time = 15000, loopCount = 1, loopDirection = "forward" },
+					  { name = "level3",  start = 5,  count = 4, time = 20000, loopCount = 1, loopDirection = "forward" },
 					  { name = "level4",  start = 7,  count = 2, time = 8000, loopCount = 1, loopDirection = "forward" },
 					  { name = "level4G",  start = 8,  count = 2, time = 8000, loopCount = 1, loopDirection = "forward" } }	
 	local animation 
@@ -49,14 +50,25 @@ function scene:createScene( event )
 	end
 	animation:play()
 
-	
+	if curLvl == 1 then audio.play( sfx.level1s5, { loops = 0, channel = 6} )
+	elseif curLvl == 2  then	audio.play( sfx.level2s5, { loops = 0, channel = 13}) 
+    -- elseif curLvl == 3  then 	audio.play( sfx.level3s3, { loops = 0, channel = 16}) 
+    end
+
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite
-    if ( thisSprite.frame == 11) then	
-    end
+    if  curLvl == 3 and thisSprite.frame == 3 then	
+    	audio.play( sfx.level3s3, { loops = 0, channel = 16}) ; audio.setVolume( 1 ) 
+    elseif curLvl == 4 and gameSettings.character == "boy" then
+		audio.play( sfx.level4s5, { loops = 0, channel = 23}) ; audio.setVolume( 1 ) 
+	elseif curLvl == 4 and gameSettings.character == "girl" then
+		audio.play( sfx.level4s5G, { loops = 0, channel = 28}) ; audio.setVolume( 1 ) 
+	end
 end
 
-if curLvl == 1 or curLvl == 2 then t = 9000 elseif curLvl == 3 then t = 16000 elseif curLvl == 4 then t = 8000 end
+	
+
+if curLvl == 1 then t = 9000 elseif curLvl == 2 then t = 15000 elseif curLvl == 3 then t = 20000 elseif curLvl == 4 then t = 8000 end
 tmr = timer.performWithDelay(t,function(e) storyboard.removeAll()
 	if curLvl == 1 or curLvl == 4  then storyboard.gotoScene( "level1question5G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
 	elseif curLvl == 2 then storyboard.gotoScene( "level1question6G", "fade", 200); 
@@ -86,6 +98,7 @@ local group = self.view
 		back = nil 
 		nextB = nil 
 	end
+	audio.dispose(6); audio.dispose(13); audio.dispose(16); audio.dispose(23); audio.dispose(28);	
 end
 
 scene:addEventListener( "createScene", scene )

@@ -12,45 +12,42 @@ loadsave.printTable(gameSettings)
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "level1" and gameSettings.character == "girl" then
-			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 );  
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			Runtime:removeEventListener("enterFrame", animate); storyboard.removeAll(); storyboard.gotoScene( "trivia1G" );  
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 		elseif button == "level1" and gameSettings.character == "boy" then
-			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			Runtime:removeEventListener("enterFrame", animate); storyboard.removeAll(); storyboard.gotoScene( "trivia1G")
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 			gameSettings.currentLevel = 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 		elseif button == "level2" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! girl")
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level2" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); print("LEVEL "..gameSettings.currentLevel.." NA! boy")
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level3" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level3" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level4" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level4" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 4; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			-- if  gameSettings.musicOn == true then audio.stop( 1 ) end
 		elseif button == "level5" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level5" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-			if  gameSettings.musicOn == true then audio.stop( 1 ) end
+			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
 		elseif button == "level6" and gameSettings.character == "girl" then
 			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
@@ -90,7 +87,7 @@ end
 
 function scene:createScene( event )
 	local group = self.view
-	
+	if audio.isChannelPaused( 1 ) and gameSettings.musicOn == true then audio.resume( 1 ) end
 	local bg = display.newImage("images/map.png"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )
 	local back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
@@ -126,6 +123,13 @@ function scene:createScene( event )
         end
         if ( i <= gameSettings.unlockedLevels ) then
 			level[i]:setEnabled( true )
+			level[i].rotation = 0
+			if level[i] ~= nil then
+		        function animate(event)
+					level[i].rotation = level[i].rotation + 3
+				end
+				Runtime:addEventListener("enterFrame",animate);	
+			end
         else 
             level[i]:setEnabled( false );--level[i].defaultFile = "images/level_candies_inactive.png"
             level[i].alpha = 0.3
@@ -144,18 +148,27 @@ function scene:createScene( event )
                 group:insert( star[j] )
             end
         end
-  --       level[i].rotation = 0
-  --       function animate(event)
-		-- 	level[i].rotation = level[i].rotation + 3
-		-- end
-		-- Runtime:addEventListener("enterFrame",animate);	
+       
  	end
+ -- 	for i=1, gameSettings.unlockedLevels do 
+ -- 	-- level[i].rotation =0;
+	-- 	if level[i] ~= nil then
+	-- 		function animate(event)
+	-- 			level[i]:rotate(3)
+	-- 		end
+	-- 		Runtime:addEventListener("enterFrame",animate);	
+	-- 	end
+	-- end
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
-	-- Runtime:removeEventListener("enterFrame", animate);
+	Runtime:removeEventListener("enterFrame", animate);
+	-- if level then
+	-- 	level:removeSelf()
+	-- 	level=nil
+	-- end
 end
 
 scene:addEventListener( "createScene", scene )
