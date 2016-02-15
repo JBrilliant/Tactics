@@ -12,7 +12,7 @@ local function buttonOnRelease( event )
 		if button == "back" then
 			storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "nextB" then
-			storyboard.gotoScene( "achievements2", "fade", 200 )
+			storyboard.gotoScene( "achievements2", "fromRight", 200 )
 		end
 
 end

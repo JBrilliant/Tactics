@@ -22,7 +22,7 @@ local function buttonOnRelease(event)
 		elseif button == "settings" then
 			storyboard.gotoScene( "settings", "fade", 200 )
 		elseif button == "credits" then
-			storyboard.gotoScene( "creditshow", "fade", 200)
+			storyboard.gotoScene( "creditshow")
 		end
 end
 
@@ -36,14 +36,14 @@ function scene:createScene( event )
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2
 		animation:play()
 	candy = display.newImage ("images/level_candies_active.png"); candy.height = _W/13; candy.width = _W/13; candy.x =_W/2 + 9;candy.y = _H/2 - 75 ; candy.alpha = 0.8
-
-	-- local function animate(event)
+	-- candy.rotation = 0;
+	-- function animate(event)
 	-- 	candy.rotation = candy.rotation + 3
 	-- end
 	-- Runtime:addEventListener("enterFrame",animate);
 	
 	newGame = widget.newButton { defaultFile = "images/newGame.png", overFile ="images/newGame_o.png", id = "newGame", x = _W/2, y = _H/2 + _H/7, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }
-	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
+	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievementss", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
 	credits = widget.newButton { defaultFile = "images/tactics iconn.png", overFile ="images/tactics icon.png", id = "credits", x =_W/2 , y = _H/2 + newGame.width/2, height =  _H/5, width = _W/9 , onRelease = buttonOnRelease }	
 	settings = widget.newButton { defaultFile = "images/settings.png", overFile ="images/settings_o.png", id = "settings", x =_W/3 + _W/3, y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
 
@@ -71,20 +71,22 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 	local group = self.view
-
+	-- Runtime:removeEventListener("enterFrame",animate);
 	-- widgets must be manually removed, such as life
-	if newGame and settings and achieve and rank and upgrades and credits then
+	if newGame and settings and achieve and rank and upgrades and credits and candy then
 		newGame:removeSelf()
 		settings:removeSelf()
 		achieve:removeSelf()
 		rank:removeSelf()
 		upgrades:removeSelf()
 		credits:removeSelf()
+		candy:removeSelf()
 		newGame = nil 
 		settings = nil 
 		achieve = nil 
 		rank = nil
 		credits = nil  
+		candy = nil
 	end
 
 end

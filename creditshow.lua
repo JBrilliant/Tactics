@@ -3,6 +3,7 @@ local sfx = require( "sfx" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require("widget")
+local gamestate = require("gamestate");
 
 local back, credits, howtoplay, background, bg, bg2, bgb
 
@@ -21,7 +22,7 @@ function scene:createScene( event )
 
 	local lang = gameSettings.lang
 	if lang == "bicol" then lang ="tagalog" end
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = function(e) storyboard.removeAll(); storyboard.gotoScene( "menu", "fade", 200 ) end}	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = function(e) storyboard.purgeScene("creditshow", false); storyboard.gotoScene( "menu") end}	
 	credit = widget.newButton { defaultFile = "images/credits.jpg",  id = "credits", x = _W /8, y = _H/10 + 80, height =  _H/16, width = _W/3 - 10, onRelease = function(e)
 			bg = display.newImage("images/creditss.jpg"); bg.height = _H; bg.width = _W/2 + 120; bg.x = _W - _W/3; bg.y = _H/2;
 			group:insert(bg)

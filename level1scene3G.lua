@@ -9,20 +9,17 @@ local score = require("score")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
+if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end 
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 gameSettings.levels[curLvl].score = score.get()
 loadsave.printTable(gameSettings.levels[curLvl].energy)
-local tmr, t;
-
+local tmr, t;print("level1scene3")
+print("question6 error scene3")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr) 
-			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene( "level1question1G", "fade", 200 ); 
-		elseif button == "nextB" then
-			storyboard.removeScene( "level1scene3G", false )
-			if curLvl == 1 then storyboard.gotoScene( "level1question3G", "fade", 200 )
-			elseif curLvl == 2 then storyboard.gotoScene( "level1question5G", "fade", 200 ) end
+			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); 
 		end
 end
 
@@ -40,24 +37,28 @@ function scene:createScene( event )
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene4.jpg")
 	elseif curLvl == 3 then
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene1a.jpg")
-	elseif curLvl == 4 then
+	elseif curLvl == 4 or curLvl == 5 then
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene3.jpg")
 	end
 	scenario.height = _H; scenario.width = _W + _W/4; scenario.x = _W/2; scenario.y = _H/2;
-	
-	audio.play( sfx.level1s3, { loops = 0, channel = 3,
-    							onComplete = function() 
-                                    audio.dispose( sfx.level1s3 ) 
-                                end } )
 
-
--- if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 4000  end
-tmr = timer.performWithDelay(8000,function(e) storyboard.removeAll()
-	if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "level1question3G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
-	elseif curLvl == 2 then storyboard.gotoScene( "level1question5G", "fade", 200); 
-	elseif curLvl == 3 then storyboard.gotoScene( "levelpassedG", "fade", 200); 
+	if curLvl == 1 then	 audio.play( sfx.level1s3, { loops = 0, channel = 4} ) 
+	elseif curLvl == 2  then audio.play( sfx.level2s4, { loops = 0, channel = 12}) 
+    elseif curLvl == 3  then audio.play( sfx.level3s5, { loops = 0, channel = 18}) ; audio.setVolume( 1 ) 
+    elseif curLvl == 4 and gameSettings.character == "boy" then
+		audio.play( sfx.level4s3, { loops = 0, channel = 21}) ; audio.setVolume( 1 ) 
+	elseif curLvl == 4 and gameSettings.character == "girl" then
+		audio.play( sfx.level4s3G, { loops = 0, channel = 26}) ; audio.setVolume( 1 ) 
 	end
-end,1)
+
+-- if curLvl == 4 then t = 9000 else t = 8000 end
+	tmr = timer.performWithDelay(8000,function(e) storyboard.removeAll()
+		if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "level1question3G", "fade", 200);  --timer.cancel(tmr); --tmr = nil--
+		elseif curLvl == 2 then storyboard.gotoScene( "level1question5G", "fade", 200); 
+		elseif curLvl == 3 then storyboard.gotoScene( "levelpassedG", "fade", 200); 
+		elseif curLvl == 5 then storyboard.gotoScene( "level1question8G", "fade", 200); 
+		end
+	end,1)
 --animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(scenario)
@@ -80,6 +81,7 @@ local group = self.view
 		back = nil 
 		nextB = nil 
 	end
+	audio.dispose(4); audio.dispose(12); audio.dispose(18); audio.dispose(21); audio.dispose(26);	
 end
 
 scene:addEventListener( "createScene", scene )
