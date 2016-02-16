@@ -2,7 +2,6 @@ local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require("widget")
-
 local back, english, tagalog, bicol
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
@@ -50,7 +49,7 @@ local group = self.view
 
 end
 
-loadsave.saveTable(t, "myTable.json", system.DocumentsDirectory)
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

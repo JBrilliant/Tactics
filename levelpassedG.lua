@@ -22,7 +22,12 @@ local function buttonOnRelease(event)
 			 timer.cancel(tmr)
 			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
-			--storyboard.gotoScene( "level2scene1G", "fade", 200 )
+			if (gameSettings.unlockedLevels - gameSettings.currentLevel) == 1 then
+				gameSettings.currentLevel = gameSettings.currentLevel + 1; 
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); storyboard.removeAll(); storyboard.gotoScene( "level1scene1G", "fade", 200 )
+			end
+		elseif button == "badge" then
+			storyboard.removeAll(); storyboard.gotoScene("achievements", "fade", 200)
 		end
 end
 
@@ -55,9 +60,7 @@ function scene:createScene( event )
 		gameSettings.levels[curLvl].stars = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	else gameSettings.levels[curLvl].stars = 1
 	end
-	gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	loadsave.printTable(gameSettings)
+	
 	local star = {}
 	if ( gameSettings.levels[curLvl] and gameSettings.levels[curLvl].stars and gameSettings.levels[curLvl].stars > 0 ) then
         for j = 1, gameSettings.levels[curLvl].stars do
@@ -67,13 +70,21 @@ function scene:createScene( event )
 			group:insert( star[j] )
         end
     end
-	print("umabot dito sa achievement")
+
+	if gameSettings.unlockedLevels == gameSettings.currentLevel then
+		gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1; 
+		gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1;
+		gameSettings.levels[curLvl].energy = 3 ; gameSettings.levels[curLvl].score = 0 
+		loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+	end
+	loadsave.printTable(gameSettings)
+
 	local function achieveUnlocked()
 		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
 		local text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
 		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-		local badge = display.newImage("images/badge "..curLvl..".png"); badge.x = _W/2; badge.y = _H/2; badge.height = _H/3; badge.width = _W/4
-		transition.to(badge,{ time=1000, delay=300,y = _H/2 + 50, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+		local badge =  widget.newButton { defaultFile = "images/badge "..curLvl..".png", id = "badge", x = _W/2, y = _H/2, height =  _H/3, width = _W/4 , onRelease = buttonOnRelease }	
+		 transition.to(badge,{ time=1000, delay=300,y = _H/2 + 50, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 		group:insert( text1)
 		group:insert( badge)
@@ -97,7 +108,7 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
-
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 scene:addEventListener( "createScene", scene )

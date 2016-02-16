@@ -48,36 +48,36 @@ local function buttonOnRelease(event)
 		elseif button == "level5" and gameSettings.character == "boy" then
 			gameSettings.currentLevel = 5; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "trivia1G", "fade", 200 )
-		elseif button == "level6" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- elseif button == "level6" and gameSettings.character == "girl" then
+		-- 	gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level6" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level7" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level7" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level8" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level8" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level9" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level9" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level10" and gameSettings.character == "girl" then
-			gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
-		elseif button == "level10" and gameSettings.character == "boy" then
-			gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level6" and gameSettings.character == "boy" then
+		-- 	gameSettings.currentLevel = 6; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level7" and gameSettings.character == "girl" then
+		-- 	gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level7" and gameSettings.character == "boy" then
+		-- 	gameSettings.currentLevel = 7; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level8" and gameSettings.character == "girl" then
+		-- 	gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level8" and gameSettings.character == "boy" then
+		-- 	gameSettings.currentLevel = 8; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level9" and gameSettings.character == "girl" then
+		-- 	gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level9" and gameSettings.character == "boy" then
+		-- 	gameSettings.currentLevel = 9; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level10" and gameSettings.character == "girl" then
+		-- 	gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
+		-- elseif button == "level10" and gameSettings.character == "boy" then
+		-- 	gameSettings.currentLevel = 10; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+		-- 	-- storyboard.gotoScene( "level1question1G", "fade", 200 )
 		elseif button == "back" then
 			if gameSettings.character == "boy" or gameSettings.character == "girl" then
 				storyboard.gotoScene( "menu", "fade", 200 )
@@ -123,13 +123,6 @@ function scene:createScene( event )
         end
         if ( i <= gameSettings.unlockedLevels ) then
 			level[i]:setEnabled( true )
-			-- level[i].rotation = 0
-			-- if level[i] ~= nil then
-		 --        function animate(event)
-			-- 		level[i].rotation = level[i].rotation + 3
-			-- 	end
-			-- 	Runtime:addEventListener("enterFrame",animate);	
-			-- end
 			transition.to(level[i],{time= 1200, rotation=180, iterations = 0})	
         else 
             level[i]:setEnabled( false );--level[i].defaultFile = "images/level_candies_inactive.png"
@@ -163,7 +156,8 @@ local group = self.view
 	-- 	level=nil
 	-- end
 end
-
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

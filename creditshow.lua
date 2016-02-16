@@ -60,6 +60,8 @@ local group = self.view
 		rank = ni
 		credits = nil  
 	end
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+			
 end
 
 scene:addEventListener( "createScene", scene )

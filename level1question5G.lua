@@ -7,6 +7,7 @@ local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
 local sceneClass = require("sceneClass")
+local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
@@ -20,7 +21,8 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			timer.cancel(tmr)
 			storyboard.removeAll();
-			storyboard.gotoScene( "level1scene5G", "fade", 200  )
+			if curLvl == 1  or curLvl == 4 then storyboard.gotoScene( "level1scene5G", "fade", 200  )
+			elseif curLvl == 2 then storyboard.gotoScene( "level1scene3G", "fade", 200  ) end
 		elseif button == "choice1" then
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
@@ -45,7 +47,24 @@ function scene:createScene(event )
 	-- local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
-	local textQuest =  display.newText( "What will you say?", 270, 10, "riffic", 24 ); textQuest.x = _W/2; textQuest.y = _H/5; textQuest:setFillColor( 1,1,1 )
+	local textQuest = display.newText( " ", 270, 10, "riffic", 24 ); textQuest.x = _W/2; textQuest.y = _H/5; textQuest:setFillColor( 1,1,1 );
+	local text = {}
+	if gameSettings.lang == "english" then
+		textQuest.text = "What will you say?"
+		if curLvl == 1 then text = {"I was afraid to get punished.", "She called me “Hippo” first."}
+		elseif curLvl == 2 then text = {"Tell the truth about David and his friends bullying you.", "Lie and tell that nothing's wrong and go back to your seat. You’re sure that David will be scared by now and leave you alone."}
+		end
+	elseif gameSettings.lang == "tagalog" then
+		textQuest.text = "Anong sasabihin mo?"
+		if curLvl == 1 then text = {"Natatakot akong mapagalitan.", "Nauna po syang tumawag sa akin ng “Hippo”."}
+		elseif curLvl == 2 then text = {"Sabihin ang totoo tungkol sa pang aaping ginagawa nina David at ng kanyang mga kaibigan.", "Magsinungaling at sabihin na lamang na walang problema at bumalik na lamang sayong upuan. Sigurado kang matatakot na sina David at ang kanyang mga kaibigan at hahayaan ka na."} 
+		end
+	elseif gameSettings.lang == "bicol" then
+		textQuest.text = "Anong sasabihon mo?"
+		if curLvl == 1 then text = {"Natakot ako baka padusahan ako.", "Tinaraman nya ako madam na “Hippo”."}
+		elseif curLvl == 2 then  text = {"Itaram su tunay tungkol kay David at sa mga barkada nya na tigaiwal ka.", "Mag utik at taramon na wara man nangyayare at magbalik sa tukawan mo ta aram mo man na baka natakot si David at babayaan ka na sana."} 
+		end
+	end
 	local animation1 = transition.to(textQuest,{ time=1000, y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
 	transition.to(textQuest,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=500, delay=2000})
 	
@@ -54,9 +73,13 @@ function scene:createScene(event )
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene30.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene17.jpg"}
 	elseif curLvl == 2 then
 		textQuest.text = "What will you do?"
+		if gameSettings.lang == "tagalog" then textQuest.text = "Anong gagawin mo?"
+		elseif gameSettings.lang == "bicol" then textQuest.text = "Anong gigibuhon mo?" end
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene4a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene4b.jpg"}
 	elseif curLvl == 4 then
 		textQuest.text = "What would you do?"
+		if gameSettings.lang == "tagalog" then textQuest.text = "Anong gagawin mo?"
+		elseif gameSettings.lang == "bicol" then textQuest.text = "Anong gigibuhon mo?" end
 		images = {"images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene5a.jpg", "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene5b.jpg"}
 	end
 	local randomImages = {}
@@ -65,19 +88,25 @@ function scene:createScene(event )
 
 	local function choice1fn()	
 		local choice1 = widget.newButton { defaultFile = randomImages[1], id = "choice"..tostring(table.indexOf( images, randomImages[1] )), x = _W/2 , y = _H/3 + _H/4 , height =   _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }	
+		local text = display.newText( text[table.indexOf( images, randomImages[1] )], 270, 10, "riffic", 12 ); text:setFillColor(0,0,0)
 		local animation = transition.to(choice1,{time=500, x=_W/2 + 10, y = _W/2-70, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		transition.to(choice1,{time=500,delay=2500, x=_W/4 , y = _H/2 ,  xScale=1, yScale=1, transition=easing.inQuad})				
+		animation = transition.to(text,{time=500, x=_W/2 + 10, y =  _H/2 + _H/3, xScale=2, yScale=2, transition=fadeIn,customProperty=1000,onComplete=after})
+		transition.to(text,{time=500,delay=2500, x=_W/4 , y = _H/2 + _H/4,  xScale=1, yScale=1, transition=easing.inQuad})				
 		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation);animation = nil; --tmr = nil
-		end,1);		
+		end,1);			
 		group:insert(choice1)	
 	end
 	tmr = timer.performWithDelay(2000,choice1fn,1)
 
 	local function choice2fn()
 		local choice2 = widget.newButton { defaultFile = randomImages[2], id = "choice"..tostring(table.indexOf( images, randomImages[2])), x = _W/2, y = _H/3 + _H/4 , height =  _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }
+		local text = display.newText( text[table.indexOf( images, randomImages[2] )], 270, 10, "riffic", 12 ); text:setFillColor(0,0,0)
 		local animation = transition.to(choice2,{ time=500, x=_W/2 +10, y = _W/2-70, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
 		transition.to(choice2,{time=500,delay=2500, x=_W - _W/4, y = _H/2,  xScale=1, yScale=1, transition=easing.inQuad})		
+		animation = transition.to(text,{time=500, x=_W/2 + 10, y = _H/2 + _H/3, xScale=2, yScale=2, transition=fadeIn,customProperty=1000,onComplete=after})
+		transition.to(text,{time=500,delay=2500, x=_W - _W/4, y = _H/2 + _H/4,  xScale=1, yScale=1, transition=easing.inQuad})				
 		tmr = timer.performWithDelay(1000,function(e)
 			transition.cancel(animation); animation = nil; --tmr = nil
 		end,1);
@@ -110,6 +139,7 @@ local group = self.view
 		choice1 = nil 
 		choice2 = nil  
 	end
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 scene:addEventListener( "createScene", scene )

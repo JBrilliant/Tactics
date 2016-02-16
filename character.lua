@@ -43,9 +43,10 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 
 end
-
+			
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

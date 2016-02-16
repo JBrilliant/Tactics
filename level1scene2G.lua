@@ -5,12 +5,13 @@ local scene = storyboard.newScene()
 local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
+local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
 if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
-loadsave.printTable(gameSettings.levels[curLvl].energy)
+loadsave.printTable(gamestate.gameSettings.levels[curLvl].energy)
 gameSettings.levels[curLvl].score = score.get()
 local tmr, t;
 print("level1scene2")
@@ -70,7 +71,7 @@ function scene:createScene( event )
 	end
 		
 
-if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 9000 elseif curLvl == 3 then t = 18000 elseif curLvl == 4 and gameSettings.character == "boy" then t = 18000  elseif curLvl == 4 and gameSettings.character == "girl" then t = 12000 elseif curLvl == 5 then t = 6000 end
+if curLvl == 1 then t = 11000 elseif curLvl == 2 then t = 18000 elseif curLvl == 3 then t = 8000 elseif curLvl == 4 and gameSettings.character == "boy" then t = 18000  elseif curLvl == 4 and gameSettings.character == "girl" then t = 12000 elseif curLvl == 5 then t = 6000 end
 tmr = timer.performWithDelay(t,function(e)
 	storyboard.removeAll()
 	if curLvl == 1 then storyboard.gotoScene( "level1question2G", "fade", 200);  
@@ -101,6 +102,7 @@ local group = self.view
 		nextB = nil 
 	end
 	audio.dispose(3); audio.dispose(10); audio.dispose(15); audio.dispose(20); audio.dispose(25);	
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 scene:addEventListener( "createScene", scene )

@@ -9,7 +9,7 @@ local sceneClass = require("sceneClass")
 local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
-loadsave.printTable(gameSettings);
+loadsave.printTable(gamestate.gameSettings);
 local energy = {}
 local curLvl = gameSettings.currentLevel; print("dito ung error");-- energyM.set(3); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 local numberOfEnergy = gameSettings.levels[curLvl].energy;   print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
@@ -102,6 +102,7 @@ local group = self.view
 		nextB = nil 
 	end
 	audio.dispose( 2 ); audio.dispose(9); audio.dispose(14); audio.dispose(19); audio.dispose(24);	
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 scene:addEventListener( "createScene", scene )

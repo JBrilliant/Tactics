@@ -6,6 +6,7 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
+local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
@@ -89,6 +90,7 @@ local group = self.view
 		nextB = nil 
 	end
 	audio.dispose(7);
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 scene:addEventListener( "createScene", scene )

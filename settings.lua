@@ -127,9 +127,9 @@ function scene:destroyScene( event )
 		langTx= nil 
 		credits= nil 
 	end
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
-loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

@@ -2,6 +2,8 @@ local storyboard = require("storyboard")
 local scene = storyboard.newScene()
 local widget = require("widget")
 local loadsave = require("loadsave")
+local gamestate = require("gamestate")
+
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 -- gameState.soundOn = nil
 
