@@ -72,12 +72,19 @@ function scene:createScene( event )
     end
 
 	if gameSettings.unlockedLevels == gameSettings.currentLevel then
-		gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1; 
-		gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1;
-		gameSettings.levels[curLvl].energy = 3 ; gameSettings.levels[curLvl].score = 0 
+		gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1;
+		if gameSettings.levels[curLvl].stars == 3 then
+			tmr = timer.performWithDelay(5000,achieveUnlocked,1)	 
+			gameSettings.unlockedAchieve = gameSettings.unlockedAchieve + 1;
+		end
+		gameSettings.levels[curLvl].energy = 3 ; gameSettings.levels[curLvl + 1].energy = 3 ; gameSettings.levels[curLvl].score = 0 
 		loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	end
 	loadsave.printTable(gameSettings)
+
+	if gameSettings.unlockedLevels == 6 then
+		
+	end
 
 	local function achieveUnlocked()
 		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
@@ -91,7 +98,8 @@ function scene:createScene( event )
 		group:insert( nextB)
 	end
 	
-	tmr = timer.performWithDelay(5000,achieveUnlocked,1)	
+	-- if 
+	-- 	tmr = timer.performWithDelay(5000,achieveUnlocked,1)	
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite

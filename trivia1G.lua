@@ -16,7 +16,7 @@ function scene:createScene( event )
 		animation:play()
 	
 	tmr = timer.performWithDelay(8000,function(e)
-			storyboard.removeAll();
+			-- storyboard.removeAll();
 			storyboard.gotoScene( "level1scene1G", "fade", 200 ); 
 			if  gameSettings.musicOn == true then audio.fadeOut( 1 ) end 
 		end,1)	
@@ -28,7 +28,7 @@ end
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
-timer.cancel(tmr)
+
 end
 
 scene:addEventListener( "createScene", scene )

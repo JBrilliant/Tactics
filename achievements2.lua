@@ -12,9 +12,7 @@ local bg, back, nextB
 local function buttonOnRelease( event )
 	local button = event.target.id
 		if button == "back" then
-			storyboard.gotoScene( "achievements", "fade", 200 )
-		elseif button == "nextB" then
-			storyboard.gotoScene( "achievements2", "fade", 200 )
+			storyboard.gotoScene( "achievements", "fromLeft", 500 )
 		end
 
 end
@@ -29,20 +27,21 @@ function scene:createScene( event )
 	-- group:insert( nextB )
 	local lang = gameSettings.lang
 		if lang == "bicol" then lang = "tagalog" end
-	local badge = {}
-	local j = 1
-	local box = {}
-	for i=5, 8 do 
-		-- box[i] = display.newImage("images/english/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
-		box[i] = display.newImage("images/"..lang.."/b"..i..".png"); box[i].x = box[i].x + (125*j) - 60;box[i].y =  _H/2 + 10; box[i].width =_W/5 + 30;box[i].height = 280; 
-		group:insert(box[i])
-		badge[i] = display.newImage("images/badge "..i..".png"); badge[i].height = _W/5 + 20; badge[i].width = _W/5 + 20; badge[i].x = badge[i].x + (125*j) - 60; badge[i].y = _H/4 + 15;
-		group:insert(badge[i])
-		j = j + 1
-		if ( i > gameSettings.unlockedAchieve) then
-			badge[i].alpha = 0.3; box[i].alpha = 0.3
-        end  
-	end
+
+	local box = display.newImage("images/"..lang.."/b5.png"); box.x = box.x + 125 - 60;box.y =  _H/2 + 10; box.width =_W/5 + 30;box.height = 280; 
+	local badge = display.newImage("images/badge 5.png"); badge.height = _W/5 + 20; badge.width = _W/5 + 20; badge.x = badge.x + 125 - 60; badge.y = _H/4 + 15;
+	local confetti = display.newImage("images/confetti.png"); confetti.x = _W - _W/3; confetti.y =  _H/2 ; confetti.width =_W/2 + 200;confetti.height = _H; 
+	local trophy = display.newImage("images/trophy.png"); trophy.x = _W - _W/3; trophy.y =  _H/2 ; trophy.width =_W/2 + 10;trophy.height = 280; 
+		
+	if ( 6 > gameSettings.unlockedAchieve) then
+		badge.alpha = 0.3;  box.alpha = 0.3; trophy.alpha = 0.3; confetti.alpha = 0.3
+    end
+
+	group:insert(box)
+	group:insert(badge)
+	group:insert(confetti) 
+	group:insert(trophy)
+	
 	group:insert( back )
 end
 

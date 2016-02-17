@@ -13,21 +13,22 @@ local gamestate = require("gamestate");
 
 
 -- set default game settings
--- loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
--- gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+--loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
+gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 function onSystemEvent( event )
 if event.type == "applicationStart" then
-	gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+	-- gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 	if gameSettings == nil then 
 		loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)-- set default at start
 		gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 		-- if gameSettings ~= nil then		
 		-- end
 	end
-	-- loadsfx()
+	loadsfx()
 elseif event.type == "applicationOpen" then
-	gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+	-- gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+	loadsfx()
 	if gameSettings == nil then 
 		loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 		gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)

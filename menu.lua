@@ -54,18 +54,22 @@ function scene:createScene( event )
 	group:insert( settings)
 	group:insert( achieve)
 	group:insert( credits)
-	
+	print("MENU MENU MENU")
+	loadsave.printTable(gameSettings);
 end
 
 function scene:enterScene( event )
     -- sfx.bgmusic = audio.loadSound("bgmusic.mp3")
-    if ( gameSettings.musicOn  ) then
-  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1,
-    							onComplete = function() 
-                                    audio.dispose( sfx.bgmusic ) 
-                                end } )
+    if gameSettings ~= nil then
+	    if  gameSettings.musicOn   then
+	  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1, onComplete = function()  audio.dispose( sfx.bgmusic )  end } )
+		end
+	else
+		gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+		 if  gameSettings.musicOn   then
+	  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1, onComplete = function()  audio.dispose( sfx.bgmusic )  end } )
+		end
 	end
-
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:

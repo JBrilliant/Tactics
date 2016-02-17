@@ -9,11 +9,11 @@ local sceneClass = require("sceneClass")
 local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
-loadsave.printTable(gamestate.gameSettings);
+
 local energy = {}
 local curLvl = gameSettings.currentLevel; print("dito ung error");-- energyM.set(3); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
-local numberOfEnergy = gameSettings.levels[curLvl].energy;   print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
-if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
+local numberOfEnergy = gameSettings.levels[curLvl].energy;  print("energy = "..gameSettings.levels[curLvl].energy); print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
+-- if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 local tmr, t;
 print("level1scene1")
 
@@ -21,7 +21,7 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			timer.cancel(tmr) 
-			storyboard.removeAll(); audio.stop( 2 ); audio.resume(1)
+			storyboard.removeAll(); audio.stop(2);  audio.stop(9);  audio.stop(14);  audio.stop(24);  audio.resume(1)
 			storyboard.gotoScene( "mapG", "fade", 200 );-- timer.cancel(tmr()); --tmr = nil
 		elseif button == "nextB" then
 			storyboard.removeAll(); --storyboard.purgeScene( storyboard.getCurrentSceneName(), false )
@@ -50,10 +50,10 @@ function scene:createScene( event )
 					 { name = "level4G", start = 1, count = 7, time = 60000, loopCount = 1, loopDirection = "forward" },
 					 { name = "level5", start = 9, count = 3, time = 8000, loopCount = 1, loopDirection = "forward" }}	
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
+	animation:setSequence("level"..tostring(curLvl));	
 	if curLvl == 4 and gameSettings.character == "girl" then  
 		animation:setSequence("level4G")  
 	elseif curLvl == 5 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level5")  end
-	animation:setSequence("level"..tostring(curLvl));	
 	animation:play()
 
 local function spriteListener( event )

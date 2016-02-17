@@ -11,7 +11,7 @@ local gamestate = require( "gamestate" )
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
-if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
+-- if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 gameSettings.levels[curLvl].score = score.get()
 loadsave.printTable(gameSettings.levels[curLvl].energy)
@@ -20,7 +20,7 @@ print("level1scene4")
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			timer.cancel(tmr) 
+			timer.cancel(tmr);audio.stop(5);  audio.stop(11);  audio.stop(17);  audio.stop(22); audio.stop(27); audio.resume(1) 
 			storyboard.removeAll();storyboard.gotoScene( "mapG", "fade", 200 ); timer.cancel(tmr)
 		elseif button == "nextB" then
 			storyboard.removeAll(); storyboard.removeScene( "level1scene4G", false )
