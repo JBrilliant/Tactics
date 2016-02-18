@@ -8,7 +8,7 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 -- gameState.soundOn = nil
 --sfx.bgmusic = nil
 
-local bg, back,  musicSwitch, sfxSwitch, lang
+local bg, back,  musicSwitch, sfxSwitch, lang, chooseChar
 
 local function onSwitchPress( event )
     local switch = event.target.id
@@ -24,6 +24,10 @@ local function onSwitchPress( event )
 			end
 	    elseif switch == "sfxSwitch" then
 	    	--stop sfx
+	    	gameSettings.soundOn = false;
+			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)	    	
+			audio.stop( 33 ); audio.dispose(); 		-- click
+			    											--level passed
 	    end
 end
 
@@ -34,15 +38,25 @@ local function buttonOnRelease(event)
 		elseif button == "back" then
 			storyboard.removeAll();
 			storyboard.gotoScene( "menu", "fade", 200 )
+		elseif button == "chooseChar" then
+			storyboard.removeAll();
+			storyboard.gotoScene( "character", "fade", 200 )
 		end
+end
+
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
 end
 
 function scene:createScene( event )
 	local group = self.view
 	loadsave.printTable(gameSettings);
 	bg = display.newImage("images/settings_bg.png"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
-	lang = widget.newButton { defaultFile = "images/"..gameSettings.lang.."/chooselang.png", overFile ="images/"..gameSettings.lang.."/chooselang.png", id = "langTX", x = _W/2 , y = _H/2 + _H/3, height =   _H/6, width = _W/2 + _W/6 , onRelease = buttonOnRelease }
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+	lang = widget.newButton { defaultFile = "images/"..gameSettings.lang.."/chooselang.png", overFile ="images/"..gameSettings.lang.."/chooselang.png", id = "langTX", x = _W/2 , y = _H/2 + _H/5 + 10, height =   _H/9, width = _W/2 + _W/6 , onRelease = buttonOnRelease , onPress = buttonOnPress}
+	chooseChar = widget.newButton { defaultFile = "images/"..gameSettings.lang.."/changeChar.png", overFile ="images/"..gameSettings.lang.."/changeChar.png", id = "chooseChar", x = _W/2 , y = _H - _H/10, height =   _H/9, width = _W/2 , onRelease = buttonOnRelease , onPress = buttonOnPress}
 
 local options = {
     frames = {
@@ -109,6 +123,7 @@ local options = {
 	group:insert( bg )
 	group:insert( back )
 	group:insert( lang )
+	group:insert( chooseChar )
 	group:insert( musicSwitch )
 	group:insert( sfxSwitch )
 	-- group:insert( credits )

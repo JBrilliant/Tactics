@@ -1,6 +1,7 @@
 local storyboard = require("storyboard")
 local scene = storyboard.newScene()
 local widget = require("widget")
+local sfx = require("sfx")
 local loadsave = require("loadsave")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
@@ -14,13 +15,18 @@ local function buttonOnRelease( event )
 		if button == "back" then
 			storyboard.gotoScene( "achievements", "fromLeft", 500 )
 		end
+end
 
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
 end
 
 function scene:createScene( event )
 	local group = self.view
 
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	-- nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	bg = display.newImage("images/bgplain.jpg"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )

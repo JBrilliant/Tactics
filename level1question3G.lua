@@ -16,6 +16,13 @@ local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.le
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
 print("level1question3")
+
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -27,15 +34,15 @@ local function buttonOnRelease(event)
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)
 			storyboard.removeAll(); --storyboard.removeScene( "level1question3G", false )
-			if curLvl == 1 then storyboard.gotoScene( "level1scene6G", "fade", 200 ) 
+			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
+			elseif curLvl == 1 then storyboard.gotoScene( "level1scene6G", "fade", 200 ) 
 			elseif curLvl == 2 or curLvl == 4 then storyboard.gotoScene( "level1scene4G", "fade", 200 ) end
 		elseif button == "choice2" then
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
-			gameSettings.energy = energyM.get()
-			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)		
-			loadsave.printTable(gameSettings)
+			gameSettings.energy = energyM.get();loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)	;loadsave.printTable(gameSettings)
 			storyboard.removeAll(); --storyboard.removeScene( "level1question3G", false )
-			if curLvl == 1 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) 
+			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
+			elseif curLvl == 1 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) 
 			elseif curLvl == 2  or curLvl == 4 then storyboard.gotoScene( "level1scene4G", "fade", 200 ) end
 		end
 end
@@ -44,9 +51,11 @@ function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	-- local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
+	local textmap = display.newText( "Replay", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
+	
 	local textQuest = display.newText( " ", 270, 10, "riffic", 24 ); textQuest.x = _W/2; textQuest.y = _H/5; textQuest:setFillColor( 1,1,1 );
 	local text = {}
 	if gameSettings.lang == "english" then
@@ -128,16 +137,17 @@ function scene:createScene( event )
 		group:insert(choice2); group:insert(text)
 	end
 	tmr = timer.performWithDelay(4500,choice2fn,1)
-	tmr = timer.performWithDelay(5500,function(e) 
-		local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
-		group:insert( back )
-		end,1);
+	-- tmr = timer.performWithDelay(5500,function(e) 
+	-- 	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	-- 	group:insert( back )
+	-- 	end,1);
 
 group:insert( background )	
--- group:insert( back )	
+group:insert( back )	
 group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)
+group:insert(textmap)
 for i=1,numberOfEnergy do
 	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])

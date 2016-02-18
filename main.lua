@@ -49,8 +49,8 @@ Runtime:addEventListener( "system", onSystemEvent )
 
 -- voiceovers
 function loadsfx()
-sfx.bgmusic = nil
-sfx.bgmusic = audio.loadSound("audio/bgmusic.wav")		-- 1								-- channel
+																							-- channels
+sfx.bgmusic = audio.loadSound("audio/bgmusic.wav")											-- 1	
 sfx.level1s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/level1-1.wav")	-- 2
 sfx.level1s2 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/level1-2.wav")	-- 3
 sfx.level1s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level1/level1-3.wav")	-- 4
@@ -71,11 +71,11 @@ sfx.level3s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level3/level3
 sfx.level3s4 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level3/level3-4.wav")	-- 17
 sfx.level3s5 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level3/level3-5.wav")	-- 18
 
-sfx.level4s1 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-1.wav")	-- 19
-sfx.level4s2 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-2.wav")	-- 20
-sfx.level4s3 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-3.wav")	-- 21
-sfx.level4s4 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-4.wav")	-- 22
-sfx.level4s5 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-5.wav")	-- 23
+sfx.level4s1 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-1.wav")		-- 19
+sfx.level4s2 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-2.wav")		-- 20
+sfx.level4s3 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-3.wav")		-- 21
+sfx.level4s4 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-4.wav")		-- 22
+sfx.level4s5 = audio.loadSound("audio/"..gameSettings.lang.."/boy/level4/level4-5.wav")		-- 23
 
 sfx.level4s1G = audio.loadSound("audio/"..gameSettings.lang.."/girl/level4/level4-1.wav")	-- 24
 sfx.level4s2G = audio.loadSound("audio/"..gameSettings.lang.."/girl/level4/level4-2.wav")	-- 25
@@ -87,6 +87,10 @@ sfx.level5s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5
 sfx.level5s2 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-1.wav")	-- 30
 sfx.level5s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-2.wav")	-- 31
 sfx.level5s4 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-3.wav")	-- 32
+sfx.click = audio.loadSound("audio/click.wav")												-- 33					
+sfx.passed = audio.loadSound("audio/passed.wav")											-- 34	
+sfx.achieve = audio.loadSound("audio/achieve.wav")											-- 34	
+
 end
 
 storyboard.gotoScene("menu")

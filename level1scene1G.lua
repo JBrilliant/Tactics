@@ -17,6 +17,12 @@ local numberOfEnergy = gameSettings.levels[curLvl].energy;  print("energy = "..g
 local tmr, t;
 print("level1scene1")
 
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -35,11 +41,13 @@ end
 function scene:createScene( event )
 	local group = self.view
 
-	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
+	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25	
 	local scoreText = score.init({ fontSize = 18, font = "riffic", x = _W - 5, y =  _H/15, maxDigits = 3, leadingZeros = false,	filename = "scorefile.txt"}); scoreText:setFillColor( 1,0,0 )
 	score.set(0); score.save(); gameSettings.levels[curLvl].score = score.get()
 
+	local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
+	
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions)	
 	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet1.png", sheetOptions)	
@@ -49,11 +57,14 @@ function scene:createScene( event )
 					 { name = "level4", start = 1, count = 2, time = 30000, loopCount = 1, loopDirection = "forward" },
 					 { name = "level4G", start = 1, count = 7, time = 60000, loopCount = 1, loopDirection = "forward" },
 					 { name = "level5", start = 9, count = 3, time = 8000, loopCount = 1, loopDirection = "forward" }}	
-	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
-	animation:setSequence("level"..tostring(curLvl));	
+	local  animation; 
 	if curLvl == 4 and gameSettings.character == "girl" then  
-		animation:setSequence("level4G")  
-	elseif curLvl == 5 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level5")  end
+		animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
+	animation:setSequence("level4G")  
+	elseif curLvl == 5 then  animation = display.newSprite( sheet2, sequence); animation.x = _W/2; animation.y = _H/2; animation:setSequence("level5")  
+	else  animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
+	animation:setSequence("level"..tostring(curLvl));	end
+	
 	animation:play()
 
 local function spriteListener( event )
@@ -61,13 +72,14 @@ local function spriteListener( event )
     if thisSprite.frame == 2 and curLvl == 1 then
     	audio.play( sfx.level1s1, { loops = 0, channel = 2}) 
     elseif curLvl == 2  then
-    	audio.play( sfx.level2s1, { loops = 0, channel = 9}) 
+    	audio.play( sfx.level2s1, { loops = 0, channel = 9}) ; audio.setVolume( 4 ) 
+    	audio.play( sfx.level2s1, { loops = 0, channel = 9}) ; audio.setVolume( 4 ) 
     elseif curLvl == 3  then
-    	audio.play( sfx.level3s1, { loops = 0, channel = 14}) ; audio.setVolume( 1 ) 
+    	audio.play( sfx.level3s1, { loops = 0, channel = 14}) ; audio.setVolume( 4) 
     elseif curLvl == 4 and gameSettings.character == "boy" then
-    	audio.play( sfx.level4s1, { loops = 0, channel = 19}) ; audio.setVolume( 1 ) 
+    	audio.play( sfx.level4s1, { loops = 0, channel = 19}) ; audio.setVolume( 4 ) 
     elseif curLvl == 4 and gameSettings.character == "girl" then
-    	audio.play( sfx.level4s1G, { loops = 0, channel = 24}) ; audio.setVolume( 1 ) 
+    	audio.play( sfx.level4s1G, { loops = 0, channel = 24}) ; audio.setVolume( 4) 
     end
 end
 
@@ -85,6 +97,7 @@ group:insert(animation)
 group:insert( back )
 group:insert(candy)
 group:insert(scoreText)
+group:insert( textmap )
 for i=1,numberOfEnergy do
 	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])

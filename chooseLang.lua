@@ -2,6 +2,7 @@ local loadsave = require("loadsave")
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require("widget")
+local sfx = require("sfx")
 local back, english, tagalog, bicol
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
@@ -23,6 +24,12 @@ local function buttonOnRelease(event)
 		end
 end
 
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
+
 function scene:createScene( event )
 	local group = self.view
 	
@@ -31,10 +38,10 @@ function scene:createScene( event )
 	background.x = _W/2; background.y = _H/2;
 	group:insert(background)
 		
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
-	english = widget.newButton { defaultFile = "images/english.png", overFile ="images/english.png", id = "english", x = _W /2, y = _H/10 + 80, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
-	tagalog = widget.newButton { defaultFile = "images/tagalog.png", overFile ="images/tagalog.png", id = "tagalog", x = _W /2, y = _H/10 + 80*2, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
-	bicol = widget.newButton { defaultFile = "images/bicol.png", overFile ="images/bicol.png", id = "bicol", x = _W /2, y = _H/10 + 80*3, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+	english = widget.newButton { defaultFile = "images/english.png", overFile ="images/english.png", id = "english", x = _W /2, y = _H/10 + 80, height =  _H/7, width = _W/2, onRelease = buttonOnRelease , onPress = buttonOnPress}	
+	tagalog = widget.newButton { defaultFile = "images/tagalog.png", overFile ="images/tagalog.png", id = "tagalog", x = _W /2, y = _H/10 + 80*2, height =  _H/7, width = _W/2, onRelease = buttonOnRelease , onPress = buttonOnPress}	
+	bicol = widget.newButton { defaultFile = "images/bicol.png", overFile ="images/bicol.png", id = "bicol", x = _W /2, y = _H/10 + 80*3, height =  _H/7, width = _W/2, onRelease = buttonOnRelease, onPress = buttonOnPress }	
 	-- group:insert( choose )
 	group:insert( back )
 	group:insert( english )

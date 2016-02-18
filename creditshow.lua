@@ -3,12 +3,19 @@ local sfx = require( "sfx" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local widget = require("widget")
+local sfx = require("sfx")
 local gamestate = require("gamestate");
 
 local back, credits, howtoplay, background, bg, bg2, bgb
 
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
+
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
 
 function scene:createScene( event )
 	local group = self.view
@@ -29,7 +36,7 @@ function scene:createScene( event )
 			bgb:removeSelf()
 			bgb = display.newImage("images/Tactics_Blank Button.png"); bgb.height = _H/10; bgb.width = _W/3; bgb.x = _W /8; bgb.y = _H/10 + 80;
 			group:insert(bgb); group:insert( credit )
-			end  }	
+			end , onPress = buttonOnPress }	
 	howtoplay = widget.newButton { defaultFile = "images/"..lang.."/how.jpg", id = "howtoplay", x = _W /8, y = _H/10 + 150, height =  _H/15, width = _W/3 - 20, onRelease = 
 	function(e)
 			bg2 = display.newImage("images/howto.jpg"); bg2.height = _H; bg2.width = _W/2 + 120; bg2.x = _W - _W/3 ; bg2.y = _H/2;
@@ -37,7 +44,7 @@ function scene:createScene( event )
 			bgb:removeSelf()
 			bgb = display.newImage("images/Tactics_Blank Button.png"); bgb.height = _H/10; bgb.width = _W/3; bgb.x = _W /8; bgb.y = _H/10 + 150;
 			group:insert(bgb); group:insert( howtoplay )
-			end }	
+			end , onPress = buttonOnPress}	
 	
 	group:insert( back )
 	group:insert( credit )

@@ -15,7 +15,13 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 gameSettings.levels[curLvl].score = score.get()
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;print("level1scene3")
-print("question6 error scene3")
+
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
+
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
@@ -28,9 +34,11 @@ function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease }
+	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease , onPress = buttonOnPress}
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15; candy.width = 80; candy.height = 25
-	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )	
+	local scoreText = display.newText(gameSettings.levels[curLvl].score, _W - 5, _H/15, "riffic", 18 ); scoreText:setFillColor( 1,0,0 )	
+	local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
+	
 	local scenario
 	if curLvl == 1 then
 		scenario = display.newImage("images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/scene23.jpg")
@@ -44,8 +52,8 @@ function scene:createScene( event )
 	scenario.height = _H; scenario.width = _W + _W/4; scenario.x = _W/2; scenario.y = _H/2;
 
 	if curLvl == 1 then	 audio.play( sfx.level1s3, { loops = 0, channel = 4} ) 
-	elseif curLvl == 2  then audio.play( sfx.level2s4, { loops = 0, channel = 12}) 
-    elseif curLvl == 3  then audio.play( sfx.level3s5, { loops = 0, channel = 18}) ; audio.setVolume( 1 ) 
+	elseif curLvl == 2  then audio.play( sfx.level2s4, { loops = 0, channel = 12})  audio.setVolume( 2 ) 
+    elseif curLvl == 3  then audio.play( sfx.level3s5, { loops = 0, channel = 18}) ;  audio.setVolume( 2 ) 
     elseif curLvl == 4 and gameSettings.character == "boy" then
 		audio.play( sfx.level4s3, { loops = 0, channel = 21}) ; audio.setVolume( 1 ) 
 	elseif curLvl == 4 and gameSettings.character == "girl" then
@@ -66,6 +74,7 @@ group:insert(scenario)
 group:insert( back )
 group:insert( candy )
 group:insert( scoreText )
+group:insert( textmap )
 for i=1,numberOfEnergy do
 	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])

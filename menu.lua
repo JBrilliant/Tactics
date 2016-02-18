@@ -26,6 +26,12 @@ local function buttonOnRelease(event)
 		end
 end
 
+local function buttonOnPress(event)
+	if gameSettings.soundOn == true then
+	 audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+	end
+end
+
 function scene:createScene( event )
 	local group = self.view
 
@@ -36,16 +42,12 @@ function scene:createScene( event )
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2
 		animation:play()
 	candy = display.newImage ("images/level_candies_active.png"); candy.height = _W/13; candy.width = _W/13; candy.x =_W/2 + 9;candy.y = _H/2 - 75 ; candy.alpha = 0.8
-	-- candy.rotation = 0;
-	-- function animate(event)
-	-- 	candy.rotation = candy.rotation + 3
-	-- end
-	-- Runtime:addEventListener("enterFrame",animate);
+	transition.to(candy,{time= 1200, rotation=180, iterations = 0})	
 	
-	newGame = widget.newButton { defaultFile = "images/newGame.png", overFile ="images/newGame_o.png", id = "newGame", x = _W/2, y = _H/2 + _H/7, height =  _H/7, width = _W/2, onRelease = buttonOnRelease }
-	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
-	credits = widget.newButton { defaultFile = "images/tactics iconn.png", overFile ="images/tactics icon.png", id = "credits", x =_W/2 , y = _H/2 + newGame.width/2, height =  _H/5, width = _W/9 , onRelease = buttonOnRelease }	
-	settings = widget.newButton { defaultFile = "images/settings.png", overFile ="images/settings_o.png", id = "settings", x =_W/3 + _W/3, y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease }
+	newGame = widget.newButton { defaultFile = "images/newGame.png", overFile ="images/newGame_o.png", id = "newGame", x = _W/2, y = _H/2 + _H/7, height =  _H/7, width = _W/2, onRelease = buttonOnRelease , onPress = buttonOnPress}
+	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }
+	credits = widget.newButton { defaultFile = "images/tactics iconn.png", overFile ="images/tactics icon.png", id = "credits", x =_W/2 , y = _H/2 + newGame.width/2, height =  _H/5, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+	settings = widget.newButton { defaultFile = "images/settings.png", overFile ="images/settings_o.png", id = "settings", x =_W/3 + _W/3, y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }
 
 	group:insert( welcome)
 	group:insert(animation)
