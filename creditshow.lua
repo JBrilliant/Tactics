@@ -12,8 +12,9 @@ local back, credits, howtoplay, background, bg, bg2, bgb
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 local function buttonOnPress(event)
+	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
 	end
 end
 

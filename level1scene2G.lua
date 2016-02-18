@@ -17,15 +17,17 @@ local tmr, t;
 print("level1scene2")
 
 local function buttonOnPress(event)
+	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
 	end
 end
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			timer.cancel(tmr) ; audio.stop(3);  audio.stop(10);  audio.stop(15);  audio.stop(20); audio.stop(25); audio.resume(1)
+			timer.cancel(tmr) ; audio.stop(3);  audio.stop(10);  audio.stop(15);  audio.stop(20); audio.stop(25); 
+			if gameSettings.musicOn == true then audio.resume(1) end
 			storyboard.removeAll();storyboard.gotoScene("mapG", "fade", 200 )
 		elseif button == "nextB" then
 			storyboard.removeAll(); storyboard.purgeScene( storyboard.getCurrentSceneName(), false )

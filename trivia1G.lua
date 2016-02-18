@@ -18,7 +18,7 @@ function scene:createScene( event )
 	tmr = timer.performWithDelay(8000,function(e)
 			storyboard.removeAll();
 			storyboard.gotoScene( "level1scene1G", "fade", 200 ); 
-			if  gameSettings.musicOn == true then audio.fadeOut( 1 ) end 
+			if  gameSettings.musicOn == true then audio.pause( 1 ) end 
 		end,1)	
 
 group:insert(animation)

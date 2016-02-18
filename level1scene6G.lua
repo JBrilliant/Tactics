@@ -19,16 +19,18 @@ local tmr, t;
 print("level1scene6")
 
 local function buttonOnPress(event)
+	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
 	end
 end
 
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			timer.cancel(tmr); audio.stop(7);   audio.resume(1) 
-			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene( "level1question3G", "fade", 200 )
+			timer.cancel(tmr); audio.stop(7);  
+			if gameSettings.musicOn == true then audio.resume(1) end
+			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); 
 		elseif button == "nextB" then
 			storyboard.removeAll(); storyboard.removeScene( "level1scene6G", false )
 			-- storyboard.gotoScene( "levelpassedG", "fade", 200 )

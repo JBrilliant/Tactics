@@ -18,8 +18,9 @@ local tmr, t;
 print("level1question1")
 
 local function buttonOnPress(event)
+	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = 33, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
 	end
 end
 
@@ -100,6 +101,7 @@ function scene:createScene( event )
 	local randomImages = {}
 	for i, v in ipairs(images) do randomImages[i] = v end
 	sceneClass.shuffle(randomImages)
+	
 	local function choice1fn()		
 		local choice1 = widget.newButton { defaultFile = randomImages[1], id = "choice"..tostring(table.indexOf( images, randomImages[1] )), x = _W/2 , y = _H/2 + _H/3 , height =   _H/4 + 30, width = _W/3 + 30, onRelease = buttonOnRelease }	
 		local text = display.newText( text[table.indexOf( images, randomImages[1] )], _W/2, _H - _H/20, "riffic", 12 ); text:setFillColor(0,0,0)
@@ -107,7 +109,7 @@ function scene:createScene( event )
 			transition.to(choice1,{time=500,delay=2500, x=_W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})	
 		transition.fadeIn(text,{ time=500,  x=_W/2 , y = _H - _H/20 })
 		transition.to(text,{time=500,delay=2500, x=_W/4, y = _H/2 + 10, transition=easing.inQuad})	
-		tmr = timer.performWithDelay(1000,function(e) transition.cancel(animation); animation = nil; end,1); 
+		tmr = timer.performWithDelay(1000,function(e) transition.cancel(animation); animation = nil; timer.cancel(tmr); tmr = nil; end,1); 
 		group:insert(choice1); group:insert(text)
 	end
 	tmr = timer.performWithDelay(3000,choice1fn,1);
@@ -119,7 +121,7 @@ function scene:createScene( event )
 			transition.to(choice2,{time=500,delay=2500, x=_W - _W/4, y = _H/3, xScale=1, yScale=1, transition=easing.inQuad})		
 		transition.fadeIn(text,{ time=2000,  x=_W/2 , y = _H - _H/20})
 		transition.to(text,{time=500,delay=2500, x=_W - _W/4, y = _H/2 + 10,  transition=easing.inQuad})	
-		tmr = timer.performWithDelay(1000,function(e) transition.cancel(animation); animation = nil;  end,1); 
+		tmr = timer.performWithDelay(1000,function(e) transition.cancel(animation); animation = nil; timer.cancel(tmr); tmr = nil; end,1); 
 		group:insert(choice2); group:insert(text)
 	end
 	tmr = timer.performWithDelay(5500,choice2fn,1); 
@@ -132,7 +134,7 @@ function scene:createScene( event )
 			transition.to(choice3,{time=500,delay=2500, x=_W/2 , y = _H/2 + 80 ,  xScale=1, yScale=1, transition=easing.inQuad})		
 		transition.fadeIn(text,{ time=500,  x=_W/2 , y = _H - _H/20 , xScale=1, yScale=1,customProperty=1000,onComplete=after})
 		transition.to(text,{time=500,delay=2500, x=_W/2, y = _H - _H/20,  transition=easing.inQuad})	
-		tmr = timer.performWithDelay(1000,function(e)  transition.cancel(animation); animation = nil; end,1); 
+		tmr = timer.performWithDelay(1000,function(e)  transition.cancel(animation); animation = nil; timer.cancel(tmr); tmr = nil;end,1); 
 		group:insert(choice3); group:insert(text)
 	end
 	tmr = timer.performWithDelay(8000,choice3fn,1);

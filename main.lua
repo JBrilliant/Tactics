@@ -13,7 +13,7 @@ local gamestate = require("gamestate");
 
 
 -- set default game settings
---loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
+-- loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 function onSystemEvent( event )
@@ -28,11 +28,11 @@ if event.type == "applicationStart" then
 	loadsfx()
 elseif event.type == "applicationOpen" then
 	-- gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
-	loadsfx()
+	-- loadsfx()
 	if gameSettings == nil then 
 		loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 		gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
-		-- loadsfx()
+		loadsfx()
 	end
 elseif event.type == "applicationExit" then
 	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
@@ -41,7 +41,7 @@ elseif event.type == "applicationSuspend" then
 elseif event.type == "applicationResume" then
 	if gameSettings ~= nil then 
 		loadsave.loadTable("myTable.json", system.DocumentsDirectory)
-		-- loadsfx()
+		loadsfx()
 	end
 end
 end
@@ -83,10 +83,10 @@ sfx.level4s3G = audio.loadSound("audio/"..gameSettings.lang.."/girl/level4/level
 sfx.level4s4G = audio.loadSound("audio/"..gameSettings.lang.."/girl/level4/level4-4.wav")	-- 27
 sfx.level4s5G = audio.loadSound("audio/"..gameSettings.lang.."/girl/level4/level4-5.wav")	-- 28
 
-sfx.level5s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-0.wav")	-- 29
-sfx.level5s2 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-1.wav")	-- 30
-sfx.level5s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-2.wav")	-- 31
-sfx.level5s4 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-3.wav")	-- 32
+sfx.level5s1 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-1.wav")	-- 29
+sfx.level5s2 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-2.wav")	-- 30
+sfx.level5s3 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-3.wav")	-- 31
+sfx.level5s4 = audio.loadSound("audio/"..gameSettings.lang.."/girl/level5/level5-4.wav")	-- 32
 sfx.click = audio.loadSound("audio/click.wav")												-- 33					
 sfx.passed = audio.loadSound("audio/passed.wav")											-- 34	
 sfx.achieve = audio.loadSound("audio/achieve.wav")											-- 34	
