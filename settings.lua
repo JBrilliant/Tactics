@@ -37,7 +37,6 @@ local function onSwitchPress( event )
 				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 				storyboard.removeAll();
 			end
-			gameSettings.soundOn = false;
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)	    	
 			audio.stop( 33 ); audio.dispose(); 		-- click
 			    											--level passed
