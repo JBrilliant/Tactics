@@ -16,22 +16,6 @@ gameSettings.levels[curLvl].score = score.get()
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;print("level1scene3")
 
--- local function buttonOnPress(event)
--- 	local availableChannel = audio.findFreeChannel()
--- 	if gameSettings.soundOn == true then
--- 		-- audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
--- 	end
--- end
-
--- local function buttonOnRelease(event)
--- 	local button = event.target.id
--- 		if button == "back" then
--- 			timer.cancel(tmr); audio.stop(4);  audio.stop(12);  audio.stop(18);  audio.stop(21); audio.stop(26); 
--- 			if gameSettings.musicOn == true then audio.resume(1) end
--- 			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); 
--- 		end
--- end
-
 function scene:createScene( event )
 	local group = self.view
 

@@ -66,7 +66,7 @@ end
 
 function scene:enterScene( event )
 local group = self.view
-	if gameSettings.musicOn == true then audio.resume( 1 ) end
+	if gameSettings.musicOn == true and audio.isChannelPaused( 1 )then audio.resume( 1 ) end
 	local textmap = display.newText( "Tap candy to choose level.", _W - _W/5, _H - _H/40, "riffic", 14 ); textmap:setFillColor( 1,1,1)
 	if gameSettings.lang == "tagalog" or gameSettings.lang == "bicol" then
 		textmap.text = "Pindutin ang kendi para pumili ng level."

@@ -25,7 +25,7 @@ local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
 			 -- Runtime:removeEventListener("enterFrame", animate);
-			 timer.cancel(tmr)
+			 timer.cancel(tmr); --if gameSettings.musicOn == true then audio.resume( 1 ) end
 			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
 			-- if gameSettings.unlockedLevels > gameSettings.currentLevel then
@@ -130,7 +130,7 @@ function scene:createScene( event )
 				gameSettings.currentLevel = gameSettings.currentLevel + 1;
 				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); 
 				if gameSettings.unlockedLevels == 6 then
-					gameSettings.currentLevel = 0;
+					gameSettings.currentLevel = 0; 
 					loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); 
 					transition.to(badge,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, alpha=0})
 					transition.to(text1,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, alpha=0})

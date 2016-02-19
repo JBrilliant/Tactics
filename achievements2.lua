@@ -40,7 +40,7 @@ function scene:createScene( event )
 	local confetti = display.newImage("images/confetti.png"); confetti.x = _W - _W/3; confetti.y =  _H/2 ; confetti.width =_W/2 + 200;confetti.height = _H; 
 	local trophy = display.newImage("images/trophy.png"); trophy.x = _W - _W/3; trophy.y =  _H/2 ; trophy.width =_W/2 + 10;trophy.height = 280; 
 		
-	if ( 6 == gameSettings.unlockedAchieve) then
+	if ( 5 ~= gameSettings.unlockedAchieve) then
 		badge.alpha = 0.3;  box.alpha = 0.3; trophy.alpha = 0.3; confetti.alpha = 0.3
     end
 

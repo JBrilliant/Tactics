@@ -16,24 +16,6 @@ gameSettings.levels[curLvl].score = score.get(); loadsave.printTable(gameSetting
 local tmr, t;
 print("level1scene5")
 
--- local function buttonOnPress(event)
--- 	local availableChannel = audio.findFreeChannel()
--- 	if gameSettings.soundOn == true then
--- 		-- audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
--- 	end
--- end
-
--- local function buttonOnRelease(event)
--- 	local button = event.target.id
--- 		if button == "back" then
--- 			timer.cancel(tmr); audio.stop(6); audio.stop(13);audio.stop(16);  audio.stop(23);  audio.stop(28);   
--- 			if gameSettings.musicOn == true then audio.resume(1) end
--- 			storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 ); --storyboard.gotoScene("level1question4G", "fade", 200 )
--- 		elseif button == "nextB" then
--- 			storyboard.removeAll(); storyboard.removeScene( "level1scene5G", false )
--- 			storyboard.gotoScene( "level1question5G", "fade", 200 )
--- 		end
--- end
 
 function scene:createScene( event )
 	local group = self.view
@@ -61,6 +43,19 @@ function scene:createScene( event )
 	end
 	animation:play()
 
+	local function spriteListener( event )
+    	local thisSprite = event.target  
+    	if gameSettings.lang == "english" then  
+    		if  curLvl == 3 and thisSprite.frame == 3 then	
+	    		audio.play( sfx.level3s3, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end
+	 	elseif gameSettings.lang == "tagalog" then
+	 		if  curLvl == 3 and thisSprite.frame == 3 then	
+	    		audio.play( sfx.level3s3t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end    
+	    elseif gameSettings.lang == "bicol" then
+	    	if  curLvl == 3 and thisSprite.frame == 3 then	
+	    	audio.play( sfx.level3s3g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end
+	 	end
+    end
 
 	if gameSettings.lang == "english" then 
 	    if curLvl == 1 then audio.play( sfx.level1s5, { loops = 0, channel = 6} )
@@ -75,19 +70,15 @@ function scene:createScene( event )
 	elseif gameSettings.lang == "tagalog" then
 		if curLvl == 1 then audio.play( sfx.level1s5t, { loops = 0, channel = 6} )
 		elseif curLvl == 2  then	audio.play( sfx.level2s5t, { loops = 0, channel = 13}) 
-    	elseif  curLvl == 3 and thisSprite.frame == 3 then	
-	    	audio.play( sfx.level3s3t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
+    	elseif curLvl == 4 and gameSettings.character == "boy" then
 			audio.play( sfx.level4s5t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 1 ) 
 		elseif curLvl == 4 and gameSettings.character == "girl" then
 			audio.play( sfx.level4s5Gt, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
 		end
 	elseif gameSettings.lang == "bicol" then
 		if curLvl == 1 then audio.play( sfx.level1s5tg, { loops = 0, channel = 6} )
-		elseif curLvl == 2  then	audio.play( sfx.level2s5tg, { loops = 0, channel = 13}) 
-    	elseif  curLvl == 3 and thisSprite.frame == 3 then	
-	    	audio.play( sfx.level3s3g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
+		elseif curLvl == 2  then	audio.play( sfx.level2s5g, { loops = 0, channel = 13}) 
+    	elseif curLvl == 4 and gameSettings.character == "boy" then
 			audio.play( sfx.level4s5g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 1 ) 
 		elseif curLvl == 4 and gameSettings.character == "girl" then
 			audio.play( sfx.level4s5Gg, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
@@ -104,12 +95,11 @@ tmr = timer.performWithDelay(t,function(e) storyboard.removeAll()
 	end
 end,1)
 
+animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(animation)
--- group:insert( back )
 group:insert( candy )
 group:insert( scoreText )
--- group:insert( textmap )
 for i=1,numberOfEnergy do
 	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])
