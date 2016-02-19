@@ -12,9 +12,8 @@ local back, credits, howtoplay, background, bg, bg2, bgb
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
@@ -30,7 +29,7 @@ function scene:createScene( event )
 
 	local lang = gameSettings.lang
 	if lang == "bicol" then lang ="tagalog" end
-	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = function(e) storyboard.removeAll(); storyboard.gotoScene( "menu") end}	
+	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = function(e) storyboard.removeAll(); storyboard.gotoScene( "menu") end, onPress = buttonOnPress}	
 	credit = widget.newButton { defaultFile = "images/credits.jpg",  id = "credits", x = _W /8, y = _H/10 + 80, height =  _H/16, width = _W/3 - 10, onRelease = function(e)
 			bg = display.newImage("images/creditss.jpg"); bg.height = _H; bg.width = _W/2 + 120; bg.x = _W - _W/3; bg.y = _H/2;
 			group:insert(bg)

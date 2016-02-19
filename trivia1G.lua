@@ -1,6 +1,7 @@
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 local loadsave = require("loadsave")
+local sfx = require("sfx")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 loadsave.printTable(gameSettings); print("TRIVIA")
 

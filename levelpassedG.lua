@@ -16,9 +16,8 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
@@ -29,27 +28,33 @@ local function buttonOnRelease(event)
 			 timer.cancel(tmr)
 			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "nextB" then
-			if gameSettings.unlockedLevels > gameSettings.currentLevel then
-				gameSettings.currentLevel = gameSettings.currentLevel + 1; 
-			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); storyboard.removeAll(); storyboard.gotoScene( "level1scene1G", "fade", 200 )
-			end
+			-- if gameSettings.unlockedLevels > gameSettings.currentLevel then
+			-- 	gameSettings.currentLevel = gameSettings.currentLevel + 1;
+			-- 	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); 
+			-- 	if gameSettings.unlockedLevels == 6 then
+			-- 		local trophy =  widget.newButton { defaultFile = "images/trophy.png", id = "trophy", x = _W/2, y = _H/2, height =  _H/3, width = _W/4 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+			-- 		group:insert(trophy)
+			-- 	else
+			-- 	storyboard.removeAll(); storyboard.gotoScene( "level1scene1G", "fade", 200 ) end
+			-- end
 		elseif button == "badge" then
 			storyboard.removeAll(); storyboard.gotoScene("achievements", "fade", 200)
+		elseif button == "trophy" then
+			storyboard.removeAll(); storyboard.gotoScene("achievements2", "fade", 200)
 		end
 end
 
 function scene:enterScene(event)
 	if gameSettings.soundOn == true then
-		audio.play( sfx.passed, { loops = 0, channel = 34, onComplete = function()  audio.dispose( sfx.passed )  end } )
+		audio.play( sfx.congratulations, { loops = 0, channel = 30, onComplete = function()  audio.dispose( 30 )  end } )
+		audio.play( sfx.drumroll, { loops = 0, channel = 27, onComplete = function()  audio.dispose( 27 )  end } )
 	end
 end
 
 function scene:createScene( event )
 	local group = self.view
-	if audio.isChannelPaused( 1 ) and gameSettings.musicOn == true then audio.resume( 1 ) end
+	
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
-	local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
 	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
@@ -67,10 +72,8 @@ function scene:createScene( event )
 	group:insert(animation)
 	group:insert( candy )
 	group:insert( scoreText )
-	group:insert( back )
 	group:insert(text)
-	group:insert(textmap)
-
+	
 	if gameSettings.levels[curLvl].score >= 40 then
 		gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	elseif gameSettings.levels[curLvl].score >= 20 and gameSettings.levels[curLvl].score  < 40 then
@@ -99,31 +102,62 @@ function scene:createScene( event )
 	end
 	loadsave.printTable(gameSettings)
 
-	if gameSettings.unlockedLevels == 6 then
-		
-	end
-
+	local badge, text1
 	local function achieveUnlocked()
+		audio.fadeOut(27)
+		audio.play( sfx.tada, { loops = 0, channel = 25, onComplete = function()  audio.dispose( 25 )  end } )
 		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
-		local text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
+		text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
 		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-		local badge =  widget.newButton { defaultFile = "images/badge "..curLvl..".png", id = "badge", x = _W/2, y = _H/2, height =  _H/3, width = _W/4 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+		badge =  widget.newButton { defaultFile = "images/badge "..curLvl..".png", id = "badge", x = _W/2, y = _H/2, height =  _H/3, width = _W/4 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
 		 transition.to(badge,{ time=1000, delay=300,y = _H/2 + 50, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
-		local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
-		local nextLvl = display.newText( "Next Level", _W - _W/30,  _H - _H/40, "riffic", 10 );  nextLvl:setFillColor( 1,1,1 )
-		local textAch = display.newText( "Tap to view achievements.", _W/2, _H - _H/40, "riffic", 10 );  textAch:setFillColor( 1,1,1 )
-		if gameSettings.lang == "tagalog" or gameSettings.lang == "bicol" then 
-			nextLvl.text = "Sunod na level"; textAch.text = "Pindutin para makita ang parangal." end
+		
 		if gameSettings.soundOn == true then
 			audio.play( sfx.achieve, { loops = 0, channel = 35, onComplete = function()  audio.dispose( sfx.achieve )  end } )
 		end
 		group:insert( text1)
 		group:insert( badge)
-		group:insert( nextB); group:insert( nextLvl); group:insert( textAch) 
+		 
 	end
 	
-	-- if 
+	local function buttons(event)
+		local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
+		local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
+		local nextLvl
+		if gameSettings.levels[curLvl].stars == 3 then
+			local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = function ( e )
+				if gameSettings.unlockedLevels > gameSettings.currentLevel then
+				gameSettings.currentLevel = gameSettings.currentLevel + 1;
+				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); 
+				if gameSettings.unlockedLevels == 6 then
+					gameSettings.currentLevel = 0;
+					loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); 
+					transition.to(badge,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, alpha=0})
+					transition.to(text1,{transition=easing.inQuad, xScale=1, yScale=1, y=_H/10, time=2000, alpha=0})
+					local text =  display.newText( "Congratulations!", 270, 10, "riffic", 24 ); text.x = _W/2; text.y = _H/10; text:setFillColor( 1,1,1 )
+					transition.to(text,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
+					local trophy =  widget.newButton { defaultFile = "images/trophy.png", id = "trophy", x = _W/2, y = _H/2, height =  _H/3, width = _W/4 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
+								 transition.to(trophy,{ time=1000, delay=300,y = _H/2 + 50, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
+					if gameSettings.soundOn == true then
+					audio.play( sfx.achieve, { loops = 0, channel = 35, onComplete = function()  audio.dispose( sfx.achieve )  end } )
+				end
+				group:insert(trophy); group:insert(text)
+				else
+				storyboard.removeAll(); storyboard.gotoScene( "level1scene1G", "fade", 200 ) end
+			end
+			end, onPress = buttonOnPress }	
+			nextLvl = display.newText( "Next Level", _W - _W/30,  _H - _H/40, "riffic", 10 );  nextLvl:setFillColor( 1,1,1 )
+			group:insert( nextB); group:insert( nextLvl);
+		end
+		local textAch = display.newText( "Tap to view achievements.", _W/2, _H - _H/40, "riffic", 10 );  textAch:setFillColor( 1,1,1 )	
+		if gameSettings.lang == "tagalog" or gameSettings.lang == "bicol" then 
+				nextLvl.text = "Sunod na level"; textAch.text = "Pindutin para makita ang parangal." end
+		group:insert(back); group:insert(textmap);  group:insert( textAch)
+	end
+
 		tmr = timer.performWithDelay(5000,achieveUnlocked,1)	
+		tmr = timer.performWithDelay(7000,buttons,1)	
+
 
 local function spriteListener( event )
     local thisSprite = event.target  -- "event.target" references the sprite
@@ -143,7 +177,11 @@ local group = self.view
 loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
+function scene:exitScene(event)
+	audio.stop(30)
+end
 scene:addEventListener( "createScene", scene )
+scene:addEventListener( "exitScene", scene )
 scene:addEventListener( "enterScene", scene )
 scene:addEventListener( "destroyScene", scene )
 

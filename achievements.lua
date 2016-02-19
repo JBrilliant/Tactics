@@ -22,15 +22,15 @@ local function buttonOnRelease( event )
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end 
 
 function scene:createScene( event )
 	local group = self.view
-
+	
+	if gameSettings.musicOn == true then audio.resume(1) end
 	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/40, y = _H/15, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
 	nextB = widget.newButton { defaultFile = "images/next.png", overFile ="images/next.png", id = "nextB", x = _W - _W/80, y = _H/15, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
 	bg = display.newImage("images/bgplain.jpg"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;

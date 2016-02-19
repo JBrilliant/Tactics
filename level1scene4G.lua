@@ -18,33 +18,33 @@ loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr,t
 print("level1scene4")
 
-local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
-	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
-	end
-end
+-- local function buttonOnPress(event)
+-- 	local availableChannel = audio.findFreeChannel()
+-- 	if gameSettings.soundOn == true then
+-- 		-- audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+-- 	end
+-- end
 
-local function buttonOnRelease(event)
-	local button = event.target.id
-		if button == "back" then
-			timer.cancel(tmr);audio.stop(5);  audio.stop(11);  audio.stop(17);  audio.stop(22); audio.stop(27); 
-			if gameSettings.musicOn == true then audio.resume(1) end
-			storyboard.removeAll();storyboard.gotoScene( "mapG", "fade", 200 ); timer.cancel(tmr)
-		elseif button == "nextB" then
-			storyboard.removeAll(); storyboard.removeScene( "level1scene4G", false )
-			storyboard.gotoScene( "level1question4G", "fade", 200 )
-		end
-end
+-- local function buttonOnRelease(event)
+-- 	local button = event.target.id
+-- 		if button == "back" then
+-- 			timer.cancel(tmr);audio.stop(5);  audio.stop(11);  audio.stop(17);  audio.stop(22); audio.stop(27); 
+-- 			if gameSettings.musicOn == true then audio.resume(1) end
+-- 			storyboard.removeAll();storyboard.gotoScene( "mapG", "fade", 200 ); timer.cancel(tmr)
+-- 		elseif button == "nextB" then
+-- 			storyboard.removeAll(); storyboard.removeScene( "level1scene4G", false )
+-- 			storyboard.gotoScene( "level1question4G", "fade", 200 )
+-- 		end
+-- end
 
 function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease , onPress = buttonOnPress}
+	-- local back = widget.newButton{ defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10,height =  _H/9 + 17, width = _W/9 + 18 ,onRelease = buttonOnRelease , onPress = buttonOnPress}
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15; candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, _W - 5, _H/15, "riffic", 18 );  scoreText:setFillColor( 1,0,0 )	
-	local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
+	-- local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
 	
 	-- local nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - 30, y = _H - _H/10,
 	-- 	height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
@@ -66,17 +66,49 @@ function scene:createScene( event )
 
 	local function spriteListener( event )
 	    local thisSprite = event.target  -- "event.target" references the sprite  
-	    if  thisSprite.frame == 2 and curLvl == 1 then audio.play( sfx.level1s4, { loops = 0, channel = 5} )
-	    elseif curLvl == 2  then
-    			audio.play( sfx.level2s3, { loops = 0, channel = 11}) 
-    	elseif curLvl == 3  then
-    			audio.play( sfx.level3s4, { loops = 0, channel = 17}) ; audio.setVolume( 1 ) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
-			audio.play( sfx.level4s4, { loops = 0, channel = 22}) ; audio.setVolume( 1 ) 
-		elseif curLvl == 4 and gameSettings.character == "girl" then
-			audio.play( sfx.level4s4G, { loops = 0, channel = 27}) ; audio.setVolume( 1 ) 
-		end
+	    if gameSettings.lang == "english" then
+	   		if  thisSprite.frame == 2 and curLvl == 1 then audio.play( sfx.level1s4, { loops = 0, channel = 2, onComplete = audio.stop(2)} )
+		    end
+	   	elseif gameSettings.lang == "tagalog" then
+	   		if  thisSprite.frame == 2 and curLvl == 1 then audio.play( sfx.level1s4t, { loops = 0, channel = 2, onComplete = audio.stop(2)} )
+		    end
+	   	elseif gameSettings.lang == "bicol" then
+	   		if  thisSprite.frame == 2 and curLvl == 1 then audio.play( sfx.level1s4g, { loops = 0, channel = 2, onComplete = audio.stop(2)} )
+		    end
+	    end
 	end
+
+		if gameSettings.lang == "english" then
+		    if curLvl == 2  then
+	    			audio.play( sfx.level2s3, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	    	elseif curLvl == 3  then
+	    			audio.play( sfx.level3s4, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
+		    elseif curLvl == 4 and gameSettings.character == "boy" then
+				audio.play( sfx.level4s4, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 1 ) 
+			elseif curLvl == 4 and gameSettings.character == "girl" then
+				audio.play( sfx.level4s4G, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 1 ) 
+			end
+		elseif gameSettings.lang == "tagalog" then
+			 if curLvl == 2  then
+	    			audio.play( sfx.level2s3t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	    	elseif curLvl == 3  then
+	    			audio.play( sfx.level3s4t, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
+		    elseif curLvl == 4 and gameSettings.character == "boy" then
+				audio.play( sfx.level4s4t, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 1 ) 
+			elseif curLvl == 4 and gameSettings.character == "girl" then
+				audio.play( sfx.level4s4Gt, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 1 ) 
+			end
+		elseif gameSettings.lang == "bicol" then
+			 if curLvl == 2  then
+	    			audio.play( sfx.level2s3g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	    	elseif curLvl == 3  then
+	    			audio.play( sfx.level3s4g, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
+		    elseif curLvl == 4 and gameSettings.character == "boy" then
+				audio.play( sfx.level4s4g, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 1 ) 
+			elseif curLvl == 4 and gameSettings.character == "girl" then
+				audio.play( sfx.level4s4Gg, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 1 ) 
+			end
+		end
 
 	if curLvl == 1 then t = 9000 elseif curLvl == 2 then t = 10000 elseif curLvl == 3 then t = 15000 elseif curLvl == 4 then t = 15000 end
 	tmr = timer.performWithDelay(t,function(e) storyboard.removeAll()
@@ -87,10 +119,10 @@ function scene:createScene( event )
 animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(animation)
-group:insert( back )
+-- group:insert( back )
 group:insert( candy )
 group:insert( scoreText )
-group:insert( textmap )
+-- group:insert( textmap )
 for i=1,numberOfEnergy do
 	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
 	group:insert(energy[i])

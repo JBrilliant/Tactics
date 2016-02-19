@@ -24,7 +24,20 @@ local function onSwitchPress( event )
 			end
 	    elseif switch == "sfxSwitch" then
 	    	--stop sfx
-	    	gameSettings.soundOn = false;
+	    	if gameSettings.soundOn == true then
+				for i = 24, 32 do 
+					audio.stop(i)
+				end
+				gameSettings.soundOn = false;
+				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+				storyboard.removeAll();
+			elseif gameSettings.soundOn == false then
+				audio.resume( 1 )
+				gameSettings.soundOn = true;
+				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+				storyboard.removeAll();
+			end
+			gameSettings.soundOn = false;
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)	    	
 			audio.stop( 33 ); audio.dispose(); 		-- click
 			    											--level passed
@@ -45,9 +58,8 @@ local function buttonOnRelease(event)
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 

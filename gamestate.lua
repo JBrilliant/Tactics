@@ -39,25 +39,6 @@ M.gameSettings.levels[5] = {}
 M.gameSettings.levels[5].stars = 0
 M.gameSettings.levels[5].score = 0
 M.gameSettings.levels[5].energy = 3
-M.gameSettings.levels[6] = {}
-M.gameSettings.levels[6].stars = 0
-M.gameSettings.levels[6].score = 0
-M.gameSettings.levels[6].energy = 3
-M.gameSettings.levels[7] = {}
-M.gameSettings.levels[7].stars = 0
-M.gameSettings.levels[7].score = 0
-M.gameSettings.levels[7].energy = 3
-M.gameSettings.levels[8] = {}
-M.gameSettings.levels[8].stars = 0
-M.gameSettings.levels[8].score = 0
-M.gameSettings.levels[8].energy = 3
-M.gameSettings.levels[9] = {}
-M.gameSettings.levels[9].stars = 0
-M.gameSettings.levels[9].score = 0
-M.gameSettings.levels[9].energy = 3
-M.gameSettings.levels[10] = {}
-M.gameSettings.levels[10].stars = 0
-M.gameSettings.levels[10].score = 0
-M.gameSettings.levels[10].energy = 3
+
 
 return M

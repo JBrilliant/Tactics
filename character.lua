@@ -30,9 +30,8 @@ local function buttonOnRelease(event)
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.rewind( { channel=1 } )=
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 

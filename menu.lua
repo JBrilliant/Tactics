@@ -27,9 +27,8 @@ local function buttonOnRelease(event)
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-	 audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
@@ -42,6 +41,7 @@ function scene:createScene( event )
 	local sequence= { { name = "normalRun", start = 3, count = 2, time = 2000,  loopDirection = "forward" }}
 	local animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2
 		animation:play()
+		
 	candy = display.newImage ("images/level_candies_active.png"); candy.height = _W/13; candy.width = _W/13; candy.x =_W/2 + 9;candy.y = _H/2 - 75 ; candy.alpha = 0.8
 	transition.to(candy,{time= 1200, rotation=180, iterations = 0})	
 	

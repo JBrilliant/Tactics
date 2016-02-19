@@ -10,9 +10,8 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 loadsave.printTable(gameSettings)
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
@@ -67,6 +66,7 @@ end
 
 function scene:enterScene( event )
 local group = self.view
+	if gameSettings.musicOn == true then audio.resume( 1 ) end
 	local textmap = display.newText( "Tap candy to choose level.", _W - _W/5, _H - _H/40, "riffic", 14 ); textmap:setFillColor( 1,1,1)
 	if gameSettings.lang == "tagalog" or gameSettings.lang == "bicol" then
 		textmap.text = "Pindutin ang kendi para pumili ng level."
@@ -79,7 +79,7 @@ end
 
 function scene:createScene( event )
 	local group = self.view
-	if audio.isChannelPaused( 1 ) and gameSettings.musicOn == true then audio.resume( 1 ) end
+	
 	local bg = display.newImage("images/map.png"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
 	group:insert( bg )
 	local back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	

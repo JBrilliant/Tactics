@@ -18,15 +18,15 @@ local function buttonOnRelease( event )
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
 function scene:createScene( event )
 	local group = self.view
-
+	
+	if gameSettings.musicOn == true then audio.resume(1) end
 	back = widget.newButton { defaultFile = "images/back.png", overFile ="images/back.png", id = "back", x = _W/30, y = _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	-- nextB = widget.newButton { defaultFile = "images/next2.png", overFile ="images/next2.png", id = "nextB", x = _W - _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease }	
 	bg = display.newImage("images/bgplain.jpg"); bg.height = _H; bg.width = _W + _W/4; bg.x = _W/2; bg.y = _H/2;
@@ -40,7 +40,7 @@ function scene:createScene( event )
 	local confetti = display.newImage("images/confetti.png"); confetti.x = _W - _W/3; confetti.y =  _H/2 ; confetti.width =_W/2 + 200;confetti.height = _H; 
 	local trophy = display.newImage("images/trophy.png"); trophy.x = _W - _W/3; trophy.y =  _H/2 ; trophy.width =_W/2 + 10;trophy.height = 280; 
 		
-	if ( 6 > gameSettings.unlockedAchieve) then
+	if ( 6 == gameSettings.unlockedAchieve) then
 		badge.alpha = 0.3;  box.alpha = 0.3; trophy.alpha = 0.3; confetti.alpha = 0.3
     end
 

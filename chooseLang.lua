@@ -14,20 +14,19 @@ local function buttonOnRelease(event)
 			storyboard.gotoScene( "settings", "fade", 200 )
 		elseif button == "english" then
 			gameSettings.lang = "english"; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.removeAll(); storyboard.gotoScene( "menu", "fade", 200 )
+			storyboard.removeAll();  storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "tagalog" then
 			gameSettings.lang = "tagalog"; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			storyboard.removeAll(); storyboard.gotoScene( "menu", "fade", 200 )
 		elseif button == "bicol" then
 			gameSettings.lang = "bicol"; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-			storyboard.removeAll(); storyboard.gotoScene("menu", "fade", 200)
+			storyboard.removeAll();  storyboard.gotoScene("menu", "fade", 200)
 		end
 end
 
 local function buttonOnPress(event)
-	local availableChannel = audio.findFreeChannel()
 	if gameSettings.soundOn == true then
-		audio.play( sfx.click, { loops = 0, channel = availableChannel, onComplete = function()  audio.dispose( sfx.click )  end } )
+		audio.play( sfx.click, { loops = 0, channel = 32, onComplete = function()  audio.dispose(32)  end } )
 	end
 end
 
