@@ -1,4 +1,3 @@
---Cry. tell your parents
 local loadsave = require( "loadsave" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
@@ -7,12 +6,10 @@ local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
 local sceneClass = require("sceneClass")
-local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
--- if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
 print("level1question2")
@@ -35,25 +32,25 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			-- timer.cancel(tmr) 
 			storyboard.removeAll(); 
-			if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "level1scene2G", "fade", 200  )
-			elseif curLvl == 2 then storyboard.gotoScene( "level1scene1G", "fade", 200  ) 
-			elseif curLvl == 3 then storyboard.gotoScene( "level1scene5G", "fade", 200  ) end
+			if curLvl == 1 or curLvl == 4 then storyboard.gotoScene( "scene2", "fade", 200  )
+			elseif curLvl == 2 then storyboard.gotoScene( "scene1", "fade", 200  ) 
+			elseif curLvl == 3 then storyboard.gotoScene( "scene5", "fade", 200  ) end
 		elseif button == "choice1" then
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.removeAll();  
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
-			elseif curLvl == 1 then storyboard.gotoScene( "level1scene7G", "fade", 200 )
-			elseif curLvl == 2 or curLvl == 3 then storyboard.gotoScene( "level1scene2G", "fade", 200 )
-			elseif curLvl == 4 then storyboard.gotoScene( "level1scene3G", "fade", 200 ) end
+			elseif curLvl == 1 then storyboard.gotoScene( "scene7", "fade", 200 )
+			elseif curLvl == 2 or curLvl == 3 then storyboard.gotoScene( "scene2G", "fade", 200 )
+			elseif curLvl == 4 then storyboard.gotoScene( "scene3", "fade", 200 ) end
 		elseif button == "choice2" then
 			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.removeAll();  
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
-			elseif curLvl == 1 then storyboard.gotoScene( "level1scene3G", "fade", 200 )
-			elseif curLvl == 2 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) 
-			elseif curLvl == 3 or curLvl == 4 then storyboard.gotoScene( "level1scene3G", "fade", 200 ) end
+			elseif curLvl == 1 then storyboard.gotoScene( "scene3", "fade", 200 )
+			elseif curLvl == 2 then storyboard.gotoScene( "scene2", "fade", 200 ) 
+			elseif curLvl == 3 or curLvl == 4 then storyboard.gotoScene( "scene3", "fade", 200 ) end
 		end
 end
 
@@ -67,7 +64,6 @@ function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	-- local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	
@@ -82,13 +78,13 @@ function scene:createScene( event )
 		elseif curLvl == 3 then text = {"Ignore him and continue playing.", "You will follow him and \nplay another game online."}
 		elseif curLvl == 4 then 
 			if gameSettings.character == "boy" then text = {"Be very frightened! They might \nseriously do it this time!", "Be strong. Immediately report it \nto the teacher or principal."}
-			elseif gameSettings.character == "girl" then text = {"Admit that she was wrong  and keep serving them.", "Tell them that you don’t want\n to because that’s not friendship."} end
+			elseif gameSettings.character == "girl" then text = {"Admit that she was wrong  \nand keep serving them.", "Tell them that you don’t want\n to because that’s not friendship."} end
 		end
 	elseif gameSettings.lang == "tagalog" then
 		textQuest.text = "Anong gagawin mo?"
 		if curLvl == 1 then text = {"Umiyak", "Magsumbong sa mga magulang"}
 		elseif curLvl == 2 then text = {"Umupo na lamang sa sulok \nat simulang umiyak.", "Tanungin sya kung bakit ka niya tinulak."}
-		elseif curLvl == 3 then text = {"Magpapatuloy ka sa paglaro ng counterstrike", "Susundin mo ang tatay mo at \nmaglalaro na lang ng ibang laro."}
+		elseif curLvl == 3 then text = {"Magpapatuloy ka sa \npaglaro ng counterstrike", "Susundin mo ang tatay mo at \nmaglalaro na lang ng ibang laro."}
 		elseif curLvl == 4 then 
 			if gameSettings.character == "boy" then text = {"Matakot! Baka seryoso na sila ngayon!", "Maging matapang! Isumbong ito \nagad sa guro o punong guro."}
 			elseif gameSettings.character == "girl" then text = {"Aminin na mali ka at patuloyn \nna pagsilbihan sila.", "Umayaw dito dahil alam mong hindi\n na pagkakaibigan ang tawag dito."} end
@@ -96,11 +92,11 @@ function scene:createScene( event )
 	elseif gameSettings.lang == "bicol" then
 		textQuest.text = "Anong gigibuhon mo?"
 		if curLvl == 1 then text = {"Magibi", "Itaram mo sa mga magurang mo"}
-		elseif curLvl == 2 then text = {"Matukaw sa gilid at magaibi.", "Aputun siya kung nata ka tigatulak"}
-		elseif curLvl == 3 then text = {"Mapadagos ka magkawat ki counterstrike", "Susunudun mo si papa mo tapos \niba na lang ang kakawaton mo."}
+		elseif curLvl == 2 then text = {"Matukaw sa gilid at magaibi.", "Aputun siya kung \nnata ka tigatulak"}
+		elseif curLvl == 3 then text = {"Mapadagos ka magkawat \nki counterstrike", "Susunudun mo si papa mo tapos \niba na lang ang kakawaton mo."}
 		elseif curLvl == 4 then 
-			if gameSettings.character == "boy" then text = {"Matakot ika ta baka gibuhon ninda ito ngunyan", "Maging makusog ka at magsumbong sa\n saimong maestro o sa principal."}
-			elseif gameSettings.character == "girl" then text = {"Aminun na tama sya asin mag iyo sainda", "Taramun mo na abo mo\n ta bako man ito friendship"} end 
+			if gameSettings.character == "boy" then text = {"Matakot ika ta baka gibuhon\n ninda ito ngunyan", "Maging makusog ka at magsumbong sa\n saimong maestro o sa principal."}
+			elseif gameSettings.character == "girl" then text = {"Aminun na tama sya \nasin mag iyo sainda", "Taramun mo na abo mo\n ta bako man ito friendship"} end 
 		end
 	end
 	local animation1 = transition.to(textQuest,{ time=500, y = _H/2, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000})
@@ -153,8 +149,7 @@ function scene:createScene( event )
 		group:insert( back ); group:insert(textmap)
 		end,1);
 
-group:insert( background )	
--- group:insert( back )	
+group:insert( background )
 group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)
@@ -164,7 +159,6 @@ for i=1,numberOfEnergy do
 end
 end
 
--- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
 	if back and choice1 and choice2  then

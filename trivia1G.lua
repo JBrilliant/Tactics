@@ -18,7 +18,7 @@ function scene:createScene( event )
 	
 	tmr = timer.performWithDelay(8000,function(e)
 			storyboard.removeAll();
-			storyboard.gotoScene( "level1scene1G", "fade", 200 ); 
+			storyboard.gotoScene( "scene1", "fade", 200 ); 
 			if  gameSettings.musicOn == true then audio.pause( 1 ) end 
 		end,1)	
 

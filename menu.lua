@@ -43,7 +43,6 @@ function scene:createScene( event )
 		animation:play()
 		
 	candy = display.newImage ("images/level_candies_active.png"); candy.height = _W/13; candy.width = _W/13; candy.x =_W/2 + 9;candy.y = _H/2 - 75 ; candy.alpha = 0.8
-	transition.to(candy,{time= 1200, rotation=180, iterations = 0})	
 	
 	newGame = widget.newButton { defaultFile = "images/newGame.png", overFile ="images/newGame_o.png", id = "newGame", x = _W/2, y = _H/2 + _H/7, height =  _H/7, width = _W/2, onRelease = buttonOnRelease , onPress = buttonOnPress}
 	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }

@@ -1,4 +1,3 @@
---Cry. tell your parents
 local loadsave = require( "loadsave" )
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
@@ -7,12 +6,10 @@ local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
 local sceneClass = require("sceneClass")
-local gamestate = require( "gamestate" )
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local energy = {}
 local curLvl = gameSettings.currentLevel; local numberOfEnergy = gameSettings.levels[curLvl].energy; 
--- if numberOfEnergy < 1 then storyboard.removeAll(); storyboard.gotoScene("levelfailedG","fade",200) end
 loadsave.printTable(gameSettings.levels[curLvl].energy)
 local tmr, t;
 print("level1question6")
@@ -35,26 +32,25 @@ local function buttonOnRelease(event)
 		if button == "back" then
 			-- timer.cancel(tmr) ; 
 			storyboard.removeAll();
-			if curLvl == 1 then storyboard.gotoScene( "level1scene7G", "fade", 200  )
-			elseif curLvl == 2 then storyboard.gotoScene( "level1scene5G", "fade", 200  )
-			elseif curLvl == 4 then storyboard.gotoScene( "level1scene1G", "fade", 200  ) end
+			if curLvl == 1 then storyboard.gotoScene( "scene7", "fade", 200  )
+			elseif curLvl == 2 then storyboard.gotoScene( "scene5", "fade", 200  )
+			elseif curLvl == 4 then storyboard.gotoScene( "scene1", "fade", 200  ) end
 		elseif button == "choice1" then
-			--MINUS ENERGY
 			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get()
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 			loadsave.printTable(gameSettings)
-			storyboard.removeAll();
+			storyboard.removeAll(); 
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
 			elseif curLvl == 1 or curLvl == 2 then storyboard.gotoScene( "levelfailedG", "fade", 200 )
-			elseif curLvl == 4 then  storyboard.gotoScene( "level1scene2G", "fade", 200 ) end
+			elseif curLvl == 4 then  storyboard.gotoScene( "scene2", "fade", 200 ) end
 		elseif button == "choice2" then
 			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
 			loadsave.printTable(gameSettings)
-			storyboard.removeAll(); print("question6 error")
+			storyboard.removeAll(); 
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
-			elseif curLvl == 1 then storyboard.gotoScene( "level1scene3G", "fade", 200 ) 
+			elseif curLvl == 1 then storyboard.gotoScene( "scene3", "fade", 200 ) 
 			elseif curLvl == 2 then storyboard.gotoScene( "levelpassedG", "fade", 200 )
-			elseif curLvl == 4 then storyboard.gotoScene( "level1scene2G", "fade", 200 ) end
+			elseif curLvl == 4 then storyboard.gotoScene( "scene2", "fade", 200 ) end
 		end
 end
 
@@ -68,7 +64,6 @@ function scene:createScene( event )
 	local group = self.view
 
 	local background = display.newImage("images/bg.png"); background.height = _H; background.width = _W + _W/4; background.x = _W/2; background.y = _H/2;
-	-- local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 	local candy = display.newImage("images/candy.png"); candy.x = _W - 20; candy.y = _H/15;candy.width = 80; candy.height = 25
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	
@@ -89,16 +84,16 @@ function scene:createScene( event )
 		elseif curLvl == 2 then text = {"Wala kang sasabihin", "Sabihin ito sa punong guro para hindi na \nmang api pa ng ibang bata sina David"}
 		elseif curLvl == 4 then
 			if gameSettings.character == "boy" then text = {"Magtago kung saan di ka nila mahahanap.", "Matapang na harapin ang mga nang aapi sayo. \nHindi ka natatakot sa kanila."}
-			elseif gameSettings.character == "girl" then text = {"Tumango na lamang at sumang ayon.", "Hikayatin sila na dapat lahat sila ang kumuha \nng pananghalian nila bilang parte ng bonding ninyo."}
+			elseif gameSettings.character == "girl" then text = {"Tumango na lamang at sumang ayon.", "Hikayatin sila na dapat lahat sila\n ang kumuha ng pananghalian nila."}
 			end
 		end
 	elseif gameSettings.lang == "bicol" then
 		textQuest.text = "Anong gigibuhon mo?"
 		if curLvl == 1 then text = {"Magibi", "Magusip sa mga magurang mo"}
-		elseif curLvl == 2 then text = {"Wara kang sasabihon.", "Itataram mo sa principal tanganing si David \nat su mga barkada nya ay magpundo magbully sa iba pang tawo."}
+		elseif curLvl == 2 then text = {"Wara kang sasabihon.", "Itataram mo sa principal tanganing magpundo \nna sinda sa pagbully sa iba pang tawo."}
 		elseif curLvl == 4 then
 			if gameSettings.character == "boy" then text = {"Magtago kung sain dae ka ninda mailing.", "Ampangun mo ng mga bullies. \nDae ka takot sainda."}
-			elseif gameSettings.character == "girl" then text = {"Magtango asin magtaram ki iyo.", "Aputun sinda at taraman sindang sinda na \nsarabay na sana sinda magbakal ki lunch" }
+			elseif gameSettings.character == "girl" then text = {"Magtango asin magtaram ki iyo.", "Aputun sinda at taraman na \nsarabay na sana kamo magbakal ki lunch" }
 			end
 		end
 	end
@@ -150,8 +145,7 @@ function scene:createScene( event )
 		group:insert( back ); group:insert(textmap)
 		end,1);
 
-group:insert( background )	
--- group:insert( back )	
+group:insert( background )
 group:insert(textQuest)
 group:insert(candy)
 group:insert(scoreText)
@@ -162,7 +156,6 @@ for i=1,numberOfEnergy do
 end
 end
 
--- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 local group = self.view
 	if back and choice1 and choice2  then

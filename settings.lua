@@ -5,8 +5,6 @@ local scene = storyboard.newScene()
 local widget = require("widget")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
--- gameState.soundOn = nil
---sfx.bgmusic = nil
 
 local bg, back,  musicSwitch, sfxSwitch, lang, chooseChar
 
@@ -17,10 +15,12 @@ local function onSwitchPress( event )
 				audio.pause( 1 )
 				gameSettings.musicOn = false;
 				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+				storyboard.removeAll();
 			elseif audio.isChannelPaused( 1 ) and gameSettings.musicOn == false then
 				audio.resume( 1 )
 				gameSettings.musicOn = true;
 				loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+				storyboard.removeAll();
 			end
 	    elseif switch == "sfxSwitch" then
 	    	--stop sfx
@@ -38,7 +38,7 @@ local function onSwitchPress( event )
 				storyboard.removeAll();
 			end
 			loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)	    	
-			audio.stop( 33 ); audio.dispose(); 		-- click
+			--audio.stop( 33 ); audio.dispose(); 		-- click
 			    											--level passed
 	    end
 end

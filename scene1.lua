@@ -9,9 +9,12 @@ local sceneClass = require("sceneClass")
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 
 local energy = {}
-local curLvl = gameSettings.currentLevel; print("dito ung error");
+local curLvl = gameSettings.currentLevel; 
 local numberOfEnergy = gameSettings.levels[curLvl].energy;  print("energy = "..gameSettings.levels[curLvl].energy); print("LEVEL "..gameSettings.currentLevel.." NA! scene1G")
-local tmr, t;
+loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+
+local tmr, t , duration
+
 print("level1scene1")
 
 
@@ -22,15 +25,75 @@ function scene:createScene( event )
 	local scoreText = score.init({ fontSize = 18, font = "riffic", x = _W - 5, y =  _H/15, maxDigits = 3, leadingZeros = false,	filename = "scorefile.txt"}); scoreText:setFillColor( 1,0,0 )
 	score.set(0); score.save(); gameSettings.levels[curLvl].score = score.get()
 
+	if gameSettings.lang == "english" then 
+    	if curLvl == 1 then
+    		duration = sfx.time1s1
+    	elseif curLvl == 2  then
+	    	audio.play( sfx.level2s1, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
+	    	duration = sfx.time2s1
+	    elseif curLvl == 3  then
+	    	audio.play( sfx.level3s1, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
+	   		duration = sfx.time3s1
+	    elseif curLvl == 4 and gameSettings.character == "boy" then
+	    	audio.play( sfx.level4s1, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
+	 		duration = sfx.time4s1  
+	    elseif curLvl == 4 and gameSettings.character == "girl" then
+	    	audio.play( sfx.level4s1G, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
+    		duration = sfx.time4s1G
+    	elseif curLvl == 5 then
+	    	audio.play( sfx.level5s1, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
+    		duration = sfx.time5s1
+    	end
+    elseif gameSettings.lang == "tagalog" then
+    	if curLvl == 1 then
+    		duration = sfx.time1s1t
+    	elseif curLvl == 2  then
+	    	audio.play( sfx.level2s1t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
+	    	duration = sfx.time2s1t
+	    elseif curLvl == 3  then
+	    	audio.play( sfx.level3s1t, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
+	    	duration = sfx.time3s1t
+	    elseif curLvl == 4 and gameSettings.character == "boy" then
+	    	audio.play( sfx.level4s1t, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
+	    	duration = sfx.time4s1t
+	    elseif curLvl == 4 and gameSettings.character == "girl" then
+	    	audio.play( sfx.level4s1Gt, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
+    		duration = sfx.time4s1Gt
+    	elseif curLvl == 5 then
+	    	audio.play( sfx.level5s1t, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
+    		duration = sfx.time5s1t
+    	end
+    elseif gameSettings.lang == "bicol" then
+    	if curLvl == 1 then
+    		duration = sfx.time1s1g
+    	elseif curLvl == 2  then
+	    	audio.play( sfx.level2s1g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
+	   		duration = sfx.time2s1g
+	    elseif curLvl == 3  then
+	    	audio.play( sfx.level3s1g, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
+	    	duration = sfx.time3s1g
+	    elseif curLvl == 4 and gameSettings.character == "boy" then
+	    	audio.play( sfx.level4s1g, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
+	    	duration = sfx.time4s1g
+	    elseif curLvl == 4 and gameSettings.character == "girl" then
+	    	audio.play( sfx.level4s1Gg, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
+    		duration = sfx.time4s1Gg
+    	elseif curLvl == 5 then
+	    	audio.play( sfx.level5s1g, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
+    		duration = sfx.time5s1g
+    	end
+    end
+    
+   
 	local sheetOptions = { width = 576, height = 320, numFrames = 12 }
 	local sheet1 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet2.png", sheetOptions)	
 	local sheet2 = graphics.newImageSheet( "images/"..gameSettings.lang.."/"..gameSettings.character.."/level"..curLvl.."/imgsheet1.png", sheetOptions)	
-	local sequence= { { name = "level1", start = 1, count = 9, time = 17500, loopCount = 1, loopDirection = "forward" },
-					 { name = "level2", start = 1, count = 6, time = 22500, loopCount = 1, loopDirection = "forward" },
-					 { name = "level3", start = 1, count = 2, time = 13000, loopCount = 1, loopDirection = "forward" },
-					 { name = "level4", start = 1, count = 2, time = 30000, loopCount = 1, loopDirection = "forward" },
-					 { name = "level4G", start = 1, count = 7, time = 60000, loopCount = 1, loopDirection = "forward" },
-					 { name = "level5", start = 9, count = 3, time = 15000, loopCount = 1, loopDirection = "forward" }}	
+	local sequence= { { name = "level1", start = 1, count = 9, time = duration, loopCount = 1, loopDirection = "forward" },
+					 { name = "level2", start = 1, count = 6, time = duration, loopCount = 1, loopDirection = "forward" },
+					 { name = "level3", start = 1, count = 2, time = duration, loopCount = 1, loopDirection = "forward" },
+					 { name = "level4", start = 1, count = 2, time = duration, loopCount = 1, loopDirection = "forward" },
+					 { name = "level4G", start = 1, count = 7, time = duration, loopCount = 1, loopDirection = "forward" },
+					 { name = "level5", start = 9, count = 3, time = duration, loopCount = 1, loopDirection = "forward" }}	
 	local  animation; 
 	if curLvl == 4 and gameSettings.character == "girl" then  
 		animation = display.newSprite( sheet1, sequence); animation.x = _W/2; animation.y = _H/2; 
@@ -41,67 +104,30 @@ function scene:createScene( event )
 	
 	animation:play()
 
-local function spriteListener( event )
-    local thisSprite = event.target    
-    if gameSettings.lang == "english" then 
-    	if thisSprite.frame == 2 and curLvl == 1 then
-	    	audio.play( sfx.level1s1, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
+	local function spriteListener( event )
+	    local thisSprite = event.target    
+	    if gameSettings.lang == "english" then 
+	    	if thisSprite.frame == 2 and curLvl == 1 then
+		    	audio.play( sfx.level1s1, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
+		    end
+	    elseif gameSettings.lang == "tagalog" then
+	    	if thisSprite.frame == 2 and curLvl == 1 then
+		    	audio.play( sfx.level1s1t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
+		    end 
+	    elseif gameSettings.lang == "bicol" then 
+	    	if thisSprite.frame == 2 and curLvl == 1 then
+		    	audio.play( sfx.level1s1g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
+		    end
 	    end
-    elseif gameSettings.lang == "tagalog" then
-    	if thisSprite.frame == 2 and curLvl == 1 then
-	    	audio.play( sfx.level1s1t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
-	    end 
-    elseif gameSettings.lang == "bicol" then 
-    	if thisSprite.frame == 2 and curLvl == 1 then
-	    	audio.play( sfx.level1s1g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) 
-	    end
-    end
-end
+	end
 
-	if gameSettings.lang == "english" then 
-    	if curLvl == 2  then
-	    	audio.play( sfx.level2s1, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
-	    elseif curLvl == 3  then
-	    	audio.play( sfx.level3s1, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
-	    	audio.play( sfx.level4s1, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
-	    elseif curLvl == 4 and gameSettings.character == "girl" then
-	    	audio.play( sfx.level4s1G, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
-    	elseif curLvl == 5 then
-	    	audio.play( sfx.level5s1, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
-    	end
-    elseif gameSettings.lang == "tagalog" then
-    	if curLvl == 2  then
-	    	audio.play( sfx.level2s1t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
-	    elseif curLvl == 3  then
-	    	audio.play( sfx.level3s1t, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
-	    	audio.play( sfx.level4s1t, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
-	    elseif curLvl == 4 and gameSettings.character == "girl" then
-	    	audio.play( sfx.level4s1Gt, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
-    	elseif curLvl == 5 then
-	    	audio.play( sfx.level5s1t, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
-    	end
-    elseif gameSettings.lang == "bicol" then
-    	if curLvl == 2  then
-	    	audio.play( sfx.level2s1g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 5 ) 
-	    elseif curLvl == 3  then
-	    	audio.play( sfx.level3s1g, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 
-	    elseif curLvl == 4 and gameSettings.character == "boy" then
-	    	audio.play( sfx.level4s1g, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
-	    elseif curLvl == 4 and gameSettings.character == "girl" then
-	    	audio.play( sfx.level4s1Gg, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4) 
-    	elseif curLvl == 5 then
-	    	audio.play( sfx.level5s1g, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
-    	end
-    end
-    
-if curLvl == 1 then t = 19500 elseif curLvl == 2 then t = 22500 elseif curLvl == 3 then t = 13000 elseif curLvl == 4  and gameSettings.character == "boy" then t = 30000 elseif curLvl == 4 and gameSettings.character == "girl" then t = 60000 elseif curLvl == 5 then t = 15000 end
-tmr = timer.performWithDelay(t,function(e)
+
+-- if curLvl == 1 then t = 19500 elseif curLvl == 2 then t = 22500 elseif curLvl == 3 then t = 13000 elseif curLvl == 4  and gameSettings.character == "boy" then t = 30000 elseif curLvl == 4 and gameSettings.character == "girl" then t = 60000 elseif curLvl == 5 then t = 15000 end
+tmr = timer.performWithDelay(duration,function(e)
 	storyboard.removeAll()
-	if curLvl == 1 or curLvl == 3 or curLvl == 5 then  storyboard.gotoScene( "level1question1G", "fade", 200)
-	elseif curLvl == 2 then storyboard.gotoScene( "level1question2G", "fade", 200) 
-	elseif curLvl == 4 then storyboard.gotoScene( "level1question6G", "fade", 200) 
+	if curLvl == 1 or curLvl == 3 or curLvl == 5 then  storyboard.gotoScene( "question1", "fade", 200)
+	elseif curLvl == 2 then storyboard.gotoScene( "question2", "fade", 200) 
+	elseif curLvl == 4 then storyboard.gotoScene( "question6", "fade", 200) 
 	end
 end,1)
 
