@@ -19,7 +19,7 @@ gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 function onSystemEvent( event )
 	if event.type == "applicationStart" then
 		if gameSettings == nil then 
-			loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)-- set default at start
+			loadsave.saveTable(gamestate.gameSettings, "myTable.json", system.DocumentsDirectory)
 			gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 		end
 	elseif event.type == "applicationOpen" then

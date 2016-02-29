@@ -41,7 +41,7 @@ local function buttonOnRelease(event)
 			storyboard.removeAll();  
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
 			elseif curLvl == 1 then storyboard.gotoScene( "scene7", "fade", 200 )
-			elseif curLvl == 2 or curLvl == 3 then storyboard.gotoScene( "scene2G", "fade", 200 )
+			elseif curLvl == 2 or curLvl == 3 then storyboard.gotoScene( "scene2", "fade", 200 )
 			elseif curLvl == 4 then storyboard.gotoScene( "scene3", "fade", 200 ) end
 		elseif button == "choice2" then
 			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
@@ -87,7 +87,7 @@ function scene:createScene( event )
 		elseif curLvl == 3 then text = {"Magpapatuloy ka sa \npaglaro ng counterstrike", "Susundin mo ang tatay mo at \nmaglalaro na lang ng ibang laro."}
 		elseif curLvl == 4 then 
 			if gameSettings.character == "boy" then text = {"Matakot! Baka seryoso na sila ngayon!", "Maging matapang! Isumbong ito \nagad sa guro o punong guro."}
-			elseif gameSettings.character == "girl" then text = {"Aminin na mali ka at patuloyn \nna pagsilbihan sila.", "Umayaw dito dahil alam mong hindi\n na pagkakaibigan ang tawag dito."} end
+			elseif gameSettings.character == "girl" then text = {"Aminin na mali ka at patuloy \nna pagsilbihan sila.", "Umayaw dito dahil alam mong hindi\n na pagkakaibigan ang tawag dito."} end
 		end
 	elseif gameSettings.lang == "bicol" then
 		textQuest.text = "Anong gigibuhon mo?"

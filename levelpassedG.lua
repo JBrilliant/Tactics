@@ -5,7 +5,6 @@ local sfx = require( "sfx" )
 local widget = require("widget")
 local score = require("score")
 local energyM = require("energy")
-local gamestate = require("gamestate")
 
 gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
 local curLvl = gameSettings.currentLevel
@@ -22,7 +21,7 @@ end
 local function buttonOnRelease(event)
 	local button = event.target.id
 		if button == "back" then
-			 timer.cancel(tmr); --if gameSettings.musicOn == true then audio.resume( 1 ) end
+			 timer.cancel(tmr);-- if gameSettings.musicOn == true  then audio.resume( 1 ) end
 			 storyboard.removeAll(); storyboard.gotoScene( "mapG", "fade", 200 )
 		elseif button == "badge" then
 			storyboard.removeAll(); storyboard.gotoScene("achievements", "fade", 200)
@@ -61,15 +60,23 @@ function scene:createScene( event )
 	group:insert( scoreText )
 	group:insert(text)
 	
-	if gameSettings.levels[curLvl].score >= 40 then
+	local tscore
+	if curLvl == 1 then tscore = 40
+	elseif curLvl == 2 then tscore = 100
+	elseif curLvl == 3 then tscore = 40
+	elseif curLvl == 4 then tscore = 100
+	elseif curLvl == 5 then tscore = 60
+	end
+	
+	if gameSettings.levels[curLvl].score >= tscore then
 		gameSettings.levels[curLvl].stars = 3; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
-	elseif gameSettings.levels[curLvl].score >= 20 and gameSettings.levels[curLvl].score  < 40 then
+	elseif gameSettings.levels[curLvl].score >= tscore/2 and gameSettings.levels[curLvl].score  < tscore and gameSettings.levels[curLvl].stars ~= 3 then
 		gameSettings.levels[curLvl].stars = 2; loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 	else gameSettings.levels[curLvl].stars = 1
 	end
 	
 	local star = {}
-	if ( gameSettings.levels[curLvl] and gameSettings.levels[curLvl].stars and gameSettings.levels[curLvl].stars > 0 ) then
+	if ( gameSettings.levels[curLvl] and gameSettings.levels[curLvl].stars ) then
         for j = 1, gameSettings.levels[curLvl].stars do
         	star[j] = display.newImage("images/star.png"); star[j].x= _W/4 + _W/8*j; star[j].y=_H/5; star[j].height=_W/8; star[j].width=_W/8;
         	transition.to(star[j],{ time=500, delay=300,y = _H/3, xScale=1, yScale=1, transition=easing.inQuad,customProperty=1000})
@@ -81,8 +88,6 @@ function scene:createScene( event )
 	
 	local badge, text1
 	local function achieveUnlocked()
-		audio.fadeOut(27)
-		audio.play( sfx.tada, { loops = 0, channel = 25, onComplete = function()  audio.dispose( 25 )  end } )
 		transition.to(animation,{transition=fade, time=500, alpha=0,onComplete=after})
 		text1 =  display.newText( "Achievement Unlocked!", 270, 10, "riffic", 24 ); text1.x = _W/2; text1.y = _H/10; text1:setFillColor( 1,1,1 )
 		transition.to(text1,{ time=1000, delay=300,y = _H/5, xScale=2, yScale=2, transition=easing.inQuad,customProperty=1000,onComplete=after})
@@ -95,6 +100,8 @@ function scene:createScene( event )
 	end
 	
 	local function buttons(event)
+		audio.fadeOut(27)
+		audio.play( sfx.choices, { loops = -1, channel = 31,  onComplete = function()  audio.dispose(31)  end } )
 		local back = widget.newButton { defaultFile = "images/back2.png", overFile ="images/back2.png", id = "back", x = _W/30, y = _H - _H/10, height =  _H/9 + 17, width = _W/9 + 18 , onRelease = buttonOnRelease , onPress = buttonOnPress}	
 		local textmap = display.newText( "Map", _W/30 - 10, _H - _H/40, "riffic", 10 ); textmap:setFillColor( 1,1,1 )
 		local nextLvl
@@ -128,13 +135,6 @@ function scene:createScene( event )
 	end
 
 
-	
-	-- if gameSettings.currentLvl == 5 then
-	-- 	print("unlockedLevels == 6 ; currentLvl == 5")
-	-- 	tmr = timer.performWithDelay(7000,finish,1)	
-	-- else tmr = timer.performWithDelay(7000,buttons,1)	
-	-- end
-	
 	if gameSettings.unlockedLevels == gameSettings.currentLevel then
 		if gameSettings.levels[curLvl].stars == 3 then
 			gameSettings.unlockedLevels = gameSettings.unlockedLevels + 1;
@@ -151,20 +151,25 @@ function scene:createScene( event )
 	tmr = timer.performWithDelay(7000,buttons,1)	
 	loadsave.printTable(gameSettings)
 
-for i=1,numberOfEnergy do
-	energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
-	group:insert(energy[i])
-end	
+	for i=1,numberOfEnergy do
+		energy[i] = display.newImage("images/english/"..gameSettings.character.."/energy.png"); energy[i].x = _W/90 + (30*i) -_W/9; energy[i].y = _H/15; energy[i].width = 26; energy[i].height = 25
+		group:insert(energy[i])
+	end	
 end
 
 
 function scene:destroyScene( event )
 local group = self.view
-loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
+	loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory)
 end
 
 function scene:exitScene(event)
 	audio.stop(30)
+	audio.stop(31)
+	if  gameSettings.musicOn   then
+	  	audio.resume(1)
+	  		-- audio.play( sfx.bgmusic, { loops = -1, channel = 1, onComplete = function()  audio.dispose( sfx.bgmusic )  end } )
+	end
 end
 scene:addEventListener( "createScene", scene )
 scene:addEventListener( "exitScene", scene )

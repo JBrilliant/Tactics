@@ -48,7 +48,11 @@ function scene:createScene( event )
 	achieve = widget.newButton { defaultFile = "images/achievements.png", overFile ="images/achievements_o.png", id = "achievements", x = _W/3 , y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }
 	credits = widget.newButton { defaultFile = "images/tactics iconn.png", overFile ="images/tactics icon.png", id = "credits", x =_W/2 , y = _H/2 + newGame.width/2, height =  _H/5, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }	
 	settings = widget.newButton { defaultFile = "images/settings.png", overFile ="images/settings_o.png", id = "settings", x =_W/3 + _W/3, y = _H/2 + newGame.width/2, height =  _H/6, width = _W/9 , onRelease = buttonOnRelease, onPress = buttonOnPress }
-
+	
+	local label1 = display.newText("Achievements", _W/3 , _H/2 + newGame.width/2 + 30, "riffic", 8 );
+	local label2 = display.newText("Credits", _W/2 + 3, _H/2 + newGame.width/2 + 30, "riffic", 8 );
+	local label3 = display.newText("Settings", _W/3 + _W/3 , _H/2 + newGame.width/2 + 30, "riffic", 8 );
+		
 	group:insert( welcome)
 	group:insert(animation)
 	group:insert( candy)
@@ -56,15 +60,15 @@ function scene:createScene( event )
 	group:insert( settings)
 	group:insert( achieve)
 	group:insert( credits)
-	print("MENU MENU MENU")
+	group:insert(label1); group:insert(label2); group:insert(label3);
 	loadsave.printTable(gameSettings);
 end
 
 function scene:enterScene( event )
-    -- sfx.bgmusic = audio.loadSound("bgmusic.mp3")
+	audio.reserveChannels( 1 )
     if gameSettings ~= nil then
 	    if  gameSettings.musicOn   then
-	  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1, onComplete = function()  audio.dispose( sfx.bgmusic )  end } )
+	  		 audio.play( sfx.bgmusic, { loops = -1, channel = 1, onComplete = function()  audio.dispose( 1)  end } )
 		end
 	else
 		gameSettings = loadsave.loadTable("myTable.json", system.DocumentsDirectory)
@@ -74,11 +78,8 @@ function scene:enterScene( event )
 	end
 end
 
--- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 	local group = self.view
-	-- Runtime:removeEventListener("enterFrame",animate);
-	-- widgets must be manually removed, such as life
 	if newGame and settings and achieve and rank and upgrades and credits then
 		newGame:removeSelf()
 		settings:removeSelf()

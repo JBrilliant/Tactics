@@ -40,20 +40,19 @@ local function buttonOnRelease(event)
 			if curLvl == 1 or curLvl == 3 or curLvl == 5 then storyboard.gotoScene( "scene1", "fade", 200  ) end
 		elseif button == "choice1" then 
 			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get()
-			--energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get(); loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.removeAll(); 
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
 			else storyboard.gotoScene( "scene2", "fade", 200 ) end
 		elseif button == "choice2" then 
 			if curLvl == 3 then energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get(); loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			else
-			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get();loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)end
+			score.add(20); score.save(); gameSettings.levels[curLvl].score = score.get(); loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)end
 			storyboard.removeAll();
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
 			elseif curLvl == 1 then storyboard.gotoScene( "scene3", "fade", 200 )
 			elseif curLvl == 3  or curLvl == 5 then storyboard.gotoScene( "scene2", "fade", 200 ) end
 		elseif button == "choice3" then 
-			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get();loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
+			energyM.minus(); energyM.save(); gameSettings.levels[curLvl].energy = energyM.get(); loadsave.saveTable(gameSettings, "myTable.json", system.DocumentsDirectory); loadsave.printTable(gameSettings)
 			storyboard.removeAll(); 
 			if gameSettings.levels[curLvl].energy == 0 then storyboard.gotoScene( "levelfailedG", "fade", 200 ) 
 			elseif curLvl == 1 then storyboard.gotoScene( "scene4", "fade", 200 )
@@ -80,7 +79,7 @@ function scene:createScene( event )
 	if gameSettings.lang == "english" then
 		textQuest.text = "What will you do?"
 		if curLvl == 1 then text = {"Nothing. They will stop soon.", "Tell your parents.", "Tease them also."}
-		elseif curLvl == 3 then text = {"Ignore him and continue playing", "Continue playing and \ntell him to shut up", "It hurts, \nso you will cry"}
+		elseif curLvl == 3 then text = {"Ignore him and continue playing", "Continue playing and \ntell him to shut up", "It hurts, so you will cry"}
 		elseif curLvl == 5 then text = { "Ignore and proceed on \nwhat you are doing", "Tell your instructor to stop","Take the restroom to escape\n from that awkward moment"}
 		end
 	elseif gameSettings.lang == "tagalog" then

@@ -89,7 +89,7 @@ function scene:createScene( event )
 		end
 	elseif gameSettings.lang == "bicol" then
 		textQuest.text = "Anong gigibuhon mo?"
-		if curLvl == 3 then text = {"Dae ka na magakawat\n at maali ka na", "Bayaan sana sinda at tigpadagos ang pagkawat.", "Mumudahun mo sinda bago ka magali "}
+		if curLvl == 3 then text = {"Dae ka na magakawat\n at maali ka na", "Bayaan sana sinda at \ntigpadagos ang pagkawat.", "Mumudahun mo sinda \nbago ka magali "}
 		elseif curLvl == 5 then text = {"Itulak sya at magali pagkatapos \nay iusip mon a sya sa magurang mo", "Babayaan mo na sna ta pirmi man sanang \nnangyayare pagtigaturuan ka nya", "Isipun na warang nangyare."}
 		end
 	end

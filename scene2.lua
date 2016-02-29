@@ -28,16 +28,16 @@ function scene:createScene( event )
 			audio.play( sfx.level1s2, { loops = 0, channel = 2, onComplete = audio.stop(2)})
 	    	duration = sfx.time1s2
 	    elseif curLvl == 2  then
-	        audio.play( sfx.level2s2, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	        audio.play( sfx.level2s2, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 4 ) 
 	    	duration = sfx.time2s2
 	    elseif curLvl == 3  then
-	    	audio.play( sfx.level3s2, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 1 ) 
+	    	audio.play( sfx.level3s2, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4 ) 
 	    	duration = sfx.time3s2
 	    elseif curLvl == 4 and gameSettings.character == "boy" then
-		   	audio.play( sfx.level4s2, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 1 ) 
+		   	audio.play( sfx.level4s2, { loops = 0, channel = 5, onComplete = audio.stop(5)}) ; audio.setVolume( 4 ) 
 			duration = sfx.time4s2
 		elseif curLvl == 4 and gameSettings.character == "girl" then
-			audio.play( sfx.level4s2G, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 1 ) 
+			audio.play( sfx.level4s2G, { loops = 0, channel = 6, onComplete = audio.stop(6)}) ; audio.setVolume( 4 ) 
 			duration = sfx.time4s2G
 		elseif curLvl == 5 then
 			audio.play( sfx.level5s2, { loops = 0, channel = 7, onComplete = audio.stop(7)}) ; audio.setVolume( 4) 
@@ -48,7 +48,7 @@ function scene:createScene( event )
 			audio.play( sfx.level1s2t, { loops = 0, channel = 2, onComplete = audio.stop(2)})
 			duration = sfx.time1s2t
 		elseif curLvl == 2  then
-	    	audio.play( sfx.level2s2t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	    	audio.play( sfx.level2s2t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ;audio.setVolume( 4 ) 
 	    	duration = sfx.time2s2t
 	    elseif curLvl == 3  then
 	    	audio.play( sfx.level3s2t, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4 ) 
@@ -68,7 +68,7 @@ function scene:createScene( event )
 			audio.play( sfx.level1s2g, { loops = 0, channel = 2, onComplete = audio.stop(2)})
 			duration = sfx.time1s2g
 		elseif curLvl == 2  then
-	    	audio.play( sfx.level2s2g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) 
+	    	audio.play( sfx.level2s2g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ;audio.setVolume( 4 ) 
 	    	duration = sfx.time2s2g
 	    elseif curLvl == 3  then
 	    	audio.play( sfx.level3s2g, { loops = 0, channel = 4, onComplete = audio.stop(4)}) ; audio.setVolume( 4) 

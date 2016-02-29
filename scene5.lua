@@ -31,6 +31,7 @@ function scene:createScene( event )
 			audio.play( sfx.level2s5, { loops = 0, channel = 13}) 
     		duration = sfx.time2s5
     	elseif curLvl == 3 then 
+    		audio.play( sfx.level3s3, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 )
     		duration = sfx.time3s3
     	elseif curLvl == 4 and gameSettings.character == "boy" then
 			audio.play( sfx.level4s5, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 4 ) 
@@ -47,6 +48,7 @@ function scene:createScene( event )
 			audio.play( sfx.level2s5t, { loops = 0, channel = 13}) 
     		duration = sfx.time2s5t
     	elseif curLvl == 3 then 
+    		audio.play( sfx.level3s3t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 )   
     		duration = sfx.time3s3t
     	elseif curLvl == 4 and gameSettings.character == "boy" then
 			audio.play( sfx.level4s5t, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 4 ) 
@@ -63,6 +65,7 @@ function scene:createScene( event )
 			audio.play( sfx.level2s5g, { loops = 0, channel = 13}) 
     		duration = sfx.time2s5g
     	elseif curLvl == 3 then 
+    		audio.play( sfx.level3s3g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) 
     		duration = sfx.time3s3g
     	elseif curLvl == 4 and gameSettings.character == "boy" then
 			audio.play( sfx.level4s5g, { loops = 0, channel = 3, onComplete = audio.stop(3)}) ; audio.setVolume( 4 ) 
@@ -90,21 +93,6 @@ function scene:createScene( event )
 	end
 	animation:play()
 
-	local function spriteListener( event )
-    	local thisSprite = event.target  
-    	if gameSettings.lang == "english" then  
-    		if  curLvl == 3 and thisSprite.frame == 3 then	
-	    		audio.play( sfx.level3s3, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end
-	 	elseif gameSettings.lang == "tagalog" then
-	 		if  curLvl == 3 and thisSprite.frame == 3 then	
-	    		audio.play( sfx.level3s3t, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end    
-	    elseif gameSettings.lang == "bicol" then
-	    	if  curLvl == 3 and thisSprite.frame == 3 then	
-	    	audio.play( sfx.level3s3g, { loops = 0, channel = 2, onComplete = audio.stop(2)}) ; audio.setVolume( 1 ) end
-	 	end
-    end
-
-	
 
 	
 
@@ -116,7 +104,6 @@ tmr = timer.performWithDelay(duration,function(e) storyboard.removeAll()
 	end
 end,1)
 
-animation:addEventListener( "sprite", spriteListener )
 group:insert(background)
 group:insert(animation)
 group:insert( candy )

@@ -1,31 +1,25 @@
-local M = {}  -- Create the local module table (this will hold our functions and data) ::: score, energy, level, music, sfx, language
-M.energy = 3  -- Set the initial score to 0
---M.energy = 0
+local M = {}  
+M.energy = 3 
+local customOptions = options or {} 
+M.filename = customOptions.filename or "energyfile.txt"
 
-function M.init( options )
-   local customOptions = options or {}
-   local opt = {}
-   opt.fontSize = customOptions.fontSize or 24
-   opt.font = customOptions.font or native.systemFontBold
-   opt.x = customOptions.x or display.contentCenterX
-   opt.y = customOptions.y or opt.fontSize*0.5
-   opt.maxDigits = customOptions.maxDigits or 6
-   opt.leadingZeros = customOptions.leadingZeros or false
-   M.filename = customOptions.filename or "energyfile.txt"
+-- function M.init( options )
+--    local customOptions = options or {}
+--    local opt = {}
+--   M.filename = customOptions.filename or "energyfile.txt"
 
-   local prefix = ""
-   if ( opt.leadingZeros ) then 
-      prefix = "0"
-   end
-   M.format = "%" .. prefix .. opt.maxDigits .. "d"
+--    local prefix = ""
+--    if ( opt.leadingZeros ) then 
+--       prefix = "0"
+--    end
+--    M.format = "%" .. prefix .. opt.maxDigits .. "d"
 
-   M.scoreText = display.newText( string.format(M.format, 0), opt.x, opt.y, opt.font, opt.fontSize )
-   return M.scoreText
-end
+--    M.scoreText = display.newText( string.format(M.format, 0), opt.x, opt.y, opt.font, opt.fontSize )
+--    return M.scoreText
+-- end
 
 function M.set( value )
    M.energy = value
-   -- M.scoreText.text = string.format( M.format, M.score )
 end
 
 function M.get()
@@ -34,7 +28,6 @@ end
 
 function M.minus()
    M.energy = M.energy - 1
-   -- M.scoreText.text = string.format( M.format, M.score )
 end
 
 function M.save()
