@@ -53,7 +53,6 @@ function scene:createScene( event )
 		storyboard.gotoScene( "question6", "fade", 200 )
 	end,1)
 
-	animation:addEventListener( "sprite", spriteListener )
 	group:insert(background)
 	group:insert(animation)
 	group:insert( candy )

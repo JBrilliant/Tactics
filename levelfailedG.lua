@@ -44,12 +44,12 @@ function scene:createScene( event )
 	local scoreText = display.newText(gameSettings.levels[curLvl].score, 270, 10, "riffic", 18 ); scoreText.x = _W - 5; scoreText.y = _H/15; scoreText:setFillColor( 1,0,0 )
 	
 	
-	local textEnd = display.newText( " ", _W/2 , _H/2, "riffic", 16 ); textEnd:setFillColor( 1,1,1 )
+	local textEnd = display.newText( " ", _W/2 , _H/2, "riffic", 18 ); textEnd:setFillColor( 1,1,1 )
 	if gameSettings.lang == "english" then
 		if curLvl == 1 then
 			textEnd.text = "Give no reaction to verbal bullying. \nTry to stay calm and just walk away. \n Get Help! Always have your friends around you. \nIt can be helpful to talk or \ntell to a trusted adult, family member,\n friend, teacher or school \nguidance counselor. If the bullying \ncontinues, in order to deal with this \nproperly, a little courage \nwill go a long way. "
 		elseif curLvl == 2 then
-			textEnd.text = "The best way to overcome physical \nbullying is to not tolerate it. Do talk to an adult \nyou trust - your parents, a \nteacher, a counselor, a friend - \nsomeone who you believe will listen\n and cares about you. If you are afraid to \ntell someone on your own, \nbring a friend with you\n to provide support. Do avoid areas\n where the bullying is likely\n to happen. "
+			textEnd.text = "The best way to overcome physical \nbullying is to not tolerate it. Do talk to an adult \nyou trust - your parents, a \nteacher, a counselor, a friend - \nsomeone who you believe will listen\n and cares about you. If you are afraid to \ntell someone on your own, \nbring a friend with you\n to provide support. Do avoid areas\n where the bullying is likely\n to happen."
 		elseif curLvl == 3 then
 			textEnd.text = "Don't respond. If someone bullies you, remember that your \nreaction is usually exactly what the bully wants. Talk\n to a trusted adult. You deserve backup.It's always \ngood to involve a parent. Block the bully. If the \nharassment's coming in the form of instant messages, texts, or \nprofile comments, use preferences or privacy\n tools to block the person. If it's in chat, leave the room."
 		elseif curLvl == 4 then
